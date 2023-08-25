@@ -36,6 +36,8 @@ class UserController extends Controller
             'password' => 'required',
         ]);
 
+
+
         if (Auth::attempt($credentials)) {
             // $user = Auth::login();
             // $user= Auth::guard('faculty');
@@ -52,9 +54,23 @@ class UserController extends Controller
 
         } else {
             // dd("Not Login");
-            return back()->with("error" , "credentials are not correct");
+            return back()->with("error", "credentials are not correct");
         }
 
 
     }
+
+
+    public function showForgotForm(Request $request)
+    {
+     return view('auth.forgotPassword');
+    }
+
+    public function forgotPassword(Request $request){
+
+        $validate = $request->validate([
+            'email' => 'required | email',
+        ]);
+
+    }   
 }
