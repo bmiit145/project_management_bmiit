@@ -1,6 +1,6 @@
 @extends('../template/layout')
 
-@section('title' , "Faculty Dashboard | PMS")
+@section('title' , "Admin Dashboard | PMS")
 
 <!-- @section('content')
 @endsection -->

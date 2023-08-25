@@ -6,18 +6,15 @@ use Illuminate\Http\Request;
 
 class FacultyController extends Controller
 {
+
+    public function ViewAddFacultyForm(){
+        return view('faculty.addForm');
+    }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-
-        return view('faculty.dashboard');
-
-    }
 
     /**
      * Show the form for creating a new resource.

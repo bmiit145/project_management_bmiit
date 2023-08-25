@@ -37,7 +37,7 @@ class UserController extends Controller
                 dd("Student Login");
             } elseif (auth()->user()->role == 1) {
                 // return Auth::guard('faculty');
-                return redirect('/dashboard');
+                return redirect('admin/dashboard');
             }
         }
         return view('auth.login');
@@ -59,15 +59,25 @@ class UserController extends Controller
             // $user= Auth::guard('faculty');
             // Auth::login($user);
 
-
-            $this->showDashboard();
+            if(auth()->user()->role == 0) {
+                // return Auth::guard('student');
+                dd("Student Login");
+            } elseif (auth()->user()->role == 1) {
+                // return Auth::guard('faculty');
+                return redirect('/dashboard');
+            }
+            // $this->showDashboard();
 
         } else {
             // dd("Not Login");
             return back()->with("error", "credentials are not correct");
         }
+    }
 
+    public function logout(){
+        Auth::logout();
 
+        return redirect('login');
     }
 
     public function  showDashboard(){
