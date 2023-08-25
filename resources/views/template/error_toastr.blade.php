@@ -1,11 +1,18 @@
+<script>
+    toastr.options = {
+    positionClass: 'toast-top-right', // Adjust as needed
+    closeButton: true,
+    progressBar: true,
+};
+
+// You can also configure other options as needed
+// For example: toastr.options.timeOut = 5000; // 5 seconds
+
+</script>
+
 @if (session('error'))
     <script>
         console.log("{{session('error')}}")
-        toastr.options =
-        {
-  	        "closeButton" : true,
-  	        "progressBar" : true
-        }
         toastr.error("{{ session('error') }}");
     </script>
   @endif

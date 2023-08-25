@@ -31,6 +31,15 @@ class UserController extends Controller
 
     public function showLoginForm()
     {
+        if(auth()->user()){
+            if (auth()->user()->role == 0) {
+                // return Auth::guard('student');
+                dd("Student Login");
+            } elseif (auth()->user()->role == 1) {
+                // return Auth::guard('faculty');
+                return redirect('/dashboard');
+            }
+        }
         return view('auth.login');
     }
 
@@ -50,14 +59,8 @@ class UserController extends Controller
             // $user= Auth::guard('faculty');
             // Auth::login($user);
 
-            if (auth()->user()->role == 0) {
-                // return Auth::guard('student');
 
-                dd("Student Login");
-            } elseif (auth()->user()->role == 1) {
-                // return Auth::guard('faculty');
-                return view('faculty.dashboard');
-            }
+            $this->showDashboard();
 
         } else {
             // dd("Not Login");
@@ -67,6 +70,16 @@ class UserController extends Controller
 
     }
 
+    public function  showDashboard(){
+        // dd(auth()->user()->role);
+        if (auth()->user()->role == 0) {
+            // return Auth::guard('student');
+            dd("Student Login");
+        } elseif (auth()->user()->role == 1) {
+            // return Auth::guard('faculty');
+            return redirect('/dashboard');
+        }
+    }
 
     public function showForgotForm(Request $request)
     {

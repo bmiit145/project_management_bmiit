@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserController;
+use App\Http\Controllers\FacultyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,8 @@ Route::get('/forgotpassword', [UserController::class, 'showForgotForm'])->name('
 Route::post('/forgotpassword', [UserController::class, 'forgotPassword'])->name('auth.forgotPassword');
 Route::get('/resetpassword', [UserController::class, 'resetPassword']);
 Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name('change.password');
+
+
+// faculty dashboard
+
+Route::get('/dashboard', [FacultyController::class, 'index'])->name('show.faculty.dashboard');
