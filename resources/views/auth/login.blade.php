@@ -42,10 +42,18 @@
 <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 <script src="{{ asset('../assets/js/config.js')}}"></script>
+<!-- toastr -->
+<script src="{{ asset('../assets/js/toastr.js')}}"></script>
 </head>
 
 <body>
     <!-- Content -->
+    @if (session('error'))
+    <script>
+        console.log("{{session('error')}}")
+        toastr.error("{{ session('error') }}");
+    </script>
+  @endif
 
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
@@ -111,7 +119,7 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder">Sneat</span>
+                  <span class="app-brand-text demo text-body fw-bolder" style="text-transform: uppercase;">PMS</span>
                 </a>
               </div>
               <!-- /Logo -->
@@ -126,7 +134,7 @@
                     type="text"
                     class="form-control"
                     id="email"
-                    name="email-username"
+                    name="username"
                     placeholder="Enter your email or username"
                     autofocus
                   />

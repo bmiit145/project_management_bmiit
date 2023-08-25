@@ -18,5 +18,6 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('/', [UserController::class, 'view']);
-Route::post('/login', [UserController::class, 'verify'])->name('auth.login');
+Route::get('/', [UserController::class, 'showLoginForm']);
+Route::get('/login', [UserController::class, 'showLoginForm']);
+Route::post('/login', [UserController::class, 'login'])->name('auth.login');
