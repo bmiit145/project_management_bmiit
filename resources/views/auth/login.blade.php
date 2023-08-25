@@ -48,24 +48,7 @@
 
 <body>
     <!-- Content -->
-    @if (session('error'))
-    <script>
-        console.log("{{session('error')}}")
-        toastr.error("{{ session('error') }}");
-    </script>
-  @endif
-
-  @if ($errors->any())
-    
-    @foreach ($errors->all() as $error)
-        <!-- <li>{{ $error }}</li> -->
-    <script>
-console.log("{{$error}}")
-toastr.error("{{ $error}}");
-</script>
-    @endforeach
-@endif
-
+    @include('../template/error_toastr')
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">

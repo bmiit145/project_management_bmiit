@@ -15,6 +15,13 @@ class CreateFacultiesTable extends Migration
     {
         Schema::create('faculties', function (Blueprint $table) {
             $table->id();
+            $table->string('fname');
+            $table->string('lname');
+            $table->bigInteger('contactno');
+            $table->string('email');
+            $table->date('doj');
+            $table->string('designation');
+            $table->string('username');
             $table->timestamps();
         });
     }
@@ -28,4 +35,6 @@ class CreateFacultiesTable extends Migration
     {
         Schema::dropIfExists('faculties');
     }
+
+    
 }

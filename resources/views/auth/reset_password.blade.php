@@ -1,26 +1,18 @@
 <!DOCTYPE html>
 
-<html
-  lang="en"
-  class="light-style customizer-hide"
-  dir="ltr"
-  data-theme="theme-default"
-  data-assets-path="../assets/"
-  data-template="vertical-menu-template-free"
->
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
-    />
+<html lang="en" class="light-style" dir="ltr" data-theme="theme-default">
 
-    <title>PSM | Forgot Password</title>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>Login | BMIIT PROJECTS</title>
 
     <meta name="description" content="" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
+      <!-- Favicon -->
+      <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -52,17 +44,15 @@
 <script src="{{ asset('../assets/js/config.js')}}"></script>
 <!-- toastr -->
 <script src="{{ asset('../assets/js/toastr.js')}}"></script>
-  </head>
+</head>
 
-  <body>
+<body>
     <!-- Content -->
-
     @include('../template/error_toastr')
-
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner py-4">
-          <!-- Forgot Password -->
+        <div class="authentication-inner">
+          <!-- Register -->
           <div class="card">
             <div class="card-body">
               <!-- Logo -->
@@ -123,43 +113,73 @@
                       </g>
                     </svg>
                   </span>
-                  <span class="app-brand-text demo text-body fw-bolder" style="text-transform: uppercase; ">PMS</span>
+                  <span class="app-brand-text demo text-body fw-bolder" style="text-transform: uppercase;">PMS</span>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Forgot Password? 🔒</h4>
-              <p class="mb-4">Enter your email and we'll send you instructions to reset your password</p>
-              <form id="formAuthentication" class="mb-3" action="{{route('auth.forgotPassword')}}" method="POST">
-                @csrf
+              <h4 class="mb-2">Reset your Password!</h4>
+              <p class="mb-4">Reset password and sign-in to your account</p>
+
+              <form id="formAuthentication" class="mb-3" action="{{route('change.password')}}" method="POST">
+              @csrf
+              <input type="email" name="email" value="{{$email}}" hidden>
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
+                  <label for="password" class="form-label">Password</label>
                   <input
-                    type="text"
-                    class="form-control"
-                    id="email"
-                    name="email"
-                    placeholder="Enter your email"
-                    autofocus
-                  />
+                      type="password"
+                      id="password"
+                      class="form-control"
+                      name="password"
+                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      aria-describedby="password"
+                    />
                 </div>
-                <button class="btn btn-primary d-grid w-100">Send Reset Link</button>
+                <div class="mb-3 form-password-toggle">
+                  <div class="d-flex justify-content-between">
+                    <label class="form-label" for="password">Comfirm Password</label>
+                    <!-- <a href="{{route('auth.ShowforgotPassword')}}">
+                      <small>Forgot Password?</small>
+                    </a> -->
+                  </div>
+                  <div class="input-group input-group-merge">
+                    <input
+                      type="password"
+                      id="password_confirmation"
+                      class="form-control"
+                      name="password_confirmation"
+                      placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                      aria-describedby="password_confirmation"
+                    />
+                    <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
+                  </div>
+                </div>
+                <!-- <div class="mb-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="remember-me" />
+                    <label class="form-check-label" for="remember-me"> Remember Me </label>
+                  </div>
+                </div> -->
+                <div class="mb-3">
+                  <button class="btn btn-primary d-grid w-100" type="submit">Reset Password</button>
+                </div>
               </form>
-              <div class="text-center">
-                <a href="{{route('auth.login')}}" class="d-flex align-items-center justify-content-center">
-                  <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
-                  Back to login
+
+              <!-- <p class="text-center">
+                <span>New on our platform?</span>
+                <a href="auth-register-basic.html">
+                  <span>Create an account</span>
                 </a>
-              </div>
+              </p> -->
             </div>
           </div>
-          <!-- /Forgot Password -->
+          <!-- /Register -->
         </div>
       </div>
     </div>
 
     <!-- / Content -->
 
-
+    
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('../assets/vendor/libs/jquery/jquery.js')}}"></script>
@@ -179,5 +199,22 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    <script>
+        $('#formAuthentication').submit(function (event){
+            event.preventDefault();
+
+            password = $('#password').val()
+            password_confirmation = $('#password_confirmation').val()
+
+            if(password != password_confirmation){
+                toastr.error("Password Does not match")
+                return;
+            }else{
+                this.submit();
+            }
+        })
+    </script>
 </body>
+
 </html>

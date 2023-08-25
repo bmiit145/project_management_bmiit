@@ -12,6 +12,11 @@ class Faculty extends Model
     protected $guarded = [];
 
     protected $fillable = [
-         'name','username' ,
+         'fname','lname' , 'contactno' , 'email' , 'doj' , 'designation' ,'username' ,
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'username', 'username');
+    }
 }

@@ -23,3 +23,5 @@ Route::get('/login', [UserController::class, 'showLoginForm']);
 Route::post('/login', [UserController::class, 'login'])->name('auth.login');
 Route::get('/forgotpassword', [UserController::class, 'showForgotForm'])->name('auth.ShowforgotPassword');
 Route::post('/forgotpassword', [UserController::class, 'forgotPassword'])->name('auth.forgotPassword');
+Route::get('/resetpassword', [UserController::class, 'resetPassword']);
+Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name('change.password');
