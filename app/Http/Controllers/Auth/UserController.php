@@ -117,6 +117,8 @@ class UserController extends Controller
                     'token' => $token
                 ]
             );
+            return back()->with("success", "Mail sent successfully");
+
 
         } else {
             return back()->with("error", "User  Does not exits");
@@ -136,7 +138,7 @@ class UserController extends Controller
         $user = Password_reset::where('email', $email)->where('token', $token)->first();
         if ($user) {
             return view('auth.reset_password', compact(['mail_verified' => true, 'email' => 'email']));
-        }else{
+        } else {
             return redirect('/login')->with("error", "Invalid URL");
         }
         dd($email, $token);

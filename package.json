@@ -14,7 +14,8 @@
     "cross-env": "^7.0",
     "laravel-mix": "^5.0.1",
     "lodash": "^4.17.19",
-    "resolve-url-loader": "^3.1.0"
+    "resolve-url-loader": "^3.1.0",
+    "vue-template-compiler": "^2.7.14"
   },
   "name": "project_management_bmiit",
   "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\"></a></p>",
@@ -23,6 +24,10 @@
   "directories": {
     "test": "tests"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "bmiit145 <21bmiit145@gmail.com>",
+  "license": "ISC",
+  "repository": "https://github.com/bmiit145/project_management_bmiit.git",
+  "dependencies": {
+    "toastr": "^2.1.4"
+  }
 }

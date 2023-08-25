@@ -1,6 +1,11 @@
 @if (session('error'))
     <script>
         console.log("{{session('error')}}")
+        toastr.options =
+        {
+  	        "closeButton" : true,
+  	        "progressBar" : true
+        }
         toastr.error("{{ session('error') }}");
     </script>
   @endif
