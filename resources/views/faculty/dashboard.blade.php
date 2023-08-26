@@ -6,7 +6,5 @@
 @endsection -->
 
 @section('body')
-
 Good Morning
-
 @endsection

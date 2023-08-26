@@ -64,7 +64,7 @@ class UserController extends Controller
                 dd("Student Login");
             } elseif (auth()->user()->role == 1) {
                 // return Auth::guard('faculty');
-                return redirect('/dashboard');
+                return redirect('admin/dashboard');
             }
             // $this->showDashboard();
 

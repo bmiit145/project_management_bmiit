@@ -87,13 +87,13 @@
             <li class="menu-item open">
               <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Layouts">Faculties</div>
+                <div data-i18n="Faculties">Faculties</div>
               </a>
 
               <ul class="menu-sub">
                 <li class="menu-item active">
-                  <a href="{{route('faculty.add')}}" class="menu-link">
-                    <div data-i18n="Without menu">Add Faculty</div>
+                  <a href="javascript:void(0);" id="add_faculty"  class="menu-link">
+                    <div data-i18n="Add Faculty">Add Faculty</div>
                   </a>
                 </li>
                 <li class="menu-item">

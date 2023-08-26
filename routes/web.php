@@ -34,4 +34,5 @@ Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name(
 
 
 // faculty dashboard
-Route::get('/AddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.add');
+Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
+Route::post('/AddFaculty', [FacultyController::class , 'create'])->name('faculty.add');

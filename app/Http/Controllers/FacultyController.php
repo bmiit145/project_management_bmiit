@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Faculty;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class FacultyController extends Controller
 {
 
-    public function ViewAddFacultyForm(){
+    public function ViewAddFacultyForm()
+    {
         return view('faculty.addForm');
     }
     /**
@@ -21,9 +25,34 @@ class FacultyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        // dd($request->all());
+
+        $validated = $request->validate([
+            "fname" => "required|min:2",
+            "lname" => "required",
+            "designation" => "required",
+            "email" => 'required|email|unique:faculties',
+            "contactno" => 'required|min:0|string|max:10',
+            "doj" => 'required|date',
+        ]);
+
+        $username = $validated['email'];
+
+        $faculty = new Faculty($validated);
+        $faculty->username = $username;
+        $faculty->save();
+        
+        User::create([
+            'username'=> $username,
+            'password' => Hash::make('password'),
+            'role'=>2
+        ]);
+
+        return response()->json([
+            "success"=>"Inserted Successfully",
+        ]);
     }
 
     /**
