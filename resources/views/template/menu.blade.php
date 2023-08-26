@@ -97,7 +97,7 @@
                   </a>
                 </li>
                 <li class="menu-item">
-                  <a href="layouts-without-navbar.html" class="menu-link">
+                  <a href="javascript:void(0);" id="view_faculty" class="menu-link">
                     <div data-i18n="Without navbar">List Faculties</div>
                   </a>
                 </li>

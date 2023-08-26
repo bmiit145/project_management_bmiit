@@ -1,30 +1,39 @@
 @extends('../template/layout')
 
-@section('title' , "Admin Dashboard | PMS")
+@section('title', 'Admin Dashboard | PMS')
 
 <!-- @section('content')
 @endsection -->
 
 @section('body')
 
-Good Morning
+    Good Morning
 
 @endsection
 
 
 @push('scripts')
-
-<script>
-    $('#add_faculty').click(function () {
-        $.ajax({
-            method:'get',
-            url:'{{route("faculty.addForm")}}',
-            success:function(res)
-            {
-                // console.log(res);
-                $(document).find('.content-body').html(res)
-            }       
+    <script>
+        $('#add_faculty').click(function() {
+            $.ajax({
+                method: 'get',
+                url: '{{ route('faculty.addForm') }}',
+                success: function(res) {
+                    // console.log(res);
+                    $(document).find('.content-body').html(res)
+                }
+            })
         })
-    })
-</script>
+
+        $('#view_faculty').click(function() {
+            $.ajax({
+                method: 'get',
+                url: '{{ route('allFaculty.view') }}',
+                success: function(res) {
+                    // console.log(res);
+                    $(document).find('.content-body').html(res)
+                }
+            });
+        });
+    </script>
 @endpush

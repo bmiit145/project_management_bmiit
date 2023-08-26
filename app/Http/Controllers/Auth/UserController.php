@@ -61,7 +61,6 @@ class UserController extends Controller
             // $user = Auth::login();
             // $user= Auth::guard('faculty');
             // Auth::login($user);
-
             if (auth()->user()->role == 0) {
                 // return Auth::guard('student');
                 dd("Student Login");

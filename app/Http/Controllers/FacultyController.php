@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Hash;
 class FacultyController extends Controller
 {
 
+    public function viewAllFaculty(){
+
+       $faculties =  Faculty::all();
+
+        return view('faculty.allFaculty', compact(['faculties'=>'faculties']));
+    }
     public function index(){
         return view('faculty.dashboard');
     }

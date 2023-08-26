@@ -36,10 +36,11 @@ Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name(
 Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
-    Route::post('/AddFaculty', [FacultyController::class , 'create'])->name('faculty.add');
+    Route::post('/AddFaculty', [FacultyController::class, 'create'])->name('faculty.add');
+    Route::get('/viewFacultyList', [FacultyController::class, 'viewAllFaculty'])->name('allFaculty.view');
 });
 
 // faculty route
 Route::group(['middleware' => 'faculty'], function () {
-Route::get('faculty/dashboard', [FacultyController::class, 'index'])->name('show.faculty.dashboard');
+    Route::get('faculty/dashboard', [FacultyController::class, 'index'])->name('show.faculty.dashboard');
 });
