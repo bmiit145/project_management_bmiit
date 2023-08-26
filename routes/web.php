@@ -20,9 +20,8 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::group(['middleware' => 'admin'], function () {
-    Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
-});
+
+
 Route::get('/', [UserController::class, 'showLoginForm']);
 Route::get('/login', [UserController::class, 'showLoginForm']);
 Route::post('/login', [UserController::class, 'login'])->name('auth.login');
@@ -33,6 +32,14 @@ Route::get('/resetpassword', [UserController::class, 'resetPassword']);
 Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name('change.password');
 
 
-// faculty dashboard
-Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
-Route::post('/AddFaculty', [FacultyController::class , 'create'])->name('faculty.add');
+// admin route
+Route::group(['middleware' => 'admin'], function () {
+    Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
+    Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
+    Route::post('/AddFaculty', [FacultyController::class , 'create'])->name('faculty.add');
+});
+
+// faculty route
+Route::group(['middleware' => 'faculty'], function () {
+Route::get('faculty/dashboard', [FacultyController::class, 'index'])->name('show.faculty.dashboard');
+});

@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Hash;
 class FacultyController extends Controller
 {
 
+    public function index(){
+        return view('faculty.dashboard');
+    }
+
     public function ViewAddFacultyForm()
     {
         return view('faculty.addForm');

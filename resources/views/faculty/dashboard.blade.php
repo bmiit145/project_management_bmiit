@@ -7,4 +7,6 @@
 
 @section('body')
 Good Morning
+
+<h1>Faculty Login</h1>
 @endsection

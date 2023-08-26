@@ -31,13 +31,16 @@ class UserController extends Controller
 
     public function showLoginForm()
     {
-        if(auth()->user()){
+        if (auth()->user()) {
             if (auth()->user()->role == 0) {
                 // return Auth::guard('student');
                 dd("Student Login");
             } elseif (auth()->user()->role == 1) {
                 // return Auth::guard('faculty');
                 return redirect('admin/dashboard');
+            } elseif (auth()->user()->role == 2) {
+                // return Auth::guard('faculty');
+                return redirect('faculty/dashboard');
             }
         }
         return view('auth.login');
@@ -59,12 +62,15 @@ class UserController extends Controller
             // $user= Auth::guard('faculty');
             // Auth::login($user);
 
-            if(auth()->user()->role == 0) {
+            if (auth()->user()->role == 0) {
                 // return Auth::guard('student');
                 dd("Student Login");
             } elseif (auth()->user()->role == 1) {
                 // return Auth::guard('faculty');
                 return redirect('admin/dashboard');
+            } elseif (auth()->user()->role == 2) {
+                // return Auth::guard('faculty');
+                return redirect('faculty/dashboard');
             }
             // $this->showDashboard();
 
@@ -74,20 +80,25 @@ class UserController extends Controller
         }
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
 
         return redirect('login');
     }
 
-    public function  showDashboard(){
+    public function showDashboard()
+    {
         // dd(auth()->user()->role);
         if (auth()->user()->role == 0) {
             // return Auth::guard('student');
             dd("Student Login");
         } elseif (auth()->user()->role == 1) {
             // return Auth::guard('faculty');
-            return redirect('/dashboard');
+            return redirect('admin/dashboard');
+        } elseif (auth()->user()->role == 2) {
+            // return Auth::guard('faculty');
+            return redirect('faculty/dashboard');
         }
     }
 
