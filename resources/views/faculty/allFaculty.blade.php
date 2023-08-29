@@ -21,41 +21,49 @@
             <tbody class="table-border-bottom-0">
 
                 @foreach ($faculties as $key => $faculty)
-                <tr>
+                    <tr>
 
-                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{++$key}}</strong></td>
-                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{$faculty->fname}}</strong></td>
-                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{$faculty->lname}}</strong></td>
-                    <td>{{$faculty->contactno}}</td>
-                    <td>{{$faculty->email}}</td>
-                    <td>{{$faculty->designation}}</td>
-                    <td>{{date('d-m-Y', strtotime($faculty->doj))}}</td>
-                    @if ($faculty->status == 1)
-                    <td><span class="badge bg-label-primary me-1">Active</span></td>
-                    @else
-                    <td><span class="badge bg-label-danger me-1">InActive</span></td>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ ++$key }}</strong>
+                        </td>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $faculty->fname }}</strong>
+                        </td>
+                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{ $faculty->lname }}</strong>
+                        </td>
+                        <td>{{ $faculty->contactno }}</td>
+                        <td>{{ $faculty->email }}</td>
+                        <td>{{ $faculty->designation }}</td>
+                        <td>{{ date('d-m-Y', strtotime($faculty->doj)) }}</td>
+                        @if ($faculty->status == 1)
+                            <td id="status"><span class="badge bg-label-primary me-1">Active</span></td>
+                        @else
+                            <td id="status"><span class="badge bg-label-danger me-1">InActive</span></td>
+                        @endif
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                    data-bs-toggle="dropdown">
+                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);"><i
+                                            class="bx bx-edit-alt me-1"></i>
+                                        Edit</a>
+                                    @if ($faculty->status == 1)
+                                        <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
+                                            data-username="{{ $faculty->username }}"
+                                            data-status="{{ $faculty->status }}"><i class="bx bx-refresh"></i>
+                                            <span>Inactive</span></a>
+                                    @else
+                                        <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
+                                            data-username="{{ $faculty->username }}"
+                                            data-status="{{ $faculty->status }}"><i class="bx bx-refresh"></i>
+                                            <span>Active</span></a>
+                                    @endif
 
-                    @endif
-                    <td>
-                        <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                                <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>
-                                    Edit</a>
-                                @if ($faculty->status == 1)
-                                    <a class="dropdown-item" href="javascript:void(0);" data-username="{{$faculty->username}}" onclick="changeStatus({{$faculty->username}})"><i class="bx bx-trash me-1"></i>
-                                        Inactive</a>
-                                @else
-                                    <a class="dropdown-item" href="javascript:void(0);" data-username="{{$faculty->username}}" onclick="changeStatus({{$faculty->username}})"><i class="bx bx-trash me-1"></i>
-                                        Active</a>
-                                @endif
-
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
+                        </td>
+                    </tr>
                 @endforeach
             </tbody>
         </table>
@@ -63,22 +71,46 @@
 </div>
 
 <script>
-    function changeStatus(username){
+    $(document).on('click', '#changeStatus', function() {
         // alert(username);
+        var username = $(this).data('username')
+        // var trWithStatus = $('td#status').closest('tr');
+        var trWithStatus = $('[data-username="' + username + '"]').closest('td').siblings('td#status')
+        var aWithUsername = $('[data-username="' + username + '"]').children('span')
+        var status = $('[data-username="' + username + '"]').data('status');
+
         $.ajax({
             type: "POST",
-            url: "{{route('changeFacultyStatus')}}",
+            url: "{{ route('changeFacultyStatus') }}",
             data: {
                 "_token": "{{ csrf_token() }}",
                 "username": username,
             },
-            success: function(response){
-                 console.log(response);
+            success: function(response) {
+                //  console.log(response);
+
+                console.log(trWithStatus.html());
+                if (status == '1') {
+                    // tag.text("adc")
+                    trWithStatus.html(' <span class="badge bg-label-danger me-1">InActive</span>')
+                    aWithUsername.html('Active')
+                    $('[data-username="' + username + '"]').attr('data-status', 0)
+                    console.log(status)
+                } else {
+                    trWithStatus.html('<span class="badge bg-label-primary me-1">Active</span>')
+                    aWithUsername.html('Inactive')
+                    $('[data-username="' + username + '"]').attr('data-status', 1)
+                    console.log(status)
+                }
+                //  console.log($msg);
             },
-            error: function(response){
+            error: function(response) {
                 console.log(response);
             }
         });
-    }
+
+    })
+
+    function changeStatus(username) {}
 </script>
 <!--/ Hoverable Table rows -->
