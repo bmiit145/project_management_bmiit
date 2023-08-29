@@ -31,10 +31,10 @@
                     <td>{{$faculty->designation}}</td>
                     <td>{{date('d-m-Y', strtotime($faculty->doj))}}</td>
                     @if ($faculty->status == 1)
-                    <td><span class="badge bg-label-primary me-1">Active</span></td>    
+                    <td><span class="badge bg-label-primary me-1">Active</span></td>
                     @else
-                    <td><span class="badge bg-label-danger me-1">InActive</span></td>    
-                        
+                    <td><span class="badge bg-label-danger me-1">InActive</span></td>
+
                     @endif
                     <td>
                         <div class="dropdown">
@@ -44,8 +44,14 @@
                             <div class="dropdown-menu">
                                 <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i>
                                     Edit</a>
-                                <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i>
-                                    Delete</a>
+                                @if ($faculty->status == 1)
+                                    <a class="dropdown-item" href="javascript:void(0);" data-username="{{$faculty->username}}" onclick="changeStatus({{$faculty->username}})"><i class="bx bx-trash me-1"></i>
+                                        Inactive</a>
+                                @else
+                                    <a class="dropdown-item" href="javascript:void(0);" data-username="{{$faculty->username}}" onclick="changeStatus({{$faculty->username}})"><i class="bx bx-trash me-1"></i>
+                                        Active</a>
+                                @endif
+
                             </div>
                         </div>
                     </td>
@@ -55,4 +61,24 @@
         </table>
     </div>
 </div>
+
+<script>
+    function changeStatus(username){
+        // alert(username);
+        $.ajax({
+            type: "POST",
+            url: "{{route('changeFacultyStatus')}}",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                "username": username,
+            },
+            success: function(response){
+                 console.log(response);
+            },
+            error: function(response){
+                console.log(response);
+            }
+        });
+    }
+</script>
 <!--/ Hoverable Table rows -->

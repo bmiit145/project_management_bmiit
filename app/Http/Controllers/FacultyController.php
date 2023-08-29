@@ -10,11 +10,26 @@ use Illuminate\Support\Facades\Hash;
 class FacultyController extends Controller
 {
 
+
     public function viewAllFaculty(){
 
        $faculties =  Faculty::all();
 
         return view('faculty.allFaculty', compact(['faculties'=>'faculties']));
+    }
+
+    public function changeFacultyStatus(Request $request){
+
+        $validated = $request->validate([
+            "username" => "required",
+        ]);
+
+        $faculty = Faculty::where('username',$request->username)->first();
+        $faculty->status = !$faculty->status;
+        $faculty->save();
+        return response()->json([
+            "success"=>"Status Changed Successfully",
+        ]);
     }
     public function index(){
         return view('faculty.dashboard');
@@ -53,7 +68,7 @@ class FacultyController extends Controller
         $faculty = new Faculty($validated);
         $faculty->username = $username;
         $faculty->save();
-        
+
         User::create([
             'username'=> $username,
             'password' => Hash::make('password'),

@@ -38,6 +38,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
     Route::post('/AddFaculty', [FacultyController::class, 'create'])->name('faculty.add');
     Route::get('/viewFacultyList', [FacultyController::class, 'viewAllFaculty'])->name('allFaculty.view');
+    Route::get('/changeFacultyStatus', [FacultyController::class, 'changeFacultyStatus'])->name('changeFacultyStatus');
 });
 
 // faculty route
