@@ -143,6 +143,12 @@
                 </li>
                 </ul> --}}
             </li>
+            <li class="menu-item">
+              <a href="{{route('ManageYears')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Acadamic Years</div>
+              </a>
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->

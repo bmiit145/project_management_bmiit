@@ -11,85 +11,93 @@
 
     <meta name="description" content="" />
 
-      <!-- Favicon -->
-      <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
-      
-<!-- Fonts -->
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-rel="stylesheet"
-/>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
 
-<!-- Icons. Uncomment required icon fonts -->
-<link rel="stylesheet" href="{{ asset('../assets/vendor/fonts/boxicons.css')}}" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+        rel="stylesheet" />
 
-<!-- Core CSS -->
-<link rel="stylesheet" href="{{ asset('../assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
-<link rel="stylesheet" href="{{ asset('../assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
-<link rel="stylesheet" href="{{ asset('../assets/css/demo.css')}}" />
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="{{ asset('../assets/vendor/fonts/boxicons.css') }}" />
 
-<!-- Vendors CSS -->
-<link rel="stylesheet" href="{{ asset('../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css')}}" />
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="{{ asset('../assets/vendor/css/core.css') }}" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="{{ asset('../assets/vendor/css/theme-default.css') }}"
+        class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="{{ asset('../assets/css/demo.css') }}" />
 
-<!-- Page CSS -->
-<!-- Page -->
-<link rel="stylesheet" href="{{ asset('../assets/vendor/css/pages/page-auth.css')}}" />
-<!-- Helpers -->
-<script src="{{ asset('../assets/vendor/js/helpers.js')}}"></script>
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="{{ asset('../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
-<!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
-<!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-<script src="{{ asset('../assets/js/config.js')}}"></script>
-<!-- toastr -->
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="{{ asset('../assets/vendor/css/pages/page-auth.css') }}" />
+    <!-- Helpers -->
+    <script src="{{ asset('../assets/vendor/js/helpers.js') }}"></script>
 
-<link rel="stylesheet" type="text/css"  href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-<script src="{{ asset('js/jquery.validate.js') }}"></script>
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="{{ asset('../assets/js/config.js') }}"></script>
+
+
+    <!-- toastr -->
+
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="{{ asset('js/jquery.validate.js') }}"></script>
+
+        {{-- data Tables --}}
+
+        <link rel="stylesheet" href="{{ asset('assets/css/dataTables.min.css') }}" />
+        <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
 </head>
 
 <body>
-  <div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
-      
-      @yield('content')
-      @include('../template/menu')
-      
-      <!-- Layout container -->
-      <div class="layout-page">
-          <!-- Navbar -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
 
-        @include('../template/nav')
-          <!-- / Navbar -->
+            @yield('content')
+            @include('../template/menu')
 
-          <!-- Content wrapper -->
-          <div class="content-wrapper">
-            <!-- Content -->
-            
-            <div class="container-xxl flex-grow-1 container-p-y">
-              <!-- Layout Demo -->
-              <div class="content-body">
-                @yield('body')
-                <!--/ Layout Demo -->
-              </div>
+            <!-- Layout container -->
+            <div class="layout-page">
+                <!-- Navbar -->
+
+                @include('../template/nav')
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <!-- Layout Demo -->
+                        <div class="content-body">
+                            @yield('body')
+                            <!--/ Layout Demo -->
+                        </div>
+                    </div>
+                    <!-- / Content -->
+
+                    <!-- Footer -->
+                    @include('../template/footer')
+                    <!-- / Footer -->
+
+                    <div class="content-backdrop fade"></div>
+                </div>
+                <!-- Content wrapper -->
             </div>
-            <!-- / Content -->
-
-            <!-- Footer -->
-            @include('../template/footer')
-            <!-- / Footer -->
-
-            <div class="content-backdrop fade"></div>
-          </div>
-          <!-- Content wrapper -->
+            <!-- / Layout page -->
         </div>
-        <!-- / Layout page -->
-      </div>
 
-      <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
     </div>
     <!-- / Layout wrapper -->
 
@@ -97,18 +105,18 @@ rel="stylesheet"
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="{{ asset('../assets/vendor/libs/jquery/jquery.js')}}"></script>
-    <script src="{{ asset('../assets/vendor/libs/popper/popper.js')}}"></script>
-    <script src="{{ asset('../assets/vendor/js/bootstrap.js')}}"></script>
-    <script src="{{ asset('../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
+    <script src="{{ asset('../assets/vendor/libs/jquery/jquery.js') }}"></script>
+    <script src="{{ asset('../assets/vendor/libs/popper/popper.js') }}"></script>
+    <script src="{{ asset('../assets/vendor/js/bootstrap.js') }}"></script>
+    <script src="{{ asset('../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
 
-    <script src="{{ asset('../assets/vendor/js/menu.js')}}"></script>
+    <script src="{{ asset('../assets/vendor/js/menu.js') }}"></script>
     <!-- endbuild -->
 
     <!-- Vendors JS -->
 
     <!-- Main JS -->
-    <script src="{{ asset('../assets/js/main.js')}}"></script>
+    <script src="{{ asset('../assets/js/main.js') }}"></script>
 
     <!-- Page JS -->
 
@@ -122,29 +130,29 @@ rel="stylesheet"
 
 
     <script>
-      $('#add_faculty').click(function() {
-          $.ajax({
-              method: 'get',
-              url: '{{ route('faculty.addForm') }}',
-              success: function(res) {
-                  // console.log(res);
-                  $(document).find('.content-body').html(res)
-              }
-          })
-      })
+        $('#add_faculty').click(function() {
+            $.ajax({
+                method: 'get',
+                url: '{{ route('faculty.addForm') }}',
+                success: function(res) {
+                    // console.log(res);
+                    $(document).find('.content-body').html(res)
+                }
+            })
+        })
 
-      $('#view_faculty').click(function() {
-          $.ajax({
-              method: 'get',
-              url: '{{ route('allFaculty.view') }}',
-              success: function(res) {
-                  // console.log(res);
-                  $(document).find('.content-body').html(res)
-              }
-          });
-      });
-  </script>
-  
+        $('#view_faculty').click(function() {
+            $.ajax({
+                method: 'get',
+                url: '{{ route('allFaculty.view') }}',
+                success: function(res) {
+                    // console.log(res);
+                    $(document).find('.content-body').html(res)
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

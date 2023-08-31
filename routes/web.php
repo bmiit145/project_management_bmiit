@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\AcadamicYearController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,8 +46,10 @@ Route::group(['middleware' => 'admin'], function () {
     // programs 
     Route::get('/ViewPrograms', [ProgramController::class, 'viewAllPrograms'])->name('ManageProgram');
     Route::post('/AddProgram', [ProgramController::class, 'create'])->name('program.add');
-
     
+    // Acadamic Year
+    Route::get('/ViewAcadamicYear', [AcadamicYearController::class, 'viewAllYears'])->name('ManageYears');
+
 });
 
 // faculty route
