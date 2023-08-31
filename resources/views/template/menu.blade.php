@@ -125,6 +125,24 @@
                 </li>
                 </ul>
             </li>
+            <li class="menu-item">
+              <a href="{{route('ManageProgram')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Program</div>
+              </a>
+              {{-- <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="pages-account-settings-account.html" class="menu-link">
+                    <div data-i18n="Account">Add Students</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <div data-i18n="Notifications">List Students</div>
+                  </a>
+                </li>
+                </ul> --}}
+            </li>
           </ul>
         </aside>
         <!-- / Menu -->

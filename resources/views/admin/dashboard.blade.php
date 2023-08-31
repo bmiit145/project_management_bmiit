@@ -13,27 +13,5 @@
 
 
 @push('scripts')
-    <script>
-        $('#add_faculty').click(function() {
-            $.ajax({
-                method: 'get',
-                url: '{{ route('faculty.addForm') }}',
-                success: function(res) {
-                    // console.log(res);
-                    $(document).find('.content-body').html(res)
-                }
-            })
-        })
-
-        $('#view_faculty').click(function() {
-            $.ajax({
-                method: 'get',
-                url: '{{ route('allFaculty.view') }}',
-                success: function(res) {
-                    // console.log(res);
-                    $(document).find('.content-body').html(res)
-                }
-            });
-        });
-    </script>
+    
 @endpush

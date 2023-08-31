@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\FacultyController;
+use App\Http\Controllers\ProgramController;
 
 /*
 |--------------------------------------------------------------------------
@@ -34,11 +35,18 @@ Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name(
 
 // admin route
 Route::group(['middleware' => 'admin'], function () {
+    // faculty
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
     Route::post('/AddFaculty', [FacultyController::class, 'create'])->name('faculty.add');
     Route::get('/viewFacultyList', [FacultyController::class, 'viewAllFaculty'])->name('allFaculty.view');
     Route::post('/changeFacultyStatus', [FacultyController::class, 'changeFacultyStatus'])->name('changeFacultyStatus');
+    
+    // programs 
+    Route::get('/ViewPrograms', [ProgramController::class, 'viewAllPrograms'])->name('ManageProgram');
+    Route::post('/AddProgram', [ProgramController::class, 'create'])->name('program.add');
+
+    
 });
 
 // faculty route
