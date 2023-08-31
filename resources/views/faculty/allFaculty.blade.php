@@ -71,13 +71,53 @@
 </div>
 
 <script>
+    // $(document).on('click', '#changeStatus', function() {
+    //     // alert(username);
+    //     var username = $(this).data('username')
+    //     // var trWithStatus = $('td#status').closest('tr');
+    //     var trWithStatus = $(document).find('[data-username="' + username + '"]').closest('td').siblings('td#status')
+    //     var aWithUsername = $(document).find('[data-username="' + username + '"]').children('span')
+    //     var status = $(document).find('[data-username="' + username + '"]').data('status');
+
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "{{ route('changeFacultyStatus') }}",
+    //         data: {
+    //             "_token": "{{ csrf_token() }}",
+    //             "username": username,
+    //         },
+    //         success: function(response) {
+    //             //  console.log(response);
+
+    //             console.log(trWithStatus.html());
+    //             if (status == '1') {
+    //                 // tag.text("adc")
+    //                 trWithStatus.html(' <span class="badge bg-label-danger me-1">InActive</span>')
+    //                 aWithUsername.html('Active')
+    //                 $(document).find('[data-username="' + username + '"]').attr('data-status', 0)
+    //                 console.log(status)
+    //             } else {
+    //                 trWithStatus.html('<span class="badge bg-label-primary me-1">Active</span>')
+    //                 aWithUsername.html('Inactive')
+    //                 $(document).find('[data-username="' + username + '"]').attr('data-status', 1)
+    //                 console.log(status)
+    //             }
+    //             //  console.log($msg);
+    //         },
+    //         error: function(response) {
+    //             console.log(response);
+    //         }
+    //     });
+
+    // })
+
+
     $(document).on('click', '#changeStatus', function() {
-        // alert(username);
-        var username = $(this).data('username')
-        // var trWithStatus = $('td#status').closest('tr');
-        var trWithStatus = $('[data-username="' + username + '"]').closest('td').siblings('td#status')
-        var aWithUsername = $('[data-username="' + username + '"]').children('span')
-        var status = $('[data-username="' + username + '"]').data('status');
+        username = $(this).data('username');
+        trWithStatus = $(document).find('[data-username="' + username + '"]').closest('td').siblings(
+            'td#status');
+        aWithUsername = $(document).find('[data-username="' + username + '"]').children('span');
+        status = $(document).find('[data-username="' + username + '"]').data('status');
 
         $.ajax({
             type: "POST",
@@ -87,29 +127,24 @@
                 "username": username,
             },
             success: function(response) {
-                //  console.log(response);
-
-                console.log(trWithStatus.html());
                 if (status == '1') {
-                    // tag.text("adc")
-                    trWithStatus.html(' <span class="badge bg-label-danger me-1">InActive</span>')
-                    aWithUsername.html('Active')
-                    $('[data-username="' + username + '"]').attr('data-status', 0)
-                    console.log(status)
+                    trWithStatus.html(' <span class="badge bg-label-danger me-1">Inactive</span>');
+                    aWithUsername.text('Active');
+                    $(document).find('[data-username="' + username + '"]').attr('data-status', 0);
                 } else {
-                    trWithStatus.html('<span class="badge bg-label-primary me-1">Active</span>')
-                    aWithUsername.html('Inactive')
-                    $('[data-username="' + username + '"]').attr('data-status', 1)
-                    console.log(status)
+                    trWithStatus.html('<span class="badge bg-label-primary me-1">Active</span>');
+                    aWithUsername.text('Inactive');
+                    $(document).find('[data-username="' + username + '"]').attr('data-status', 1);
                 }
-                //  console.log($msg);
+                // Update the status variable after the AJAX call
+                status = status === '1' ? '0' : '1';
             },
             error: function(response) {
                 console.log(response);
             }
         });
+    });
 
-    })
 
     function changeStatus(username) {}
 </script>
