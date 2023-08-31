@@ -113,11 +113,16 @@
 
 
     $(document).on('click', '#changeStatus', function() {
-        username = $(this).data('username');
-        trWithStatus = $(document).find('[data-username="' + username + '"]').closest('td').siblings(
+        let username = $(this).data('username');
+        let userClass = $(document).find('[data-username="' + username + '"]')
+        // console.log("userClass", userClass.html());
+        let trWithStatus = userClass.closest('td').siblings(
             'td#status');
-        aWithUsername = $(document).find('[data-username="' + username + '"]').children('span');
-        status = $(document).find('[data-username="' + username + '"]').data('status');
+        // console.log("trWithStatus", trWithStatus.html());
+        let aWithUsername = userClass.children('span');
+        // console.log("aWithUsername", aWithUsername.html());
+        let status = userClass.data('status');
+        // console.log("status", status);
 
         $.ajax({
             type: "POST",
@@ -128,16 +133,20 @@
             },
             success: function(response) {
                 if (status == '1') {
-                    trWithStatus.html(' <span class="badge bg-label-danger me-1">Inactive</span>');
-                    aWithUsername.text('Active');
-                    $(document).find('[data-username="' + username + '"]').attr('data-status', 0);
-                } else {
+                    // console.log("status 1 work");
+                    trWithStatus.html('<span class="badge bg-label-danger me-1">Inactive</span>');
+                    aWithUsername.html('Active');
+                    userClass.data('status', 0);
+                } else if (status == '0') {
+                    // console.log("status 0 work");
                     trWithStatus.html('<span class="badge bg-label-primary me-1">Active</span>');
-                    aWithUsername.text('Inactive');
-                    $(document).find('[data-username="' + username + '"]').attr('data-status', 1);
+                    aWithUsername.html('Inactive');
+                    userClass.data('status', 1);
+                } else {
+                    alert("not working")
                 }
                 // Update the status variable after the AJAX call
-                status = status === '1' ? '0' : '1';
+                status = status == '1' ? '0' : '1';
             },
             error: function(response) {
                 console.log(response);
