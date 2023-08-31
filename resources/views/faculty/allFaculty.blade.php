@@ -153,8 +153,5 @@
             }
         });
     });
-
-
-    function changeStatus(username) {}
 </script>
 <!--/ Hoverable Table rows -->
