@@ -49,6 +49,7 @@ Route::group(['middleware' => 'admin'], function () {
     
     // Acadamic Year
     Route::get('/ViewAcadamicYear', [AcadamicYearController::class, 'viewAllYears'])->name('ManageYears');
+    Route::post('/AddAcadamicYear', [AcadamicYearController::class, 'create'])->name('acadamicYear.add');
 
 });
 

@@ -13,26 +13,26 @@
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Add new Program</h5>
+                        <h5 class="mb-0">Add new Acadamic Year</h5>
                         <!-- <small class="text-muted float-end">Merged input group</small> -->
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('program.add') }}" id="addProgramForm">
+                        <form method="post" action="{{ route('acadamicYear.add') }}" id="addYearForm">
                             @csrf
                             <span id="error_info">
 
                             </span>
-                            <div class="mb-3">
-                                <label class="form-label" for="code">code</label>
-                                <div class="input-group input-group-merge">
-                                    {{-- <span id="code2" class="input-group-text">
+                            <!--      <div class="mb-3">
+                                                                <label class="form-label" for="code">code</label>
+                                                                <div class="input-group input-group-merge">
+                                                                    {{-- <span id="code2" class="input-group-text">
                                         <i class="bx bx-buildings"></i></span> --}}
-                                    <input type="text" id="code" class="form-control" name="code"
-                                        placeholder="IT4003" aria-label="IT4003" aria-describedby="code2" />
-                                </div>
-                                <label id="code-error" class="error" for="code"></label>
-                            </div>
-
+                                                                    <input type="text" id="code" class="form-control" name="code"
+                                                                        placeholder="IT4003" aria-label="IT4003" aria-describedby="code2" />
+                                                                </div>
+                                                                <label id="code-error" class="error" for="code"></label>
+                                                            </div>
+                                                        -->
                             <div class="mb-3">
                                 <label class="form-label" for="name">name</label>
                                 <div class="input-group input-group-merge">
@@ -54,7 +54,7 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <h5 class="card-header "> <strong> Program List</strong></h5>
+                <h5 class="card-header "> <strong> Acadamic Year List</strong></h5>
                 <div class="table-responsive text-nowrap">
                     <table class="table table-hover table-responsive text-nowrap" id="dataTable">
                         <thead>
@@ -68,22 +68,22 @@
                         </thead>
                         <tbody class="table-border-bottom-0">
                             {{-- @if (count($years) != 0) --}}
-                                @foreach ($years as $key => $year)
-                                    <tr>
-                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                            <strong>{{ ++$key }}</strong>
-                                        </td>
-                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                            <strong>{{ $year->name }}</strong>
-                                        </td>
-                                        {{-- <td>
+                            @foreach ($years as $key => $year)
+                                <tr>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                        <strong>{{ ++$key }}</strong>
+                                    </td>
+                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                        <strong>{{ $year->name }}</strong>
+                                    </td>
+                                    {{-- <td>
                                     @if ($program->status == 1)
                                         <td id="status"><span class="badge bg-label-primary me-1">Active</span></td>
                                     @else
                                         <td id="status"><span class="badge bg-label-danger me-1">InActive</span></td>
                                     @endif
                                     </td> --}}
-                                        {{-- <td>
+                                    {{-- <td>
                                         <div class="dropdown">
                                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                                 data-bs-toggle="dropdown">
@@ -109,8 +109,8 @@
                                             </div>
                                         </div>
                                     </td> --}}
-                                    </tr>
-                                @endforeach
+                                </tr>
+                            @endforeach
                             {{-- @else
                                 <tr>
                                     <td colspan="3" style="text-align: center">No record Found !</td>
@@ -126,38 +126,40 @@
 @endsection
 
 @push('scripts')
-<script src="{{ asset('js/jquery.validate.js') }}"></script>
+    <script src="{{ asset('js/jquery.validate.js') }}"></script>
     <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            // Initialize the DataTable
+        function CreateDataTable() {
             $('#dataTable').DataTable({
                 paging: true, // Enable pagination
                 pageLength: 10, // Number of rows per page
                 responsive: true, // Enable responsive design
                 // Add any additional configuration options as needed
                 language: {
-                emptyTable: "No records available", // Customize the "No record Found" message
-            },
+                    emptyTable: "No records available", // Customize the "No record Found" message
+                },
             });
+        }
+
+        function DestroyDataTable() {
+            $('#dataTable').DataTable().destroy();
+          }
+
+        $(document).ready(function() {
+            // Initialize the DataTable
+            CreateDataTable();
         });
 
 
-        $('#addProgramForm').validate({
+        $('#addYearForm').validate({
             rules: {
                 "name": {
                     required: true,
                 },
-                "code": {
-                    required: true,
-                },
-            },
-            messages: {
-                name: {
-                    required: "Please enter Program name",
-                },
-                code: {
-                    required: "Please enter Program Code",
+                messages: {
+                    name: {
+                        required: "Please enter Program name",
+                    },
                 },
             },
             // errorPlacement: function(error, element) {
@@ -180,29 +182,32 @@
 
                 // }
 
-                var formData = $('#addProgramForm').serialize()
+                var formData = $('#addYearForm').serialize()
                 $.ajax({
                     type: "post",
-                    url: "{{ route('program.add') }}",
+                    url: "{{ route('acadamicYear.add') }}",
                     data: formData,
                     // dataType: "dataType",
                     success: function(res) {
                         // console.log(res.success);
                         toastr.success(res.success)
-                        $('#addProgramForm')[0].reset();
+                        $('#addYearForm')[0].reset();
 
 
                         // get and replace table bodyy
                         $.ajax({
                             type: "get",
-                            url: "{{ route('ManageProgram') }}",
+                            url: "{{ route('ManageYears') }}",
                             // data: ,
                             // dataType: "dataType",
                             success: function(r) {
+                                DestroyDataTable()
                                 var response = $(r);
                                 var tbody = response.find('tbody').html();
                                 // console.log(tbody);
                                 $(document).find('tbody').html(tbody)
+                                CreateDataTable();
+
                             },
 
                             error: function(xhr, response) {
