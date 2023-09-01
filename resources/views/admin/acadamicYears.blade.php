@@ -67,7 +67,7 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @if (count($years) != 0)
+                            {{-- @if (count($years) != 0) --}}
                                 @foreach ($years as $key => $year)
                                     <tr>
                                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
@@ -111,11 +111,11 @@
                                     </td> --}}
                                     </tr>
                                 @endforeach
-                            @else
+                            {{-- @else
                                 <tr>
                                     <td colspan="3" style="text-align: center">No record Found !</td>
                                 </tr>
-                            @endif
+                            @endif --}}
                         </tbody>
                     </table>
                 </div>
@@ -136,6 +136,9 @@
                 pageLength: 10, // Number of rows per page
                 responsive: true, // Enable responsive design
                 // Add any additional configuration options as needed
+                language: {
+                emptyTable: "No records available", // Customize the "No record Found" message
+            },
             });
         });
 

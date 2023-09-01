@@ -9,7 +9,7 @@ class AcadamicYearController extends Controller
 {
     function viewAllYears()  {
 
-        $years = academicyear::get();
+        $years = academicyear::all();
 
 
         
