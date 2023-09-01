@@ -34,15 +34,15 @@
                                                             </div>
                                                         -->
                             <div class="mb-3">
-                                <label class="form-label" for="name">name</label>
+                                <label class="form-label" for="name">Year Name</label>
                                 <div class="input-group input-group-merge">
                                     {{-- <span id="name2" class="input-group-text">
                                         <i class="bx bx-buildings"></i></span> --}}
                                     <input type="text" id="name" class="form-control" name="name"
-                                        placeholder="B.Sc(IT)" aria-label="B.Sc(IT)" aria-describedby="name2" />
+                                        placeholder="2023-24" aria-label="2023-24" aria-describedby="name2" />
                                 </div>
-                                <label id="name-error" class="error" for="name"></label>
                             </div>
+                            <label id="name-error" class="error" for="name"></label>
 
 
                             <button type="submit" class="btn btn-primary">Add Program</button>

@@ -16,9 +16,10 @@ class AcadamicYearController extends Controller
     function create(Request $request){
         
         $validated = $request->validate([
-            "name" => "required",
+            "name" => "required|unique:academicyears",
         ], [
             'name.required' => 'The name field is required',
+            'name.unique' => 'The Acadamic Year should be unique',
         ]);
 
         $program  = new academicyear();
