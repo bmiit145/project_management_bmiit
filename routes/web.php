@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SemesterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\FacultyController;
@@ -50,6 +51,10 @@ Route::group(['middleware' => 'admin'], function () {
     // Acadamic Year
     Route::get('/ViewAcadamicYear', [AcadamicYearController::class, 'viewAllYears'])->name('ManageYears');
     Route::post('/AddAcadamicYear', [AcadamicYearController::class, 'create'])->name('acadamicYear.add');
+
+    // semester    
+    Route::get('/ManageSemester', [SemesterController::class, 'ViewAllSemester'])->name('ManageSemester');
+    Route::get('/ManageAllProgramSemester', [SemesterController::class, 'ViewAllProgramSemester'])->name('ManageProgramSemester');
 
 });
 

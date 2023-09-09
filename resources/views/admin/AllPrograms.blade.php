@@ -55,8 +55,8 @@
         <div class="col-md-6">
             <div class="card">
                 <h5 class="card-header "> <strong> Program List</strong></h5>
-                <div class="table-responsive text-nowrap">
-                    <table class="table table-hover table-responsive text-nowrap">
+                <div class="table-responsive text-nowrap m-2">
+                    <table class="table table-hover table-responsive text-nowrap" id="dataTable">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -130,6 +130,16 @@
 
 @push('scripts')
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
+    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            // Initialize the DataTable
+            CreateDataTable();
+        });
+    </script>
     <script>
         $('#addProgramForm').validate({
             rules: {
@@ -165,7 +175,7 @@
 
                 // //send ajax for similar name check
                 // if (similarName) {
-                    
+
                 // }
 
                 var formData = $('#addProgramForm').serialize()
@@ -187,10 +197,12 @@
                             // data: ,
                             // dataType: "dataType",
                             success: function(r) {
+                                DestroyDataTable();
                                 var response = $(r);
                                 var tbody = response.find('tbody').html();
                                 // console.log(tbody);
                                 $(document).find('tbody').html(tbody)
+                                CreateDataTable();
                             },
 
                             error: function(xhr, response) {

@@ -126,6 +126,10 @@
     <!-- Content -->
     @include('../template/error_toastr')
 
+    {{-- data table --}}
+    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
+
     @stack('scripts')
 
 
