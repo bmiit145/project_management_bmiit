@@ -9,7 +9,6 @@
 
     <div class="row">
         <div class="col-md-6">
-
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -23,16 +22,16 @@
 
                             </span>
                             <!--      <div class="mb-3">
-                                                                <label class="form-label" for="code">code</label>
-                                                                <div class="input-group input-group-merge">
-                                                                    {{-- <span id="code2" class="input-group-text">
+                                                                    <label class="form-label" for="code">code</label>
+                                                                    <div class="input-group input-group-merge">
+                                                                        {{-- <span id="code2" class="input-group-text">
                                         <i class="bx bx-buildings"></i></span> --}}
-                                                                    <input type="text" id="code" class="form-control" name="code"
-                                                                        placeholder="IT4003" aria-label="IT4003" aria-describedby="code2" />
+                                                                        <input type="text" id="code" class="form-control" name="code"
+                                                                            placeholder="IT4003" aria-label="IT4003" aria-describedby="code2" />
+                                                                    </div>
+                                                                    <label id="code-error" class="error" for="code"></label>
                                                                 </div>
-                                                                <label id="code-error" class="error" for="code"></label>
-                                                            </div>
-                                                        -->
+                                                            -->
                             <div class="mb-3">
                                 <label class="form-label" for="name">Year Name</label>
                                 <div class="input-group input-group-merge">
@@ -41,8 +40,8 @@
                                     <input type="text" id="name" class="form-control" name="name"
                                         placeholder="2023-24" aria-label="2023-24" aria-describedby="name2" />
                                 </div>
+                                <label id="name-error" class="error" for="name"></label>
                             </div>
-                            <label id="name-error" class="error" for="name"></label>
 
 
                             <button type="submit" class="btn btn-primary">Add Program</button>
@@ -130,7 +129,6 @@
     <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
     <script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
     <script>
-       
         $(document).ready(function() {
             // Initialize the DataTable
             CreateDataTable();
@@ -139,13 +137,13 @@
 
         $('#addYearForm').validate({
             rules: {
-                "name": {
+                'name': {
                     required: true,
                 },
-                messages: {
-                    name: {
-                        required: "Please enter Program name",
-                    },
+            },
+            messages: {
+                'name': {
+                    'required': "Please enter Acadamic year",
                 },
             },
             // errorPlacement: function(error, element) {
@@ -188,6 +186,7 @@
                             // dataType: "dataType",
                             success: function(r) {
                                 DestroyDataTable()
+
                                 var response = $(r);
                                 var tbody = response.find('tbody').html();
                                 // console.log(tbody);

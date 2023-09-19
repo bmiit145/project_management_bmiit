@@ -17,35 +17,24 @@
                         <!-- <small class="text-muted float-end">Merged input group</small> -->
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('program.add') }}" id="addProgramForm">
+                        <form method="post" action="{{ route('semester.add') }}" id="addSemesterForm">
                             @csrf
                             <span id="error_info">
 
                             </span>
                             <div class="mb-3">
-                                <label class="form-label" for="code">code</label>
-                                <div class="input-group input-group-merge">
-                                    {{-- <span id="code2" class="input-group-text">
-                                        <i class="bx bx-buildings"></i></span> --}}
-                                    <input type="text" id="code" class="form-control" name="code"
-                                        placeholder="IT4003" aria-label="IT4003" aria-describedby="code2" />
-                                </div>
-                                <label id="code-error" class="error" for="code"></label>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label" for="name">name</label>
+                                <label class="form-label" for="name">Semester name</label>
                                 <div class="input-group input-group-merge">
                                     {{-- <span id="name2" class="input-group-text">
                                         <i class="bx bx-buildings"></i></span> --}}
                                     <input type="text" id="name" class="form-control" name="name"
-                                        placeholder="B.Sc(IT)" aria-label="B.Sc(IT)" aria-describedby="name2" />
+                                        placeholder="5" aria-label="5" aria-describedby="name2" />
                                 </div>
                                 <label id="name-error" class="error" for="name"></label>
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary">Add Program</button>
+                            <button type="submit" class="btn btn-primary">Add new Semester</button>
                         </form>
                     </div>
                 </div>
@@ -54,29 +43,25 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <h5 class="card-header "> <strong> Program List</strong></h5>
+                <h5 class="card-header "> <strong> Semester List</strong></h5>
                 <div class="table-responsive text-nowrap m-2">
                     <table class="table table-hover table-responsive text-nowrap" id="dataTable">
                         <thead>
                             <tr>
                                 <th>No.</th>
-                                <th>Code</th>
                                 <th>Name</th>
                                 {{-- <th>Status</th>
                                 <th>Actions</th> --}}
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                                @foreach ($semester as $key => $program)
+                                @foreach ($semester as $key => $sem)
                                     <tr>
                                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
                                             <strong>{{ ++$key }}</strong>
                                         </td>
                                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                            <strong>{{ $program->id }}</strong>
-                                        </td>
-                                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                            <span>{{ $program->name }}</span>
+                                            <span>{{ $sem->name }}</span>
                                         </td>
                                         {{-- <td>
                                     @if ($program->status == 1)
@@ -134,22 +119,16 @@
             CreateDataTable();
         });
     </script>
-    {{-- <script>
-        $('#addProgramForm').validate({
+    <script>
+        $('#addSemesterForm').validate({
             rules: {
                 "name": {
-                    required: true,
-                },
-                "code": {
                     required: true,
                 },
             },
             messages: {
                 name: {
                     required: "Please enter Program name",
-                },
-                code: {
-                    required: "Please enter Program Code",
                 },
             },
             // errorPlacement: function(error, element) {
@@ -172,22 +151,22 @@
 
                 // }
 
-                var formData = $('#addProgramForm').serialize()
+                var formData = $('#addSemesterForm').serialize()
                 $.ajax({
                     type: "post",
-                    url: "{{ route('program.add') }}",
+                    url: "{{ route('semester.add') }}",
                     data: formData,
                     // dataType: "dataType",
                     success: function(res) {
                         // console.log(res.success);
                         toastr.success(res.success)
-                        $('#addProgramForm')[0].reset();
+                        $('#addSemesterForm')[0].reset();
 
 
                         // get and replace table bodyy
                         $.ajax({
                             type: "get",
-                            url: "{{ route('ManageProgram') }}",
+                            url: "{{ route('ManageSemester') }}",
                             // data: ,
                             // dataType: "dataType",
                             success: function(r) {
@@ -231,5 +210,5 @@
                 });
             }
         })
-    </script> --}}
+    </script>
 @endpush

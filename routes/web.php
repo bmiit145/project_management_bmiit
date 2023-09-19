@@ -51,10 +51,12 @@ Route::group(['middleware' => 'admin'], function () {
     // Acadamic Year
     Route::get('/ViewAcadamicYear', [AcadamicYearController::class, 'viewAllYears'])->name('ManageYears');
     Route::post('/AddAcadamicYear', [AcadamicYearController::class, 'create'])->name('acadamicYear.add');
-
+    
     // semester    
     Route::get('/ManageSemester', [SemesterController::class, 'ViewAllSemester'])->name('ManageSemester');
     Route::get('/ManageAllProgramSemester', [SemesterController::class, 'ViewAllProgramSemester'])->name('ManageProgramSemester');
+    Route::post('/AddSemester', [SemesterController::class, 'createSemester'])->name('semester.add');
+    Route::post('/AddProgramSemester', [SemesterController::class, 'createProgramSemester'])->name('Programsemester.add');
 
 });
 

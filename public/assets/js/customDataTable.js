@@ -8,6 +8,7 @@ function CreateDataTable() {
             emptyTable: "No records available", // Customize the "No record Found" message
         },
     });
+
 }
 
 function DestroyDataTable() {

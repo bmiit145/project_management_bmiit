@@ -12,4 +12,9 @@ class Program extends Model
     protected $fillable = [
         'code' , 'name',
     ];
+    
+    public function programsemesters()
+    {
+        return $this->hasMany(ProgramSemester::class , 'code' , 'programCode');
+    }
 }

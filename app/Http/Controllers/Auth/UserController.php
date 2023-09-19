@@ -54,10 +54,11 @@ class UserController extends Controller
             'username' => 'required',
             'password' => 'required',
         ]);
+        
+        $remember = $request->filled('remember'); // Check if 'remember' checkbox is checked
 
-
-
-        if (Auth::attempt($credentials)) {
+        
+        if (Auth::attempt($credentials, $remember)) {
             // $user = Auth::login();
             // $user= Auth::guard('faculty');
             // Auth::login($user);

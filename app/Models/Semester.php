@@ -10,4 +10,9 @@ class Semester extends Model
     use HasFactory;
     
     protected $fillable = ['name'];
+
+    public function programsemesters()
+    {
+        return $this->hasMany(ProgramSemester::class , 'id' , 'semesterid');
+    }
 }

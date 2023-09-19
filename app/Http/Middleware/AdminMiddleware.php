@@ -19,7 +19,7 @@ class AdminMiddleware
         if(auth()->check() && auth()->user()->role == 1) {
             return $next($request);
         }
-    
+        
         // abort(403, 'Unauthorized action.');
         return redirect('/login')->with("error" , "Unauthorized action.");
     }

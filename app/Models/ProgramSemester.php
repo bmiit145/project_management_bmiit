@@ -9,4 +9,16 @@ class ProgramSemester extends Model
 {
     use HasFactory;
     protected $fillable = ['programCode', 'semesterid'];
+
+
+
+    public function program()
+    {
+        return $this->belongsTo(Program::class , 'programCode' , 'code');
+    }
+    public function semester()
+    {
+        return $this->belongsTo(Semester::class , 'semesterid' , 'id');
+    }
+
 }

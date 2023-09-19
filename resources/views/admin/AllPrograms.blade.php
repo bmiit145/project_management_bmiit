@@ -67,7 +67,7 @@
                             </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            @if (count($programs) != 0)
+                            {{-- @if (count($programs) != 0) --}}
                                 @foreach ($programs as $key => $program)
                                     <tr>
                                         <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
@@ -114,11 +114,11 @@
                                     </td> --}}
                                     </tr>
                                 @endforeach
-                            @else
+                            {{-- @else
                                 <tr>
                                     <td colspan="3" style="text-align: center">No record Found !</td>
                                 </tr>
-                            @endif
+                            @endif --}}
                         </tbody>
                     </table>
                 </div>
