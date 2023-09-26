@@ -17,7 +17,6 @@ class FacultyController extends Controller
 
         return view('faculty.allFaculty', compact(['faculties'=>'faculties']));
 
-
     }
 
     public function changeFacultyStatus(Request $request){
@@ -125,12 +124,6 @@ class FacultyController extends Controller
     public function update(Request $request, $id)
     {
         //
-
-
-
-
-
-
     }
 
     /**

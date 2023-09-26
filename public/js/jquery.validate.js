@@ -1500,7 +1500,7 @@ $.extend( $.validator, {
 		// https://jqueryvalidation.org/max-method/
 		max: function( value, element, param ) {
 			return this.optional( element ) || value <= param;
-		},
+        },
 
 		// https://jqueryvalidation.org/range-method/
 		range: function( value, element, param ) {
