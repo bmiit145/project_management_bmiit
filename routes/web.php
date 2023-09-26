@@ -57,7 +57,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ManageAllProgramSemester', [SemesterController::class, 'ViewAllProgramSemester'])->name('ManageProgramSemester');
     Route::post('/AddSemester', [SemesterController::class, 'createSemester'])->name('semester.add');
     Route::post('/AddProgramSemester', [SemesterController::class, 'createProgramSemester'])->name('Programsemester.add');
-
 });
 
 // faculty route
