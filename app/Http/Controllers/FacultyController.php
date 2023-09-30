@@ -14,7 +14,7 @@ class FacultyController extends Controller
     public function viewAllFaculty(){
 
        $faculties =  Faculty::all();
-
+       
         return view('faculty.allFaculty', compact(['faculties'=>'faculties']));
 
     }

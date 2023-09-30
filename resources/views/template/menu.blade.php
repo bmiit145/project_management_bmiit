@@ -159,6 +159,26 @@
                         </li>
                     </ul>
                 </li>
+                <!-- Courses -->
+                <li class="menu-item open">
+                    <a href="javascript:void(0);" class="menu-link menu-toggle">
+                        <i class="menu-icon tf-icons bx bx-layout"></i>
+                        <div data-i18n="Courses">Courses</div>
+                    </a>
+
+                    <ul class="menu-sub">
+                        <li class="menu-item active">
+                            <a href="{{route('ManageCourses')}}" id="Courses" class="menu-link">
+                                <div data-i18n="Courses">Courses</div>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="{{route('ManageCourseYears')}}" id="courseYear" class="menu-link">
+                                <div data-i18n="Without navbar">Course Year</div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </aside>
         <!-- / Menu -->

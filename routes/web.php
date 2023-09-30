@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\AcadamicYearController;
+use App\Http\Controllers\CourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -59,7 +60,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/AddSemester', [SemesterController::class, 'createSemester'])->name('semester.add');
     Route::post('/AddProgramSemester', [SemesterController::class, 'createProgramSemester'])->name('Programsemester.add');
 
-
+    // courses
+    Route::get('/ViewAllCourses', [CourseController::class, 'ViewAllCourses'])->name('ManageCourses');
+    Route::get('/ViewAllCoursesYear', [CourseController::class, 'ViewAllCoursesYear'])->name('ManageCourseYears');
+    Route::post('/AddCourse', [CourseController::class, 'createCourse'])->name('course.add');
 });
 
 // faculty route

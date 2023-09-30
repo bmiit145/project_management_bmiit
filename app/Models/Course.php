@@ -14,4 +14,11 @@ class Course extends Model
         'name',
         'programsemesterid',
     ];
+
+
+    public function programsemester()
+    {
+        return $this->belongsTo(ProgramSemester::class , 'programsemesterid' , 'id');
+    }
+
 }

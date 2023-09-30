@@ -156,18 +156,18 @@
                             // Update the status variable after the AJAX call
                             status = status == '1' ? '0' : '1';
                         },
-                        error: function(xhr , response) {
-                            if (xhr.status == 422) { 
-                            var errors = xhr.responseJSON.errors;
+                        error: function(xhr, response) {
+                            if (xhr.status == 422) {
+                                var errors = xhr.responseJSON.errors;
 
-                            $.each(errors, function(field, messages) {
-                                $.each(messages, function(index, message) {
-                                    toastr.error(messages)
+                                $.each(errors, function(field, messages) {
+                                    $.each(messages, function(index, message) {
+                                        toastr.error(messages)
+                                    });
                                 });
-                            });
-                        }
+                            }
 
-                        });
+                        }});
                 });
 </script>
 <!--/ Hoverable Table rows -->
