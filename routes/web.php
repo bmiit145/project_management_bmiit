@@ -64,6 +64,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewAllCourses', [CourseController::class, 'ViewAllCourses'])->name('ManageCourses');
     Route::get('/ViewAllCoursesYear', [CourseController::class, 'ViewAllCoursesYear'])->name('ManageCourseYears');
     Route::post('/AddCourse', [CourseController::class, 'createCourse'])->name('course.add');
+    Route::post('/AddCourseYear', [CourseController::class, 'createCourseYear'])->name('courseYear.add');
 });
 
 // faculty route

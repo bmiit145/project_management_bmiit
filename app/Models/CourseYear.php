@@ -14,4 +14,15 @@ class CourseYear extends Model
         'year_id',
 //        'status',
     ];
+
+
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    public function year()
+    {
+        return $this->belongsTo(academicyear::class);
+    }
 }
