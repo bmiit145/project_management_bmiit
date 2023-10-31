@@ -196,6 +196,8 @@
 <script>
     // $(document).ready(function () {
         $('.selectSearch').select2();
+
+        $(label.error).style('display', 'none');
     // });
 </script>
 

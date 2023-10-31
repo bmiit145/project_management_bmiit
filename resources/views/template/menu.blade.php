@@ -104,12 +104,12 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="pages-account-settings-account.html" class="menu-link">
+                    <a href="{{ route('student.addForm') }}" class="menu-link">
                         <div data-i18n="Account">Add Students</div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="pages-account-settings-notifications.html" class="menu-link">
+                    <a href="{{ route('ManageStudent') }}" class="menu-link">
                         <div data-i18n="Notifications">List Students</div>
                     </a>
                 </li>

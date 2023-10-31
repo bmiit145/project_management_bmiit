@@ -165,6 +165,8 @@
                                         toastr.error(messages)
                                     });
                                 });
+                            }else if(xhr.status == 500){
+                                toastr.error("Something went wrong")
                             }
 
                         }});

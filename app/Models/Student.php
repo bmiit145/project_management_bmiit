@@ -12,12 +12,16 @@ class Student extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'enro' , 'fname','lname' , 'contactno' , 'email' , 'username'
+        'enro' , 'fname','lname' , 'contactno' , 'email' , 'username' , 'status' , 'courseYearId'
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'username', 'username');
     }
-    
+
+    public function courseYear()
+    {
+        return $this->belongsTo(CourseYear::class, 'courseYearId', 'id');
+    }
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\AcadamicYearController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CommitteeController;
+use App\Http\Controllers\StudentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,13 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/viewFacultyList', [FacultyController::class, 'viewAllFaculty'])->name('allFaculty.view');
     Route::post('/changeFacultyStatus', [FacultyController::class, 'changeFacultyStatus'])->name('changeFacultyStatus');
 
+    // student
+    ROute::get('/ViewAddStudent', [StudentController::class, 'ViewAddStudentForm'])->name('student.addForm');
+    Route::post('/AddStudent', [StudentController::class, 'create'])->name('student.add');
+    Route::get('/ViewAllStudent', [StudentController::class, 'viewAllStudent'])->name('ManageStudent');
+    Route::post('/changeStudentStatus', [StudentController::class, 'changeStudentStatus'])->name('changeStudentStatus');
+
+
     // programs
     Route::get('/ViewPrograms', [ProgramController::class, 'viewAllPrograms'])->name('ManageProgram');
     Route::post('/AddProgram', [ProgramController::class, 'create'])->name('program.add');
@@ -71,6 +79,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     Route::get('/ViewAllCommittees', [CommitteeController::class, 'ViewAllCommittees'])->name('ManageCommittees');
     Route::post('/AddCommittee', [CommitteeController::class, 'createCommittee'])->name('committee.add');
+
+
+
 });
 
 // faculty route
