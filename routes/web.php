@@ -8,7 +8,7 @@ use App\Http\Controllers\FacultyController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\AcadamicYearController;
 use App\Http\Controllers\CourseController;
-
+use App\Http\Controllers\CommitteeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -65,6 +65,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewAllCoursesYear', [CourseController::class, 'ViewAllCoursesYear'])->name('ManageCourseYears');
     Route::post('/AddCourse', [CourseController::class, 'createCourse'])->name('course.add');
     Route::post('/AddCourseYear', [CourseController::class, 'createCourseYear'])->name('courseYear.add');
+
+
+    // committee
+
+    Route::get('/ViewAllCommittees', [CommitteeController::class, 'ViewAllCommittees'])->name('ManageCommittees');
+    Route::post('/AddCommittee', [CommitteeController::class, 'createCommittee'])->name('committee.add');
 });
 
 // faculty route

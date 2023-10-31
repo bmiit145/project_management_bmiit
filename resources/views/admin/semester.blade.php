@@ -44,7 +44,7 @@
         <div class="col-md-6">
             <div class="card">
                 <h5 class="card-header "> <strong> Semester List</strong></h5>
-                <div class="table-responsive text-nowrap m-2">
+                <div class="table-responsive text-nowrap p-2">
                     <table class="table table-hover table-responsive text-nowrap" id="dataTable">
                         <thead>
                             <tr>
@@ -108,10 +108,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/jquery.validate.js') }}"></script>
-    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
-
 
     <script>
         $(document).ready(function() {

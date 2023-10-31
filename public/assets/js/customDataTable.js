@@ -1,5 +1,10 @@
+$(document).ready(function () {
+    $('.dataTable').addClass('dataTable');
+    // $('#dataTable').addClass('datatables-ajax');
+});
+
 function CreateDataTable() {
-    $('#dataTable').DataTable({
+    $('.dataTable').DataTable({
         paging: true, // Enable pagination
         pageLength: 10, // Number of rows per page
         responsive: true, // Enable responsive design
@@ -9,8 +14,10 @@ function CreateDataTable() {
         },
     });
 
+
+
 }
 
 function DestroyDataTable() {
-    $('#dataTable').DataTable().destroy();
+    $('.dataTable').DataTable().destroy();
   }

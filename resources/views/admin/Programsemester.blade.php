@@ -32,7 +32,7 @@
                             </div> --}}
                             <div class="mb-3">
                                 <label for="program" class="form-label">Program</label>
-                                <select class="form-select" id="program" name="program"
+                                <select class="form-select selectSearch" id="program" name="program"
                                     aria-label="Default select example">
                                     <option value="-1" selected>Open this select Program</option>
                                     @foreach ($programs as $program)
@@ -44,7 +44,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="semester" class="form-label">semester</label>
-                                <select class="form-select" id="semester" name="semester"
+                                <select class="form-select selectSearch" id="semester" name="semester"
                                     aria-label="Default select example">
                                     <option value="-1" selected>Open this select Semester</option>
                                     @foreach ($semesters as $semester)
@@ -64,7 +64,7 @@
         <div class="col-md-6">
             <div class="card">
                 <h5 class="card-header "> <strong> Semester List</strong></h5>
-                <div class="table-responsive text-nowrap m-2">
+                <div class="table-responsive text-nowrap p-2">
                     <table class="table table-hover table-responsive text-nowrap" id="dataTable">
                         <thead>
                             <tr>
@@ -136,9 +136,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/jquery.validate.js') }}"></script>
-    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
     <script src="{{ asset('assets/js/CustomJqueryValidation.js') }}"></script>
 
 
@@ -238,7 +235,7 @@
                     error: function(xhr, response) {
                         if (xhr.status == 422) {
                             var errors = xhr.responseJSON.errors;
-                            
+
                             $.each(errors, function(field, messages) {
                                 $.each(messages, function(index, message) {
                                     toastr.error(messages)

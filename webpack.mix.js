@@ -11,9 +11,26 @@ const mix = require('laravel-mix');
  |
  */
 
+
+// Copy Toastr CSS and JS files from node_modules to public directory
+mix.copy('node_modules/toastr/build/toastr.min.css', 'public/css/toastr.min.css');
+mix.copy('node_modules/toastr/build/toastr.min.js', 'public/js/toastr.min.js');
+
+// Copy Select2 CSS and JS files from node_modules to public directory
+
+// mix.copy('node_modules/select2/dist/css/select2.min.css', 'public/css/select2.min.css');
+// mix.copy('node_modules/select2/dist/js/select2.min.js', 'public/js/select2.min.js');
+
+
+// I want to access all js and css files in the public folder
+// without the need to run npm run dev or npm run watch
+// so I added this snippet to the webpack.mix.js file
+// so that it will copy all the files in the public folder
+// to the public folder in the root directory
+// so that I can access them directly
+mix.copyDirectory('public', '../public');
+
 mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ])
-    .sass('resources/sass/app.scss', 'public/css')
     .setPublicPath('public');
+
+mix.js('node_modules/choices.js/public/assets/scripts/choices.min.js', 'public/js');

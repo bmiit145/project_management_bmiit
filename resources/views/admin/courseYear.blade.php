@@ -24,7 +24,7 @@
                             </span>
                             <div class="mb-3">
                                 <label for="course" class="form-label">Course</label>
-                                <select class="form-select" id="course" name="courseid"
+                                <select class="form-select selectSearch" id="course" name="courseid"
                                         aria-label="Default select example">
                                     <option value="-1" selected>select Course</option>
                                     @foreach ($courses as $course)
@@ -37,7 +37,7 @@
                             </div>
                             <div class="mb-3">
                                 <label for="academicyear" class="form-label">Course</label>
-                                <select class="form-select" id="academicyear" name="academicyearid"
+                                <select class="form-select selectSearch" id="academicyear" name="academicyearid"
                                         aria-label="Default select example">
                                     <option value="-1" selected>select Acadamic Year </option>
                                     @foreach ($academicyears as $academicyear)
@@ -59,8 +59,8 @@
         <div class="col-md-6">
             <div class="card">
                 <h5 class="card-header "><strong> Program List</strong></h5>
-                <div class="table-responsive text-nowrap m-2">
-                    <table class="table table-hover table-responsive text-nowrap" id="dataTable">
+                <div class="table-responsive text-nowrap p-2">
+                    <table class="datatables-ajax table table-hover dataTable no-footer  " id="dataTable">
                         <thead>
                         <tr>
                             <th>No.</th>
@@ -136,11 +136,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/jquery.validate.js') }}"></script>
-    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
-    <script src="{{ asset('assets/js/CustomJqueryValidation.js') }}"></script>
-
 
     <script>
         $(document).ready(function () {

@@ -44,7 +44,7 @@
                                 <label id="name-error" class="error" for="name"></label>
                             </div>
                             <div class="mb-3">
-                                <label for="programsemester" class="form-label">Course</label>
+                                <label for="programsemester" class="form-label">Program Semester</label>
                                 <select class="form-select" id="programsemester" name="programsemesterid"
                                         aria-label="Default select example">
                                     <option value="-1" selected>select Program Semester</option>
@@ -67,7 +67,7 @@
         <div class="col-md-6">
             <div class="card">
                 <h5 class="card-header "><strong> Program List</strong></h5>
-                <div class="table-responsive text-nowrap m-2">
+                <div class="table-responsive text-nowrap p-2">
                     <table class="table table-hover table-responsive text-nowrap" id="dataTable">
                         <thead>
                         <tr>
@@ -141,9 +141,7 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/jquery.validate.js') }}"></script>
-    <script src="{{ asset('assets/js/dataTables.min.js') }}"></script>
-    <script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
+
     <script src="{{ asset('assets/js/CustomJqueryValidation.js') }}"></script>
 
 

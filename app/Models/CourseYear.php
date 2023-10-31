@@ -25,4 +25,10 @@ class CourseYear extends Model
     {
         return $this->belongsTo(academicyear::class);
     }
+
+    public  function committee()
+    {
+        return $this->hasMany(Committee::class);
+    }
+
 }

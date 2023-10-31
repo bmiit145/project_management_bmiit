@@ -19,4 +19,9 @@ class Faculty extends Model
     {
         return $this->belongsTo(User::class, 'username', 'username');
     }
+
+    public function committeeMember()
+    {
+        return $this->hasMany(CommitteeMember::class , 'faculty_id' , 'id');
+    }
 }
