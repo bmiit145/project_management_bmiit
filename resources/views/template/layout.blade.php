@@ -210,20 +210,26 @@
 <script>
     // aarange side bar menu
     $(document).ready(function () {
+
         //check for active menu for init
         var url = window.location.href;
         var activePage = url;
+        var found = false;
         $('.sidebar-menu li a').each(function () {
             var linkPage = this.href;
             if (activePage == linkPage) {
+                found = true;
                 $(this).closest("li").addClass("active");
-
                 if ($(this).closest("li").parent().hasClass('menu-sub')) {
                     $(this).closest("li").parent().parent().addClass("open");
                     $(this).closest("li").parent().parent().addClass("active");
                 }
             }
         });
+
+        if (!found) {
+            $('.sidebar-menu li').eq(0).addClass("active");
+        }
 
         //on click for ajax page
         $('.sidebar-menu li a').click(function () {
