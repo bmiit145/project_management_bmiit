@@ -36,7 +36,7 @@
                                        style="display: none"></label>
                             </div>
                             <div class="mb-3">
-                                <label for="academicyear" class="form-label">Course</label>
+                                <label for="academicyear" class="form-label">Academic year</label>
                                 <select class="form-select selectSearch" id="academicyear" name="academicyearid"
                                         aria-label="Default select example">
                                     <option value="-1" selected>select Acadamic Year </option>

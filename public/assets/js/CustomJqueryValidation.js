@@ -22,3 +22,11 @@ $.validator.addMethod("uniqueValues", function(value, element, className) {
 
     return isValid;
 }, "Each dropdown value must be unique.");
+
+$.validator.addMethod("require_from_group", function(value, element, options) {
+    var fields = $(options[1], element.form);
+    var filledFields = fields.filter(function() {
+        return $(this).val() !== '-1';
+    });
+    return filledFields.length >= options[0];
+} , "Please fill at least one of these fields.");

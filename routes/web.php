@@ -10,6 +10,8 @@ use App\Http\Controllers\AcadamicYearController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\allocationController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -80,7 +82,12 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewAllCommittees', [CommitteeController::class, 'ViewAllCommittees'])->name('ManageCommittees');
     Route::post('/AddCommittee', [CommitteeController::class, 'createCommittee'])->name('committee.add');
 
+    // Group
+    Route::get('/ViewAllGroups', [GroupController::class, 'ViewAllGroups'])->name('ManageGroups');
+    Route::post('/AddGroup', [GroupController::class, 'createGroup'])->name('studentGroup.add');
 
+    //allocation
+    Route::get('/ViewAllAllocations', [allocationController::class, 'ViewAllAllocations'])->name('ManageAllocations');
 
 });
 

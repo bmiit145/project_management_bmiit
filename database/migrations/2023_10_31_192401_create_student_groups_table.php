@@ -16,7 +16,7 @@ class CreateStudentGroupsTable extends Migration
         Schema::create('student_groups', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('studentenro');
-            $table->foreignId('groupid')->constrained("groups");
+            $table->foreignId('groupid')->constrained("groups")->nullable();
             $table->foreignId("courseYearId")->constrained("course_years");
             $table->foreign('studentenro')->references("enro")->on("students");
             $table->timestamps();

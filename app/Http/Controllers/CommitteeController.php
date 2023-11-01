@@ -27,6 +27,7 @@ class CommitteeController extends Controller
 
         $request->validate([
             'name' => 'required',
+            'head' => 'required | numeric | exists:faculties,id',
             'courseYearId' => 'required | numeric | exists:course_years,id| unique:committees',
         ], [
             'name.required' => 'Please Enter Committee Name',

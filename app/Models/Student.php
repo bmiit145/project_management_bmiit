@@ -24,4 +24,10 @@ class Student extends Model
     {
         return $this->belongsTo(CourseYear::class, 'courseYearId', 'id');
     }
+
+    public function studentGroups()
+    {
+        return $this->hasMany(StudentGroup::class, 'studentenro', 'enro');
+    }
+
 }

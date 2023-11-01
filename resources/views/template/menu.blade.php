@@ -187,6 +187,20 @@
                 <div data-i18n="Account Settings">Committees</div>
             </a>
         </li>
+        <!-- Group -->
+        <li class="menu-item">
+            <a href="{{ route('ManageGroups')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Group</div>
+            </a>
+        </li>
+        <!-- Allocation -->
+        <li class="menu-item">
+            <a href="{{ route('ManageAllocations')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Guide Allocation</div>
+            </a>
+        </li>
     </ul>
 </aside>
 <!-- / Menu -->

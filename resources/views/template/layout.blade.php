@@ -94,7 +94,6 @@
 
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <!-- Layout Demo -->
-                    <div class="content-body">
                         @yield('body')
                         <!--/ Layout Demo -->
                     </div>
@@ -197,7 +196,7 @@
     // $(document).ready(function () {
         $('.selectSearch').select2();
 
-        $(label.error).style('display', 'none');
+        $('label.error').css('display', 'none');
     // });
 </script>
 

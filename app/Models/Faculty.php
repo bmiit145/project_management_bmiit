@@ -24,4 +24,9 @@ class Faculty extends Model
     {
         return $this->hasMany(CommitteeMember::class , 'faculty_id' , 'id');
     }
+
+    public function allocations()
+    {
+        return $this->hasMany(Allocation::class, 'facultyid', 'id');
+    }
 }

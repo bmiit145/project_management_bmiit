@@ -8,4 +8,26 @@ use Illuminate\Database\Eloquent\Model;
 class StudentGroup extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'studentenro',
+        'groupid',
+        'courseYearId',
+        'status',
+    ];
+
+    public function student()
+    {
+        return $this->belongsTo(Student::class, 'studentenro', 'enro');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class, 'groupid', 'id');
+    }
+
+    public function courseYear()
+    {
+        return $this->belongsTo(CourseYear::class, 'courseYearId', 'id');
+    }
 }
