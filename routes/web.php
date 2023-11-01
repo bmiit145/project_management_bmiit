@@ -12,6 +12,7 @@ use App\Http\Controllers\CommitteeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\allocationController;
+use App\Http\Controllers\ProjectController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,9 +41,9 @@ Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name(
 
 // admin route
 Route::group(['middleware' => 'admin'], function () {
-
-    // faculty
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
+    Route::get('/dashboard', [AdminController::class, 'index']);
+    // faculty
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
     Route::post('/AddFaculty', [FacultyController::class, 'create'])->name('faculty.add');
     Route::get('/viewFacultyList', [FacultyController::class, 'viewAllFaculty'])->name('allFaculty.view');
@@ -91,6 +92,10 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/getGroups', [allocationController::class, 'getGroups'])->name('getGroups');
     Route::get('/getGuide', [allocationController::class, 'getGuide'])->name('getGuide');
     Route::post('/AddAllocation', [allocationController::class, 'createAllocation'])->name('allocation.add');
+
+    // project
+    Route::get('/ViewAllProjects', [ProjectController::class, 'ViewAllProjects'])->name('ManageProjects');
+
 });
 
 // faculty route

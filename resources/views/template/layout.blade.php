@@ -157,6 +157,8 @@
 <script src="{{ asset('assets/js/dataTables.bootstrap5.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/dataTables.rowGroup.min.js') }}"></script>
+
 {{--<script src="{{ asset('assets/js/dataTable-main.js') }}"></script>--}}
 {{--<script src="{{ asset('assets/js/dt-search.js') }}"></script>--}}
 
@@ -170,9 +172,10 @@
 
 
 @stack('scripts')
+
+
 <script>
     $('#add_faculty').click(function () {
-        console.log(11111)
         $.ajax({
             method: 'get',
             url: '{{ route('faculty.addForm') }}',
@@ -204,6 +207,40 @@
     // });
 </script>
 
+<script>
+    // aarange side bar menu
+    $(document).ready(function () {
+        //check for active menu for init
+        var url = window.location.href;
+        var activePage = url;
+        $('.sidebar-menu li a').each(function () {
+            var linkPage = this.href;
+            if (activePage == linkPage) {
+                $(this).closest("li").addClass("active");
+
+                if ($(this).closest("li").parent().hasClass('menu-sub')) {
+                    $(this).closest("li").parent().parent().addClass("open");
+                    $(this).closest("li").parent().parent().addClass("active");
+                }
+            }
+        });
+
+        //on click for ajax page
+        $('.sidebar-menu li a').click(function () {
+            if (!$(this).hasClass('menu-toggle')) {
+
+                $('.sidebar-menu li').removeClass("active");
+                $(this).closest("li").addClass("active");
+
+                if ($(this).closest("li").parent().hasClass('menu-sub')) {
+                    $(this).closest("li").parent().parent().addClass("open");
+                    $(this).closest("li").parent().parent().addClass("active");
+                }
+            }
+        });
+
+    });
+</script>
 </body>
 
 </html>

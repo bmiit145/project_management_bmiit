@@ -57,10 +57,10 @@
 
     <div class="menu-inner-shadow"></div>
 
-    <ul class="menu-inner py-1">
+    <ul class="menu-inner py-1 sidebar-menu">
         <!-- Dashboard -->
         <!-- active open class for future -->
-        <li class="menu-item active">
+        <li class="menu-item">
             <a href=" {{ url('/dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
@@ -74,14 +74,14 @@
         </li>
 
         <!-- Faculty -->
-        <li class="menu-item open">
+        <li class="menu-item ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Faculties">Faculties</div>
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="javascript:void(0);" id="add_faculty" class="menu-link">
                         <div data-i18n="Add Faculty">Add Faculty</div>
                     </a>
@@ -141,14 +141,14 @@
             </a>
         </li>
         <!-- Semester -->
-        <li class="menu-item open">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="semester">Semester</div>
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item active">
+                <li class="menu-item">
                     <a href="{{route('ManageSemester')}}" id="semester" class="menu-link">
                         <div data-i18n="semester">Manage Semester</div>
                     </a>
@@ -161,14 +161,14 @@
             </ul>
         </li>
         <!-- Courses -->
-        <li class="menu-item open">
+        <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-layout"></i>
                 <div data-i18n="Courses">Courses</div>
             </a>
 
             <ul class="menu-sub">
-                <li class="menu-item active">
+                <li class="menu-item ">
                     <a href="{{route('ManageCourses')}}" id="Courses" class="menu-link">
                         <div data-i18n="Courses">Courses</div>
                     </a>

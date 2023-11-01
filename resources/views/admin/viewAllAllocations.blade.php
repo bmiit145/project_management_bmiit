@@ -77,7 +77,7 @@
             <div class="card">
                 <h5 class="card-header "><strong> Guide Allocation Details</strong></h5>
                 <div class="table-responsive text-nowrap p-2">
-                    <table class="datatables-ajax table table-hover dataTable no-footer  "
+                    <table class="dt-scrollableTable table-responsive datatables-ajax dtr-column  table table-hover dataTable "
                            id="dataTable">
                         <thead>
                         <tr>
@@ -100,7 +100,6 @@
                                     </td>
                                     <td>
                                         @if($allocation->studentGroups)
-                                            c
                                             <strong>{{ $allocation->studentGroups->courseYear->course->name . '    ' . $allocation->studentGroups->courseYear->year->name  }}</strong>
                                         @else
                                             <strong>Not Allocated</strong>

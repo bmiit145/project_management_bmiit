@@ -43,7 +43,7 @@ class GroupController extends Controller
             }
         }
 
-        if (!$studentGroups) {
+        if ($studentGroups->isEmpty()) {
             $GroupNumber = 1;
         } else {
             $GroupNumber = StudentGroup::where('courseYearId', $request->courseYearId)->orderBy('groupid', 'desc')->first()->group->number + 1;

@@ -47,13 +47,16 @@
                                         </option>
                                     @endforeach
                                 </select>
+                                <small class="font-light float-end" style="color: darkgreen">( Optional )</small>
+                                <br>
                                 <label id="guide-error" class="error" for="guide"
                                        style="display: none"></label>
                             </div>
                             <div class="mb-3">
                                 <label for="guide" class="form-label">Students</label>
                                 <div class="member_select_div">
-                                    <select class="form-select selectSearch unique-dropdown member-dropdown my-4" id="member"
+                                    <select class="form-select selectSearch unique-dropdown member-dropdown my-4"
+                                            id="member"
                                             name="members[]"
                                             aria-label="Default select example">
                                         <option value="-1" selected>select Student</option>
@@ -157,11 +160,11 @@
                                         <strong>{{ $studentGroup->student->fname . ' '. $studentGroup->student->lname   }}</strong>
                                     </td>
                                     <td>
-{{--                                        @if( $studentGroup->group->project->title )--}}
-{{--                                            <strong>{{ $studentGroup->group->project->title }}</strong>--}}
-{{--                                        @else--}}
-{{--                                            <strong>Not Assigned</strong>--}}
-{{--                                        @endif--}}
+                                        {{--                                        @if( $studentGroup->group->project->title )--}}
+                                        {{--                                            <strong>{{ $studentGroup->group->project->title }}</strong>--}}
+                                        {{--                                        @else--}}
+                                        {{--                                            <strong>Not Assigned</strong>--}}
+                                        {{--                                        @endif--}}
                                     </td>
                                     <td>
                                         @if($studentGroup->group->allocation)
@@ -225,7 +228,6 @@
                     </table>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection
@@ -235,7 +237,12 @@
     <script>
         $(document).ready(function () {
             // Initialize the DataTable
-            CreateDataTable();
+            let dataTable = CreateDataTable();
+
+            dataTable.order(['7', 'desc'], ['6', 'asc'], ['1', 'asc'], ['2', 'asc']).draw();
+            dataTable.rowGroup({
+                dataSrc: '[7 , 6 , 1 , 2]'
+            })
         });
     </script>
     <script>
@@ -271,7 +278,7 @@
                 'members[]': {
                     // notEqualValue: "-1",
                     uniqueValues: 'unique-dropdown',
-                    require_from_group: [1  , '.member-dropdown']
+                    require_from_group: [1, '.member-dropdown']
                 },
                 // 'guide': {
                 //     notEqualValue: "-2",
