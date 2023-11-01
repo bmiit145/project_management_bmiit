@@ -20,7 +20,7 @@ class Group extends Model
         return $this->hasMany(StudentGroup::class, 'group_id', 'id');
     }
 
-    public function studentGroup()
+    public function studentGroups()
     {
         return $this->hasMany(StudentGroup::class, 'groupid', 'id');
     }
@@ -30,4 +30,8 @@ class Group extends Model
         return $this->hasOne(Allocation::class, 'studentgroupno', 'id');
     }
 
+    public function project()
+    {
+        return $this->hasOne(Project::class, 'groupId', 'id');
+    }
 }

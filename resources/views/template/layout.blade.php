@@ -55,10 +55,10 @@
     {{-- data Tables --}}
 
     <!--datatable css-->
-{{--    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />--}}
-{{--    <!--datatable responsive css-->--}}
-{{--    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />--}}
-{{--    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />--}}
+    {{--    <link href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" rel="stylesheet" type="text/css" />--}}
+    {{--    <!--datatable responsive css-->--}}
+    {{--    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />--}}
+    {{--    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />--}}
 
 
     <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.min.css') }}"/>
@@ -94,25 +94,27 @@
 
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <!-- Layout Demo -->
+                    <div class="content-body">
                         @yield('body')
                         <!--/ Layout Demo -->
                     </div>
                 </div>
-                <!-- / Content -->
-
-                <!-- Footer -->
-                @include('../template/footer')
-                <!-- / Footer -->
-
-                <div class="content-backdrop fade"></div>
             </div>
-            <!-- Content wrapper -->
-        </div>
-        <!-- / Layout page -->
-    </div>
+            <!-- / Content -->
 
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
+            <!-- Footer -->
+            @include('../template/footer')
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+        </div>
+        <!-- Content wrapper -->
+    </div>
+    <!-- / Layout page -->
+</div>
+
+<!-- Overlay -->
+<div class="layout-overlay layout-menu-toggle"></div>
 </div>
 <!-- / Layout wrapper -->
 
@@ -170,11 +172,13 @@
 @stack('scripts')
 <script>
     $('#add_faculty').click(function () {
+        console.log(11111)
         $.ajax({
             method: 'get',
             url: '{{ route('faculty.addForm') }}',
             success: function (res) {
                 // console.log(res);
+                console.log($(document).find('.content-body'))
                 $(document).find('.content-body').html(res)
             }
         })
@@ -194,9 +198,9 @@
 {{-- for search dropBox--}}
 <script>
     // $(document).ready(function () {
-        $('.selectSearch').select2();
+    $('.selectSearch').select2();
 
-        $('label.error').css('display', 'none');
+    $('label.error').css('display', 'none');
     // });
 </script>
 

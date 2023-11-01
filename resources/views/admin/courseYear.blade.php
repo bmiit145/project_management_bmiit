@@ -13,7 +13,7 @@
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Add new Program</h5>
+                        <h5 class="mb-0">Add new Course Year</h5>
                         <!-- <small class="text-muted float-end">Merged input group</small> -->
                     </div>
                     <div class="card-body">
@@ -58,7 +58,7 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <h5 class="card-header "><strong> Program List</strong></h5>
+                <h5 class="card-header "><strong> Course Year List</strong></h5>
                 <div class="table-responsive text-nowrap p-2">
                     <table class="datatables-ajax table table-hover dataTable no-footer  " id="dataTable">
                         <thead>

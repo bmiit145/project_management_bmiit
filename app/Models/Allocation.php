@@ -14,9 +14,19 @@ class Allocation extends Model
         'facultyid',
     ];
 
-    public function studentGroup()
+    public function group()
     {
         return $this->belongsTo(Group::class, 'studentgroupno', 'id');
+    }
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'studentgroupno', 'groupid');
+    }
+
+    public function studentGroups()
+    {
+        return $this->belongsTo(StudentGroup::class, 'studentgroupno', 'groupid');
     }
 
     public function faculty()

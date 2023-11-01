@@ -31,4 +31,5 @@ class CourseYear extends Model
         return $this->hasMany(Committee::class);
     }
 
+
 }

@@ -11,7 +11,7 @@
 
 <!-- Hoverable Table rows -->
 <div class="card">
-    <h5 class="card-header "> <strong> Faculty List</strong></h5>
+    <h5 class="card-header "> <strong> Student List</strong></h5>
     <div class="table-responsive text-nowrap">
         <table class="table dataTable table-hover table-responsive text-nowrap" id="dataTable">
             <thead>

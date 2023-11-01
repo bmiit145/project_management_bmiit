@@ -88,7 +88,9 @@ Route::group(['middleware' => 'admin'], function () {
 
     //allocation
     Route::get('/ViewAllAllocations', [allocationController::class, 'ViewAllAllocations'])->name('ManageAllocations');
-
+    Route::get('/getGroups', [allocationController::class, 'getGroups'])->name('getGroups');
+    Route::get('/getGuide', [allocationController::class, 'getGuide'])->name('getGuide');
+    Route::post('/AddAllocation', [allocationController::class, 'createAllocation'])->name('allocation.add');
 });
 
 // faculty route

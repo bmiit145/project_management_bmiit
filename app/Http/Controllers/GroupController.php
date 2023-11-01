@@ -31,7 +31,6 @@ class GroupController extends Controller
         ]);
 
 
-
         $studentGroups = StudentGroup::where('courseYearId', $request->courseYearId)->get();
         // member unique but as per course year id as student must not repeat for each course id
         foreach ($request->members as $member) {
@@ -44,12 +43,10 @@ class GroupController extends Controller
             }
         }
 
-
-        // find the next group number
-        if ($studentGroups) {
+        if (!$studentGroups) {
             $GroupNumber = 1;
         } else {
-            $GroupNumber = $studentGroups->orderBy('groupid', 'desc')->first()->group->number + 1;
+            $GroupNumber = StudentGroup::where('courseYearId', $request->courseYearId)->orderBy('groupid', 'desc')->first()->group->number + 1;
         }
 
         $group = new Group();
