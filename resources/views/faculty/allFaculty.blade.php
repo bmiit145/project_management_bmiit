@@ -52,12 +52,12 @@
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
                                         @if ($faculty->status == 1)
-                                            <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
+                                            <a class="dropdown-item" href="javascript:void(0);" id="changeFacultyStatus"
                                                 data-username="{{ $faculty->username }}"
                                                 data-status="{{ $faculty->status }}"><i class="bx bx-refresh"></i>
                                                 <span>Inactive</span></a>
                                         @else
-                                            <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
+                                            <a class="dropdown-item" href="javascript:void(0);" id="changeFacultyStatus"
                                                 data-username="{{ $faculty->username }}"
                                                 data-status="{{ $faculty->status }}"><i class="bx bx-refresh"></i>
                                                 <span>Active</span></a>
@@ -79,7 +79,7 @@
 </div>
 
 <script>
-    // $(document).on('click', '#changeStatus', function() {
+    // $(document).on('click', '#changeFacultyStatus', function() {
     //     // alert(username);
     //     var username = $(this).data('username')
     //     // var trWithStatus = $('td#status').closest('tr');
@@ -120,7 +120,7 @@
     // })
 
 
-    $(document).on('click', '#changeStatus', function() {
+    $(document).on('click', '#changeFacultyStatus', function() {
                 let username = $(this).data('username');
                 let userClass = $(document).find('[data-username="' + username + '"]')
                 // console.log("userClass", userClass.html());

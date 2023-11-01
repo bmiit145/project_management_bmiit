@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.dataTable').addClass('dataTable');
+    $('#dataTable').addClass('dataTable');
     // $('#dataTable').addClass('datatables-ajax');
 });
 
@@ -9,6 +9,7 @@ function CreateDataTable() {
         pageLength: 10, // Number of rows per page
         // responsive: true,
         scrollX: true,
+        "autoWidth": true,
         // "order": [
         //     [2, 'asc']
         // ],
