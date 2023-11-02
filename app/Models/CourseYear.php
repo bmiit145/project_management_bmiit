@@ -31,5 +31,14 @@ class CourseYear extends Model
         return $this->hasMany(Committee::class);
     }
 
+    public function schedule()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function presentationPanel()
+    {
+        return $this->hasMany(PresentationPanel::class);
+    }
 
 }

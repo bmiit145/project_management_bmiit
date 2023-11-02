@@ -30,3 +30,11 @@ $.validator.addMethod("require_from_group", function(value, element, options) {
     });
     return filledFields.length >= options[0];
 } , "Please fill at least one of these fields.");
+
+
+$.validator.addMethod("validDateTime", function(value, element) {
+    // Define your desired date and time format using Regular Expression
+    // Here, it's YYYY-MM-DD HH:MM (24-hour format)
+    return this.optional(element) || /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(value);
+}, "Please enter a valid date and time in the format YYYY-MM-DD HH:MM");
+

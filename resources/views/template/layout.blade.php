@@ -9,10 +9,10 @@
 
     <title>@yield('title')</title>
 
-    <meta name="description" content=""/>
+    <meta name="description" content="PMS - Project Management System"/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico"/>
+    <link rel="icon" type="image/x-icon" href="{{ asset('../assets/img/favicon/favicon.ico')}}"/>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -43,14 +43,12 @@
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{ asset('../assets/js/config.js') }}"></script>
 
-
-    <!-- toastr -->
-
-    <link rel="stylesheet" type="text/css"
-          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
+
+
+
 
     {{-- data Tables --}}
 
@@ -60,15 +58,36 @@
     {{--    <link href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" rel="stylesheet" type="text/css" />--}}
     {{--    <link href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />--}}
 
-
-    <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.bootstrap.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('assets/css/buttons.dataTables.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/dataTables.bootstrap5.min.css') }}"/>
 
+    <!-- toastr -->
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     {{--  Select 2 link  --}}
     <link rel="stylesheet" href="{{ mix('css/select2.min.css') }}"/>
     <script src="{{ mix('js/select2.min.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/core.css') }}"/>
+
+    <style>
+        .dt-down-arrow {
+            display: none !important;
+        }
+
+        /*.dataTables_wrapper .dt-buttons{*/
+        /*    width: 125px;*/
+        /*}*/
+        /*.dataTables_wrapper .dt-buttons .dt-button-collection {*/
+        /*    width: 125px;*/
+        /*}*/
+
+        /*.dataTables_wrapper .dt-button-collection .dt-button {*/
+        /*    width: 125px;*/
+        /*}*/
+
+    </style>
 
     @yield('css')
 
@@ -141,23 +160,31 @@
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <!-- Content -->
-@include('../template/error_toastr')
+
 
 {{-- data table --}}
 
 {{--<script src="{{ asset('assets/js/dataTables.min.js') }}"></script>--}}
-<script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
-
 {{--<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>--}}
 {{--<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>--}}
 {{--<script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>--}}
 {{--<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>--}}
 
+<script src="{{ asset('assets/js/CustomDataTable.js') }}"></script>
 <script src="{{ asset('assets/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.bootstrap5.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.responsive.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/buttons.colVis.min.js') }}"></script>
 <script src="{{ asset('assets/js/dataTable/dataTables.rowGroup.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/jszip.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/pdfmake.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/buttons.print.min.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/vfs_fonts.js') }}"></script>
+<script src="{{ asset('assets/js/dataTable/dataTables.select.min.js') }}"></script>
+
 
 {{--<script src="{{ asset('assets/js/dataTable-main.js') }}"></script>--}}
 {{--<script src="{{ asset('assets/js/dt-search.js') }}"></script>--}}
@@ -170,6 +197,7 @@
 <script src="{{ asset('js/jquery.validate.js') }}"></script>
 <script src="{{ asset('assets/js/CustomJqueryValidation.js') }}"></script>
 
+@include('../template/error_toastr')
 
 @stack('scripts')
 

@@ -13,6 +13,8 @@ use App\Http\Controllers\StudentController;
 use App\Http\Controllers\GroupController;
 use App\Http\Controllers\allocationController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\presentationController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +45,8 @@ Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name(
 Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
     Route::get('/dashboard', [AdminController::class, 'index']);
+
+
     // faculty
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
     Route::post('/AddFaculty', [FacultyController::class, 'create'])->name('faculty.add');
@@ -97,6 +101,15 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewAllProjects', [ProjectController::class, 'ViewAllProjects'])->name('ManageProjects');
     Route::get('/getProject', [ProjectController::class, 'getProject'])->name('getProject');
     Route::post('/AddProject', [ProjectController::class, 'createProject'])->name('Project.add');
+
+    // Presentation
+    Route::get('/SchedulePresentation', [presentationController::class, 'SchedulePresentation'])->name('ManageSchedule');
+    Route::post('/AddSchedule', [presentationController::class, 'createSchedule'])->name('Schedule.add');
+
+    Route::get('/PresentationPanel', [presentationController::class, 'PresentationPanel'])->name('ManagePresentationPanel');
+    Route::post('/AddPresentationPanel', [presentationController::class, 'createPresentationPanel'])->name('panel.add');
+
+    Route::get('/ViewAllPresentations', [presentationController::class, 'ViewAllPresentations'])->name('ManagePresentations');
 
 });
 

@@ -34,4 +34,14 @@ class Group extends Model
     {
         return $this->hasOne(Project::class, 'groupId', 'id');
     }
+
+    public function panelProjects()
+    {
+        return $this->hasMany(PanelProject::class , 'groupId' , 'id');
+    }
+
+    public function presentationPanel()
+    {
+        return $this->hasMany(PresentationPanel::class , 'groupId' , 'id');
+    }
 }

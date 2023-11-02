@@ -212,6 +212,33 @@
             </a>
         </li>
 
+        <!-- Presentation  -->
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Presentation">Presentation</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item ">
+                    <a href="{{route('ManageSchedule')}}" id="Schedule" class="menu-link">
+                        <div data-i18n="Schedule">Presentation Schedule</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('ManagePresentationPanel')}}" id="Panel" class="menu-link">
+                        <div data-i18n="Panels">Presentation Panel</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('ManageCourseYears')}}" id="Panel" class="menu-link">
+                        <div data-i18n="Panels">Allocate Presentation Panel</div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
     </ul>
 </aside>
 <!-- / Menu -->

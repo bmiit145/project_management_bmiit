@@ -1,26 +1,124 @@
 $(document).ready(function () {
     $('#dataTable').addClass('dataTable');
     $('.dataTable').addClass('w-100');
+
     // $('#dataTable').addClass('datatables-ajax');
 });
 
+// function CreateDataTable() {
+//     var dataTable = $('#dataTable').DataTable({
+//         paging: true, // Enable pagination
+//         pageLength: 10, // Number of rows per page
+//         // responsive: true,
+//         scrollX: true,
+//         "autoWidth": true,
+//         // "order": [
+//         //     [2, 'asc']
+//         // ],
+//         // "rowGroup": {
+//         //     dataSrc: 2
+//         // },
+//         language: {
+//             emptyTable: "No records available", // Customize the "No record Found" message
+//         },
+//     });
+//
+//     // dataTable
+//     //     .on('order.dt search.dt', function () {
+//     //         let i = 1;
+//     //
+//     //         dataTable
+//     //             .cells(null, 0, {search: 'applied', order: 'applied'})
+//     //             .every(function (cell) {
+//     //                 this.data(i++);
+//     //             });
+//     //     })
+//     //     .draw();
+//
+//     // $('#dataTable tbody').on('draw.dt', function () {
+//     //     $('#yourDataTable tbody td').each(function () {
+//     //         if ($(this).text() === 'NULL' || $(this).text() === 'null' || $(this).text() === 'Not Assigned') {
+//     //             $(this).css('color', 'red');s
+//     //         }
+//     //     });
+//     // });
+//
+//     return dataTable;
+// }
+
+
 function CreateDataTable() {
-    var dataTable = $('.dataTable').DataTable({
-        paging: true, // Enable pagination
-        pageLength: 10, // Number of rows per page
-        // responsive: true,
-        scrollX: true,
-        "autoWidth": true,
-        // "order": [
-        //     [2, 'asc']
-        // ],
-        // "rowGroup": {
-        //     dataSrc: 2
-        // },
-        language: {
-            emptyTable: "No records available", // Customize the "No record Found" message
-        },
-    });
+    var dataTable = $('#dataTable').DataTable({
+            paging: true, // Enable pagination
+            pageLength: 10, // Number of rows per page
+            // responsive: true,
+            scrollX: true,
+            "autoWidth": true,
+            //for reorder
+            rowReorder: true,
+            // columnDefs: [
+            //     {orderable: true, className: 'reorder', targets: 0},
+            //     {orderable: false, targets: '_all'}
+            // ],
+
+            // length change
+            lengthMenu: [
+                [10, 25, 50, -1],
+                ['10 rows', '25 rows', '50 rows', 'Show all']
+            ],
+            // dom: 'lBfrtip',
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pageLength',
+                    className: 'btn btn-label-primary dropdown-toggle',
+
+                },
+                'spacer',  // not a button, just an empty space
+                {
+                    extend: 'collection',
+                    className: 'btn btn-label-primary dropdown dropdown-toggle',
+                    autoClose: true,
+                    text: '<i class="bx bx-export me-sm-1"></i> <span class="d-none d-sm-inline-block">Export</span>',
+                    buttons: [{
+                        extend: 'copy',
+                        title: 'PMS - Project Management System',
+                    }, {
+                        extend: 'csv',
+                        title: 'PMS - Project Management System',
+                    }, {
+                        extend: 'excel',
+                        title: 'PMS - Project Management System',
+                    }, {
+                        extend: 'pdf',
+                        pageSize: 'A4',
+                        // orientation: 'landscape',
+                        title: 'PMS - Project Management System',
+                    }, {
+                        extend: 'print',
+                        title: 'PMS - Project Management System',
+                    },
+                    ]
+                },
+                // 'spacer',  // not a button, just an empty space
+                // {
+                //     extend: 'pdf',
+                //     title: 'PMS - Project Management System',
+                // }
+                // 'colvis'
+            ],
+            // "order": [
+            //     [2, 'asc']
+            // ],
+            // "rowGroup": {
+            //     dataSrc: 2
+            // },
+            language:
+                {
+                    emptyTable: "No records available", // Customize the "No record Found" message
+                },
+            select: true,
+        });
 
     dataTable
         .on('order.dt search.dt', function () {

@@ -29,4 +29,10 @@ class Faculty extends Model
     {
         return $this->hasMany(Allocation::class, 'facultyid', 'id');
     }
+
+    public function presentationPanel()
+    {
+        return $this->hasMany(PresentationPanel::class , 'facultyId' , 'id');
+    }
+
 }
