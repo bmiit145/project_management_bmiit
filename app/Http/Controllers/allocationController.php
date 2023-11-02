@@ -25,6 +25,14 @@ class allocationController extends Controller
         $groups = [];
         foreach ($studentgroups as $studentgroup) {
             $group = $studentgroup->group;
+
+            $project = Project::where('groupid',$studentgroup->groupid )->first();
+            if ($project != null) {
+                $title = $project->title;
+            } else {
+                $title = null;
+            }
+            $group->title = $title;
             $groups[] = $group;
         }
         return response()->json($groups);
@@ -41,7 +49,7 @@ class allocationController extends Controller
         if ($project != null) {
             $title = $project->title;
         } else {
-            $title = null;
+            $title = NULL;
         }
         return response()->json(['facultyId' => $facultyId, 'title' => $title]);
     }

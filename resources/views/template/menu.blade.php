@@ -181,6 +181,7 @@
                 </li>
             </ul>
         </li>
+
         <!-- Committee -->
         <li class="menu-item">
             <a href="{{ route('ManageCommittees') }}" class="menu-link">
@@ -202,6 +203,15 @@
                 <div data-i18n="Account Settings">Guide Allocation</div>
             </a>
         </li>
+
+        <!-- Allocation -->
+        <li class="menu-item">
+            <a href="{{ route('ManageProjects')}}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Project Allocation</div>
+            </a>
+        </li>
+
     </ul>
 </aside>
 <!-- / Menu -->

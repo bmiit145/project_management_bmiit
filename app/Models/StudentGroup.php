@@ -30,4 +30,9 @@ class StudentGroup extends Model
     {
         return $this->belongsTo(CourseYear::class, 'courseYearId', 'id');
     }
+
+    public function allocation()
+    {
+        return $this->hasOne(Allocation::class, 'studentgroupno', 'groupid');
+    }
 }

@@ -95,6 +95,8 @@ Route::group(['middleware' => 'admin'], function () {
 
     // project
     Route::get('/ViewAllProjects', [ProjectController::class, 'ViewAllProjects'])->name('ManageProjects');
+    Route::get('/getProject', [ProjectController::class, 'getProject'])->name('getProject');
+    Route::post('/AddProject', [ProjectController::class, 'createProject'])->name('Project.add');
 
 });
 

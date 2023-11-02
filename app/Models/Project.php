@@ -11,7 +11,7 @@ class Project extends Model
 
     protected $fillable = [
         'title',
-        'description',
+        'definition',
         'groupId',
     ];
 

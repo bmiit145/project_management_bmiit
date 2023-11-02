@@ -68,7 +68,7 @@
             <div class="card">
                 <h5 class="card-header "><strong> Program List</strong></h5>
                 <div class="table-responsive text-nowrap p-2">
-                    <table class="table table-hover table-responsive text-nowrap" id="dataTable">
+                    <table class="table table-hover table-responsive text-nowrap w-100" id="dataTable">
                         <thead>
                         <tr>
                             <th>No.</th>

@@ -5,6 +5,20 @@
 <!-- @section('content')
 @endsection -->
 
+@section('css')
+
+    <style>
+        .dataTable {
+            width: 100% !important;
+        }
+
+        .dataTable td {
+            word-wrap: break-word !important;;
+            overflow-wrap: break-word !important;
+        }
+    </style>
+
+@endsection
 @section('body')
 
     <div class="row">
@@ -13,11 +27,10 @@
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Guide Allocation and Update</h5>
-                        <!-- <small class="text-muted float-end">Merged input group</small> -->
+                        <h5 class="mb-0">Project Assignment</h5>
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('allocation.add') }}" id="AllocationForm">
+                        <form method="post" action="{{ route('Project.add') }}" id="ProjectAllocationForm">
                             @csrf
                             <span id="error_info">
 
@@ -52,39 +65,53 @@
                                 <label id="group-error" class="error" for="group"
                                        style="display: none"></label>
                             </div>
+
                             <div class="mb-3">
-                                <label for="faculty" class="form-label">Guide</label>
-                                <select class="form-select selectSearch" id="faculty" name="facultyId"
-                                        aria-label="Default select example">
-                                    <option value="-1" selected>select Group</option>
-                                    @foreach ($faculties as $faculty)
-                                        <option
-                                            value="{{ $faculty->id }}">{{ $faculty->fname . ' - '  . $faculty->lname }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                <label id="faculty-error" class="error" for="faculty"
-                                       style="display: none"></label>
+                                <label class="form-label" for="c">title</label>
+                                <div class="input-group input-group-merge">
+                                    {{-- <span id="title2" class="input-group-text">
+                                        <i class="bx bx-buildings"></i></span> --}}
+                                    <input type="text" id="title" class="form-control" name="title"
+                                           placeholder="Project Title " aria-label="Project Title "
+                                           aria-describedby="title"/>
+                                </div>
+                                <label id="title-error" class="error" for="title"></label>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Allocate Guide</button>
+                            <div class="mb-3">
+                                <label class="form-label" for="definition">definition</label>
+                                <textarea id="definition" name="definition" class="form-control"
+                                          placeholder="Definition"></textarea>
+                                <small class="font-light float-end" style="color: darkgreen">( Optional )</small>
+                                <label id="definition-error" class="error" for="definition"></label><br>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Assign Project</button>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
             <div class="card">
-                <h5 class="card-header "><strong> Guide Allocation Details</strong></h5>
-                <div class="table-responsive text-nowrap p-2">
-                    <table class="dt-scrollableTable table-responsive datatables-ajax dtr-column  table table-hover dataTable "
-                           id="dataTable">
+                <h5 class="card-header "><strong> Project Details</strong></h5>
+                <div class="table-responsive p-2">
+                    <table
+                        class="dt-scrollableTable table-responsive datatables-ajax dtr-column  table table-hover dataTable"
+                        id="dataTable">
                         <thead>
                         <tr>
                             <th>No.</th>
                             <th>Course Year</th>
                             <th>Group Number</th>
+                            <th>Student Enrollment No</th>
+                            <th>Student Name</th>
                             <th>Project Title</th>
+                            <th>Project Definition</th>
                             <th>Guide Name</th>
                             {{--                            <th>Status</th>--}}
                             {{--                            <th>Actions</th>--}}
@@ -92,32 +119,36 @@
                         </thead>
                         <tbody class="table-border-bottom-0">
                         {{--                        @if (count($programs) != 0)--}}
-                        @foreach ($allocations as $key => $allocation)
-                            @if( $allocation->studentGroups)
+                        @foreach ($studentGroups as $key => $studentGroup)
+                            @if($studentGroup->student)
                                 <tr>
                                     <td>
-                                        <strong>{{ ++$key }}</strong>
+                                        <strong>{{ ++$key }}</strong>s
                                     </td>
-                                    <td>
-                                        @if($allocation->studentGroups)
-                                            <strong>{{ $allocation->studentGroups->courseYear->course->name . '    ' . $allocation->studentGroups->courseYear->year->name  }}</strong>
+                                    <td>{{ $studentGroup->courseYear->course->name }}
+                                        - {{ $studentGroup->courseYear->year->name }}</td>
+                                    <td>{{ $studentGroup->group->number }}</td>
+                                    <td>{{ $studentGroup->student->enro }}</td>
+                                    <td>{{ $studentGroup->student->fname .  '  ' . $studentGroup->student->lname  }}</td>
+                                    @if($studentGroup->allocation)
+                                        @if($studentGroup->allocation->project)
+                                            <td>{{ $studentGroup->allocation->project->title }}</td>
+                                            <td>{{ $studentGroup->allocation->project->definition}}</td>
                                         @else
-                                            <strong>Not Allocated</strong>
+                                            <td style="color: red">NULL</td>
+                                            <td style="color: red">NULL</td>
                                         @endif
-                                    </td>
-                                    <td>
-                                        <strong>{{ $allocation->studentgroupno  }}</strong>
-                                    </td>
-                                    <td>
-                                        @if($allocation->project)
-                                            <span>{{ $allocation->project->title  }}</span>
-                                        @else
-                                            <span style="color: red"> No Project Assign</span>
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <span>{{ $allocation->faculty->fname . '   ' .   $allocation->faculty->lname }}</span>
-                                    </td>
+                                    @else
+                                        <td style="color: red">Not Assigned</td>
+                                        <td style="color: red">Not Assigned</td>
+                                    @endif
+
+                                    @if($studentGroup->allocation)
+                                        <td>{{ $studentGroup->allocation->faculty->fname .  '  ' . $studentGroup->allocation->faculty->lname  }}</td>
+                                    @else
+                                        <td style="color: red">Not Assigned</td>
+                                    @endif
+
                                     {{--                                @if ($program->status == 1)--}}
                                     {{--                                    <td id="status"><span--}}
                                     {{--                                            class="badge bg-label-primary me-1">Active</span></td>--}}
@@ -158,30 +189,41 @@
                                 </tr>
                             @endif
                         @endforeach
-                        {{--                        @else--}}
-                        {{--                            <tr>--}}
-                        {{--                                <td colspan="3" style="text-align: center">No record Found !</td>--}}
-                        {{--                            </tr>--}}
-                        {{--                        @endif--}}
                         </tbody>
                     </table>
+
                 </div>
             </div>
 
         </div>
     </div>
+
 @endsection
 
 @push('scripts')
+    {{--    <script src="//cdn.datatables.net/rowgroup/1.1.4/js/dataTables.rowGroup.min.js"></script>--}}
 
     <script>
+
+
         $(document).ready(function () {
-            // Initialize the DataTable
-            CreateDataTable();
+            CreateDataTableProject();
         });
+
     </script>
     <script>
-        $('#AllocationForm').validate({
+
+        function Formreset() {
+            $('#courseYear').val('-1');
+            $('#courseYear').trigger('change');
+            $('#group').val('-1');
+            $('#group').trigger('change');
+            $('#title').val('');
+            $('#definition').val('');
+            $('#project-title').text('Project Title');
+        }
+
+        $('#ProjectAllocationForm').validate({
             rules: {
                 "courseYearId": {
                     notEqualValue: "-1",
@@ -189,19 +231,25 @@
                 "groupId": {
                     notEqualValue: "-1",
                 },
-                "facultyId": {
-                    notEqualValue: "-1",
+                "title": {
+                    required: true,
+                },
+                "definition": {
+                    // required: true,
                 },
             },
             messages: {
                 courseYearId: {
-                    required: "Please select Course And Acadamic Year",
+                    notEqualValue: "Please select Course And Acadamic Year",
                 },
                 groupId: {
-                    required: "Please select Group",
+                    notEqualValue: "Please select Group",
                 },
-                facultyId: {
+                title: {
                     required: "Please select Faculty",
+                },
+                definition: {
+                    // required: "Please select Faculty",
                 },
             },
             // errorPlacement: function(error, element) {
@@ -216,40 +264,27 @@
                 // form.submit();
                 event.preventDefault();
 
-
-                // name = $(document).find('#name').val();
-
-                // //send ajax for similar name check
-                // if (similarName) {
-
-                // }
-
-                var formData = $('#AllocationForm').serialize()
+                var formData = $('#ProjectAllocationForm').serialize()
                 $.ajax({
                     type: "post",
-                    url: "{{ route('allocation.add') }}",
+                    url: "{{ route('Project.add') }}",
                     data: formData,
                     // dataType: "dataType",
                     success: function (res) {
                         if (res.success) {
                             toastr.success(res.success)
-
-
                         } else {
                             toastr.error(res.error)
                         }
 
                         // reset form
-                        $('#AllocationForm')[0].reset();
-                        $('#courseYear').val('-1');
-                        $('#courseYear').trigger('change');
-                        $('#group').attr('disabled', true);
-                        $('#faculty').attr('disabled', true);
+                        Formreset();
+
 
                         // get and replace table bodyy
                         $.ajax({
                             type: "get",
-                            url: "{{ route('ManageAllocations') }}",
+                            url: "{{ route('ManageProjects') }}",
                             // data: ,
                             // dataType: "dataType",
                             success: function (r) {
@@ -258,7 +293,7 @@
                                 var tbody = response.find('tbody').html();
                                 // console.log(tbody);
                                 $(document).find('tbody').html(tbody)
-                                CreateDataTable();
+                                CreateDataTableProject();
                             },
 
                             error: function (xhr, response) {
@@ -271,6 +306,8 @@
                                             toastr.error(messages)
                                         });
                                     });
+                                } else if (xhr.status == 500) {
+                                    toastr.error('Something went wrong !')
                                 }
                             }
 
@@ -287,27 +324,24 @@
                                     toastr.error(messages)
                                 });
                             });
+                        } else if (xhr.status == 500) {
+                            toastr.error('Something went wrong !')
                         }
                     }
-
                 });
             }
         })
     </script>
     <script>
         $('#group').attr('disabled', true);
-        $('#faculty').attr('disabled', true);
         $(document).on('change', '#courseYear', function () {
             var courseYearId = $(this).val();
 
             // if select a defalut option
             if (courseYearId == -1) {
                 $('#group').val('-1');
-                $('#faculty').val('-1');
                 $('#group').trigger('change');
-                $('#faculty').trigger('change');
                 $('#group').attr('disabled', true);
-                $('#faculty').attr('disabled', true);
                 return;
             }
 
@@ -333,7 +367,8 @@
                     var groups = response;
                     var options = '<option value="-1" selected>select Group</option>';
                     $.each(groups, function (index, group) {
-                        options += '<option value="' + group.id + '">' + group.number + '\t - \t'+ group.title+ '</option>';
+                        // options += '<option value="' + group.id + '">' + group.number + '</option>';
+                        options += '<option value="' + group.id + '">' + group.number + '\t - \t' + group.title + '</option>';
                     });
                     $('#group').html(options);
                     $('#group').attr('disabled', false);
@@ -344,46 +379,48 @@
         $(document).on('change', '#group', function () {
             var groupId = $(this).val();
 
-            // if select a defalut option
             if (groupId == -1) {
-                $('#faculty').val('-1');
-                $('#faculty').trigger('change');
-                $('#faculty').attr('disabled', true);
-                $('#project-title').text('Project Title');
+                $('#title').val('');
+                $('#definition').val('');
                 return;
             }
 
             // get guide
             $.ajax({
                 type: "get",
-                url: "{{ route('getGuide') }}",
+                url: "{{ route('getProject') }}",
                 data: {
                     groupId: groupId
                 },
                 // dataType: "dataType",
                 success: function (response) {
                     // console.log(response);
-                    $('#faculty').attr('disabled', false);
 
                     if (response.length == 0) {
-                        toastr.error('Select Guide Manually');
-                        $('#faculty').val('-1');
-                        $('#faculty').trigger('change');
+                        toastr.info('Enter Project Info');
+
                         return;
                     }
 
-                    var facultyId = response.facultyId;
-                    $('#faculty').val(facultyId);
-                    $('#faculty').trigger('change');
-
                     var ProjectTitle = response.title;
                     if (ProjectTitle != null) {
+                        $('#title').val(ProjectTitle);
                         $('#project-title').text(ProjectTitle);
                     } else {
-                        $('#project-title').text('No Project Title');
+                        $('#title').val('');
+                        $('#project-title').text('Project Title');
+                        $('#project-title').text('Project Title');
+                    }
+
+                    var ProjectDefinition = response.definition;
+                    if (ProjectDefinition != null) {
+                        $('#definition').val(ProjectDefinition);
+                    } else {
+                        $('#definition').val('');
                     }
                 }
             });
         });
+
     </script>
 @endpush
