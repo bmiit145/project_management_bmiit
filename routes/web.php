@@ -113,7 +113,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/getPanels', [presentationController::class, 'getPanels'])->name('getPanels');
     Route::post('/AddAllocatePresentation', [presentationController::class, 'createAllocatePresentation'])->name('panel.allocate');
 
-
     Route::get('/ViewAllPresentations', [presentationController::class, 'ViewAllPresentations'])->name('ManagePresentations');
 
 });

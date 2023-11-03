@@ -127,9 +127,10 @@ class presentationController extends Controller
 
         $panels = Panel::all();
         $PresentationPanels = PresentationPanel::all();
+        $panelProjects = PanelProject::all();
         $faculties = Faculty::all();
         $courseYears = CourseYear::all();
-        return view('presentation.AllocatePresentation', compact('panels', 'faculties', 'courseYears', 'PresentationPanels'));
+        return view('presentation.viewAllPresentations', compact('panels', 'faculties', 'courseYears', 'PresentationPanels' , 'panelProjects'));
     }
 
     public function getPanels(Request $request)
