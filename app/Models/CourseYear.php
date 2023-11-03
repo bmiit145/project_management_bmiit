@@ -41,4 +41,9 @@ class CourseYear extends Model
         return $this->hasMany(PresentationPanel::class);
     }
 
+    public function evaluationMark()
+    {
+        return $this->hasMany(EvaluationMark::class);
+    }
+
 }
