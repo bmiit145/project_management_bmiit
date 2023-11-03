@@ -216,7 +216,7 @@
                 <h5 class="card-header "><strong> Committee Member List</strong></h5>
                 <div class="card-datatable  table-responsive text-nowrap p-2">
                     <table class="dt-advanced-search table table-hover table-responsive dataTable text-nowrap"
-                           id="dataTable">
+                           id="MemberdataTable">
                         <thead>
                         <tr>
                             <th>No.</th>
@@ -307,6 +307,8 @@
         $(document).ready(function () {
             // Initialize the DataTable
             CreateDataTable();
+            CreateDataTable('MemberdataTable');
+
         });
     </script>
     <script>
@@ -409,11 +411,13 @@
                             // dataType: "dataType",
                             success: function (r) {
                                 DestroyDataTable();
+                                DestroyDataTable('MemberdataTable');
                                 var response = $(r);
                                 var tbody = response.find('tbody').html();
                                 // console.log(tbody);
                                 $(document).find('tbody').html(tbody)
                                 CreateDataTable();
+                                CreateDataTable('MemberdataTable');
                             },
 
                             error: function (xhr, response) {

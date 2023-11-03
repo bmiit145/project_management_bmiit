@@ -109,6 +109,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/PresentationPanel', [presentationController::class, 'PresentationPanel'])->name('ManagePresentationPanel');
     Route::post('/AddPresentationPanel', [presentationController::class, 'createPresentationPanel'])->name('panel.add');
 
+    Route::get('/AllocatePresentation', [presentationController::class, 'AllocatePresentation'])->name('ManageAllocatePresentation');
+    Route::get('/getPanels', [presentationController::class, 'getPanels'])->name('getPanels');
+    Route::post('/AddAllocatePresentation', [presentationController::class, 'createAllocatePresentation'])->name('panel.allocate');
+
+
     Route::get('/ViewAllPresentations', [presentationController::class, 'ViewAllPresentations'])->name('ManagePresentations');
 
 });

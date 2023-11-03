@@ -9,6 +9,7 @@ use App\Models\Schedule;
 use App\Models\Faculty;
 use App\Models\Student;
 use App\Models\PresentationPanel;
+use App\Models\PanelProject;
 
 class presentationController extends Controller
 {
@@ -121,4 +122,70 @@ class presentationController extends Controller
         }
     }
 
+    public function AllocatePresentation(Request $request)
+    {
+
+        $panels = Panel::all();
+        $PresentationPanels = PresentationPanel::all();
+        $faculties = Faculty::all();
+        $courseYears = CourseYear::all();
+        return view('presentation.AllocatePresentation', compact('panels', 'faculties', 'courseYears', 'PresentationPanels'));
+    }
+
+    public function getPanels(Request $request)
+    {
+        $courseYearId = $request->courseYearId;
+        $presentationPanels = PresentationPanel::where('courseYearId', $courseYearId)->get();
+
+        $panels = [];
+        foreach ($presentationPanels as $presentationPanel) {
+            if (!$presentationPanel->panel) {
+                continue;
+            }
+
+            $panels[] = $presentationPanel->panel;
+        }
+        return response()->json($panels);
+    }
+
+    public function createAllocatePresentation(Request $request)
+    {
+        $validated = $request->validate([
+            'courseYearId' => 'required | numeric | exists:course_years,id',
+            'group' => 'required | array | min:1',
+            'panel' => 'required | numeric | exists:panels,id',
+        ]);
+
+        if (count($request->group) == 1 && $request->group[0] == '-1') {
+            return response()->json(['error' => 'Please select atleast one group']);
+        }
+        $groups = $request->group;
+        $update_groups = [];
+        $create_groups = [];
+        $error_groups = [];
+
+        foreach ($groups as $group) {
+            $panelProject = PanelProject::where('groupId', $group)->first();
+            if ($panelProject) {
+//                return response()->json(['error' => 'Group already allocated']);
+                $panelProject->panelId = $request->panel;
+                if ($panelProject->save()) {
+                    $update_groups[] = $group;
+                }else{
+                    $error_groups[] = $group;
+                }
+                continue;
+            }
+            $panelProject = new PanelProject();
+            $panelProject->panelId = $request->panel;
+            $panelProject->groupId = $group;
+            if ($panelProject->save()) {
+                $create_groups[] = $group;
+            }else{
+                $error_groups[] = $group;
+            }
+
+        }
+        return response()->json(['success' => 'Groups allocated successfully' , 'update_groups' => $update_groups , 'create_groups' => $create_groups , 'error_groups' => $error_groups ]);
+    }
 }

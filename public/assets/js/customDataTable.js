@@ -47,8 +47,14 @@ $(document).ready(function () {
 // }
 
 
-function CreateDataTable() {
-    var dataTable = $('#dataTable').DataTable({
+function CreateDataTable(param) {
+
+    // if param not passed
+    if (param === undefined || param === null || param === '') {
+        param = "dataTable";
+    }
+
+    var dataTable = $(document).find('#'+param).DataTable({
             paging: true, // Enable pagination
             pageLength: 10, // Number of rows per page
             // responsive: true,
@@ -201,6 +207,11 @@ function CreateDataTableProject() {
         .draw();
 }
 
-function DestroyDataTable() {
-    $('.dataTable').DataTable().destroy();
+function DestroyDataTable(param) {
+
+    if (param === undefined || param === null || param === '') {
+        param = "dataTable";
+    }
+
+    $(document).find('#'+param).DataTable().destroy();
 }

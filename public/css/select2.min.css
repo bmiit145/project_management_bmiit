@@ -235,7 +235,7 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--single .sele
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered li {
-    list-style: none
+    list-style: none;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__placeholder {
@@ -318,7 +318,7 @@ html:not([dir=rtl]) .select2-container--default .select2-selection--multiple .se
     background: rgba(0,0,0,0);
     border: none;
     outline: 0;
-    -webkit-appearance: textfield
+    /* -webkit-appearance:textfield; */
 }
 
 .select2-container--default .select2-results>.select2-results__options {

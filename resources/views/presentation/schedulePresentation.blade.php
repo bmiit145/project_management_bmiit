@@ -104,7 +104,8 @@
                                         <?php
                                         $date = date_create($schedule->datetime);
                                         $dateOnly = date_format($date, 'Y-m-d');
-                                        $timeOnly = date_format($date, 'H:i:s');
+                                        $timeOnly = date_format($date, 'h:i:s A');
+
                                         ?>
                                     <tr>
                                         <td>{{ ++$key }}</td>

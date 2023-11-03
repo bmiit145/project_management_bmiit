@@ -230,7 +230,12 @@
 <script>
     // $(document).ready(function () {
     $('.selectSearch').select2();
-
+    $('.MultipleselectSearch').select2({
+        // tags: true,
+        tokenSeparators: [',', ' '],
+        placeholder: 'Select an option',
+        width: '100%'
+    });
     $('label.error').css('display', 'none');
     // });
 </script>

@@ -5,6 +5,9 @@
 <!-- @section('content')
 @endsection -->
 
+@section('css')
+
+@endsection
 @section('body')
 
     <div class="row">
@@ -17,7 +20,7 @@
                         <!-- <small class="text-muted float-end">Merged input group</small> -->
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('panel.add') }}" id="addPanelForm">
+                        <form method="post" action="{{ route('panel.allocate') }}" id="AllocatePanelForm">
                             @csrf
                             <span id="error_info">
 
@@ -37,23 +40,39 @@
                                        style="display: none"></label>
                             </div>
                             <div class="mb-3">
-                                <label for="member" class="form-label">Faculty</label>
-                                <div class="member_select_div">
-                                    <select class="form-select selectSearch unique-dropdown member-dropdown my-4"
-                                            id="member"
-                                            name="members[]"
+                                <label for="group" class="form-label">Group Number</label>
+                                <select class="form-select MultipleselectSearch group-dropdown" id="group"
+                                        name="group[]" multiple
+                                        aria-label="Default select example" aria-hidden="true">
+                                    <option value="-1">select Group</option>
+                                    {{--                                    @foreach ($groups as $group)--}}
+                                    {{--                                        <option value="{{ $group->id }}">{{ $group->course->name }}--}}
+                                    {{--                                            - {{ $group->year->name }}--}}
+                                    {{--                                        </option>--}}
+                                    {{--                                    @endforeach--}}
+                                </select>
+                                {{--                                <label id="project-title" class="title" for="title"--}}
+                                {{--                                       style="color: #0d6efd">Project Title</label><br>--}}
+                                <label id="group-error" class="error" for="group"
+                                       style="display: none"></label>
+                            </div>
+                            <div class="mb-3">
+                                <label for="panel" class="form-label">Panel</label>
+                                <div class="panel_select_div">
+                                    <select class="form-select selectSearch panel-dropdown my-4"
+                                            id="panel"
+                                            name="panel"
                                             aria-label="Default select example">
-                                        <option value="-1" selected>select Faculty for panel</option>
-                                        @foreach ($faculties as $faculty)
-                                            <option
-                                                value="{{ $faculty->id }}">{{ $faculty->fname . " ". $faculty->lname }}
-                                            </option>
-                                        @endforeach
+                                        <option value="-1" selected>select Panel Number</option>
+                                        {{--                                        @foreach ($panels as $panel)--}}
+                                        {{--                                            <option--}}
+                                        {{--                                                value="{{ $panel->id }}">{{ $panel->number}}--}}
+                                        {{--                                            </option>--}}
+                                        {{--                                        @endforeach--}}
                                     </select>
                                 </div>
-                                <label id="member-error" class="error" for="member"
+                                <label id="panel-error" class="error" for="panel"
                                        style="display: none"></label><br>
-                                <button type="button" class="btn btn-dark mt-2 add_member">Add Faculty</button>
                             </div>
                             <button type="submit" class="btn btn-primary">Add new Panel</button>
                         </form>
@@ -62,8 +81,33 @@
             </div>
             <!-- </div>  -->
         </div>
+{{--        <div class="col-md-6">--}}
+{{--            <div class="col-xl">--}}
+{{--                <div class="card mb-4">--}}
+{{--                    <div class="card-header d-flex justify-content-between align-items-center">--}}
+{{--                        <h5 class="mb-0">Add new Panel</h5>--}}
+{{--                        <!-- <small class="text-muted float-end">Merged input group</small> -->--}}
+{{--                    </div>--}}
+{{--                    <div class="card-body">--}}
+{{--                        <label>New Added</label>--}}
+{{--                        <div class="new_group">--}}
 
-    </div>
+{{--                        </div>--}}
+{{--                        <label>Updated</label>--}}
+{{--                        <div class="updated_group">--}}
+
+{{--                        </div>--}}
+{{--                        <label>Errors</label>--}}
+{{--                        <div class="error_group">--}}
+
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--            <!-- </div>  -->--}}
+{{--        </div>--}}
+
+{{--    </div>--}}
     <div class="row">
 
         <div class="col-md-12">
@@ -163,56 +207,121 @@
         });
     </script>
     <script>
-        $(document).ready(function () {
-            var select_html = $('.member_select_div select').first().prop('outerHTML');
-            $(document).on('click', '.add_member', function () {
-                // console.log(select_html);
-                $('.member_select_div').append(select_html);
+        $('#group').attr('disabled', true);
+        $('#panel').attr('disabled', true);
+        $(document).on('change', '#courseYear', function () {
+            var courseYearId = $(this).val();
 
-                $('.member_select_div select').select2();
+            // if select a defalut option
+            if (courseYearId == -1) {
+                $('#group').val('-1');
+                $('#panel').val('-1');
+                $('#group').trigger('change');
+                $('#panel').trigger('change');
+                $('#group').attr('disabled', true);
+                $('#panel').attr('disabled', true);
+                return;
+            }
 
-            });
+            // get groups
+            $.ajax({
+                type: "get",
+                url: "{{ route('getGroups') }}",
+                data: {
+                    courseYearId: courseYearId
+                },
+                // dataType: "dataType",
+                success: function (response) {
+                    // console.log(response);
+                    $('#group').attr('disabled', true);
 
-            $(document).on('change', '#courseYear', function () {
-                let value = $(this).val();
-                if (value != -1) {
-                    $('#name').val($(this).find(':selected').text().trim());
-                    // console.log($(this).find(':selected').text().trim())
-                } else {
-                    $('#name').val('');
+                    if (response.length == 0) {
+                        toastr.error('No Groups Found');
+                        $('#group').val('-1');
+                        $('#group').trigger('change');
+                        return;
+                    }
+
+                    var groups = response;
+                    var options = '<option value="-1">select Group</option>';
+                    $.each(groups, function (index, group) {
+                        options += '<option value="' + group.id + '">' + group.number + '\t - \t' + group.title + '</option>';
+                    });
+                    $('#group').html(options);
+                    $('#group').attr('disabled', false);
                 }
             });
-        });
+
+            $.ajax({
+                type: "get",
+                url: "{{ route('getPanels') }}",
+                data: {
+                    courseYearId: courseYearId
+                },
+                // dataType: "dataType",
+                success: function (response) {
+                    // console.log(response);
+                    $('#panel').attr('disabled', true);
+
+                    if (response.length == 0) {
+                        toastr.error('No Panel Found');
+                        $('#panel').val('-1');
+                        $('#panel').trigger('change');
+                        return;
+                    }
+
+                    var panels = response;
+                    var options = '<option value="-1" selected>select Panel</option>';
+                    $.each(panels, function (index, panel) {
+                        options += '<option value="' + panel.id + '">' + panel.number + '</option>';
+                    });
+                    $('#panel').html(options);
+                    $('#panel').attr('disabled', false);
+                }
+            });
+        })
+
     </script>
+    {{--    <script>--}}
+    {{--        $(document).ready(function () {--}}
+    {{--            $(document).on('change', '#courseYear', function () {--}}
+    {{--                let value = $(this).val();--}}
+    {{--                if (value != -1) {--}}
+    {{--                    $('#name').val($(this).find(':selected').text().trim());--}}
+    {{--                    // console.log($(this).find(':selected').text().trim())--}}
+    {{--                } else {--}}
+    {{--                    $('#name').val('');--}}
+    {{--                }--}}
+    {{--            });--}}
+    {{--        });--}}
+    {{--    </script>--}}
     <script>
 
-        $('#addPanelForm').validate({
+        $('#AllocatePanelForm').validate({
             ignore: [],
             rules: {
                 "courseYearId": {
+                    notEqualValue: " group-dropdown-1",
+                },
+                'group[]': {
+                    notEqualValue: "-1",
+                    uniqueValues: 'unique-dropdown',
+                    require_from_group: [1, '.group-dropdown']
+                },
+                'panel': {
                     notEqualValue: "-1",
                 },
-                'members[]': {
-                    // notEqualValue: "-1",
-                    uniqueValues: 'unique-dropdown',
-                    require_from_group: [1, '.member-dropdown']
-                },
-                // 'guide': {
-                //     notEqualValue: "-2",
-                // }
             },
             messages: {
-
-                // guide: {
-                //     notEqualValue: "Please select Head Of committee",
-                // },
                 courseYearId: {
-                    notEqualValue: "Please select Course Year",
+                    notEqualValue: "Please select  group-dropdownCourse Year",
                 },
-                'members[]': {
-                    // notEqualValue: "Please select Member Of committee",
-                    uniqueValues: "Please select unique Each Student Of Group",
-                    require_from_group: "Please select at least one Student Of Group",
+                "group[]": {
+                    uniqueValues: "Please select unique  Group",
+                    require_from_up: "Please select at least one Group",
+                },
+                panel: {
+                    notEqualValue: "Please select Panel",
                 }
             },
             // errorPlacement: function(error, element) {
@@ -235,10 +344,10 @@
 
                 // }
 
-                var formData = $('#addPanelForm').serialize()
+                var formData = $('#AllocatePanelForm').serialize()
                 $.ajax({
                     type: "post",
-                    url: "{{ route('panel.add') }}",
+                    url: "{{ route('panel.allocate') }}",
                     data: formData,
                     // dataType: "dataType",
                     success: function (res) {
@@ -249,12 +358,12 @@
                         // console.log(res.success);
                         toastr.success(res.success)
 
-                        $('#addPanelForm')[0].reset();
+                        $('#AllocatePanelForm')[0].reset();
 
                         // get and replace table body
                         $.ajax({
                             type: "get",
-                            url: "{{ route('ManagePresentationPanel') }}",
+                            url: "{{ route('ManageAllocatePresentation') }}",
                             // data: ,
                             // dataType: "dataType",
                             success: function (r) {
@@ -264,9 +373,7 @@
                                 console.log(tbody);
                                 $(document).find('tbody').html(tbody);
                                 CreateDataTable();
-                                console.log(111111111)
                             },
-
                             error: function (xhr, response) {
                                 if (xhr.status == 422) {
                                     var errors = xhr.responseJSON.errors;

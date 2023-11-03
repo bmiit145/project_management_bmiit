@@ -231,7 +231,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{route('ManageCourseYears')}}" id="Panel" class="menu-link">
+                    <a href="{{route('ManageAllocatePresentation')}}" id="Panel" class="menu-link">
                         <div data-i18n="Panels">Allocate Presentation Panel</div>
                     </a>
                 </li>
