@@ -250,7 +250,6 @@
 
                 if (sessionStorage.getItem('NavcourseYearId')) {
                     var NavcourseYearId = sessionStorage.getItem('NavcourseYearId');
-
                 } else {
                     var NavcourseYearId = $(document).find('#NavcourseYear').val();
                 }
@@ -272,6 +271,19 @@
 
             //store value in Session storage
             sessionStorage.setItem('NavcourseYearId', NavcourseYearId);
+
+            // store it to laravel session
+            $.ajax({
+                method: 'post',
+                url: '{{ route('setCourseYearSession') }}',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    courseYearId: NavcourseYearId
+                },
+                success: function (res) {
+                    console.log(res);
+                }
+            })
 
         })
     })

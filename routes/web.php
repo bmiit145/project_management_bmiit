@@ -40,12 +40,13 @@ Route::post('/forgotpassword', [UserController::class, 'forgotPassword'])->name(
 Route::get('/resetpassword', [UserController::class, 'resetPassword']);
 Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name('change.password');
 
+//setCourseYearSession
+Route::post('/setCourseYearSession', [CourseController::class, 'setCourseYearSession'])->name('setCourseYearSession');
 
 // admin route
 Route::group(['middleware' => 'admin'], function () {
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
     Route::get('/dashboard', [AdminController::class, 'index']);
-
 
     // faculty
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');

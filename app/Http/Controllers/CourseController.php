@@ -10,6 +10,13 @@ use App\Models\Course;
 
 class CourseController extends Controller
 {
+    function setCourseYearSession(Request $request)
+    {
+        $request->session()->put('courseYear', $request->courseYearId);
+
+        return response()->json(["success" => "Course Year Session set successfully"]);
+
+    }
     function ViewAllCourses()
     {
         $programsemesters = ProgramSemester::all();

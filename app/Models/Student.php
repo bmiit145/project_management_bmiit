@@ -30,4 +30,5 @@ class Student extends Model
         return $this->hasMany(StudentGroup::class, 'studentenro', 'enro');
     }
 
+
 }

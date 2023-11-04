@@ -52,6 +52,15 @@ class StudentController extends Controller
             "email" => 'required|email|unique:students',
             "contactno" => 'required|min:0|string|max:10',
             "courseYearId" => 'required',
+        ],[
+            'enro.required' => 'Enrollment Number is required',
+            'enro.unique' => 'Enrollment Number is already taken',
+            'fname.required' => 'First Name is required',
+            'lname.required' => 'Last Name is required',
+            'email.required' => 'Email is required',
+            'email.unique' => 'Email is already taken',
+            'contactno.required' => 'Contact Number is required',
+            'courseYearId.required' => 'Course Year is required',
         ]);
 
         $username = $validated['enro'];
