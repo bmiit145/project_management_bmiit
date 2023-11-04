@@ -27,7 +27,7 @@
             <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center" style="width: 300px">
 {{--                    <i class="bx bx-search fs-4 lh-0"></i>--}}
-                    <select class="form-select selectSearch" id="NavcourseYear" name="courseYearId"
+                    <select class="form-select selectSearch" id="NavcourseYear"
                             aria-label="Default select example" >
                         <option value="-1" selected>select Course and Acadamic Year</option>
 {{--                        @foreach ($courseYears as $courseYear)--}}

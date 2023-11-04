@@ -246,8 +246,10 @@
                     var NavcourseYearId = localStorage.getItem('NavcourseYearId');
                     $(document).find('#NavcourseYear').val(NavcourseYearId);
                     $(document).find("#NavcourseYear").trigger('change');
-                    $(document).find("select#courseYear").val(NavcourseYearId);
-                    $(document).find("select#courseYear").trigger('change');
+                    // $(document).find("select#courseYear").val(NavcourseYearId);
+                    // $(document).find("select#courseYear").trigger('change');
+
+
                 } else {
                     var NavcourseYearId = $(document).find('#NavcourseYear').val();
                 }
