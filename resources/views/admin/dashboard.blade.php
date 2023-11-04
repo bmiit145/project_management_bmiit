@@ -25,6 +25,8 @@
             <span class="avatar-initial rounded bg-label-primary">
               <i class="bx bx-user bx-sm"></i>
             </span>
+
+
                             </div>
                         </div>
                     </div>
