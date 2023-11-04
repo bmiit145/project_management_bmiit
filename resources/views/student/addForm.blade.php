@@ -205,6 +205,8 @@
                         // console.log(res.success);
                         toastr.success(res.success)
                         $('#addStudentForm')[0].reset()
+                        $('#addStudentForm select').trigger('change');
+                        courseYearFill();
                     },
                     error: function (xhr, response) {
                         if (xhr.status == 422) {

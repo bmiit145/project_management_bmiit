@@ -253,7 +253,7 @@
                 </li>
                 <li class="menu-item">
                     <a href="{{route('ManageAllEvaluations')}}" id="evaluation" class="menu-link">
-                        <div data-i18n="evaluation">Evaluations Marks</div>
+                        <div data-i18n="evaluation">Evaluations Total Marks</div>
                     </a>
                 </li>
                 <li class="menu-item">

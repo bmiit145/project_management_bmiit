@@ -279,7 +279,7 @@
 
                         // reset form
                         Formreset();
-
+                        courseYearFill();
 
                         // get and replace table bodyy
                         $.ajax({

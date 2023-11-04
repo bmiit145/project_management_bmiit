@@ -226,8 +226,14 @@
 </script>
 
 <script>
-    $(document).ready(function () {
+    // function to  refill  course year dropdown
 
+    function courseYearFill() {
+        var courseYearId = $(document).find('#NavcourseYear').val();
+        $(document).find("select#courseYear").val(courseYearId);
+        $(document).find("select#courseYear").trigger('change');
+    }
+    $(document).ready(function () {
         // fillup Nav course year dropdown
         $.ajax({
             method: 'get',
@@ -241,24 +247,22 @@
                 });
                 $(document).find('#NavcourseYear').html(html);
 
-
                 if (localStorage.getItem('NavcourseYearId')) {
                     var NavcourseYearId = localStorage.getItem('NavcourseYearId');
-                    $(document).find('#NavcourseYear').val(NavcourseYearId);
-                    $(document).find("#NavcourseYear").trigger('change');
-                    // $(document).find("select#courseYear").val(NavcourseYearId);
-                    // $(document).find("select#courseYear").trigger('change');
-
 
                 } else {
                     var NavcourseYearId = $(document).find('#NavcourseYear').val();
                 }
 
+                $(document).find('#NavcourseYear').val(NavcourseYearId);
+                $(document).find("#NavcourseYear").trigger('change');
+                // $(document).find("select#courseYear").val(NavcourseYearId);
+                // $(document).find("select#courseYear").trigger('change');
+
             }
         })
 
-        //get value from local storage
-
+        // change event for Nav course year dropdown
         $(document).on('change', '#NavcourseYear', function () {
             var NavcourseYearId = $(document).find('#NavcourseYear').val();
 

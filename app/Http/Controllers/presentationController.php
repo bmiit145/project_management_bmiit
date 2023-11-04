@@ -56,9 +56,9 @@ class presentationController extends Controller
     {
         $evaluationMarkId = $request->evaluationMarkId;
         $evaluationMark = EvaluationMark::where('id', $evaluationMarkId)->first();
-        if(!$evaluationMark){
+        if ($evaluationMark) {
             return response()->json($evaluationMark->outof);
-        }else{
+        } else {
             return response()->json(null);
         }
     }
@@ -73,6 +73,7 @@ class presentationController extends Controller
         }
         return response()->json($evaluationMark->outof);
     }
+
     public function getGroupMark(Request $request)
     {
         $validated = $request->validate([
@@ -304,6 +305,8 @@ class presentationController extends Controller
 
     public function createEvaluationCriteriaMarks(Request $request)
     {
+//        dd($request->all());
+
         $validated = $request->validate([
             'courseYearId' => 'required | numeric | exists:course_years,id',
             'evaluationCriteria' => 'required',
@@ -311,25 +314,29 @@ class presentationController extends Controller
         ]);
         //evaluationCriteria is numeric or not
         if (is_numeric($request->evaluationCriteria)) {
+            if ($request->etext) {
+                return response()->json(['error' => "Invalid Evaluation Criteria  \n Number Not Allowed "]);
+            }
             $ecriteriaId = $request->evaluationCriteria;
         } else {
             $ec = EvaluationCriteria::where('name', $request->evaluationCriteria)->first();
-            if (!$ec) {
+            if ($ec === null || empty($ec->count()) || $ec->count() === "") {
                 $ec = new EvaluationCriteria();
                 $ec->name = $request->evaluationCriteria;
-                if (!$ec->save()) {
+                if ($ec->save()) {
                     $ecriteriaId = $ec->id;
                 } else {
-                    return response()->json(['error' => 'Evaluation Criteria already exists']);
+                    return response()->json(['error' => 'New Evaluation Criteria Not Created']);
                 }
             } else {
+
                 return response()->json(['error' => 'Evaluation Criteria already exists']);
             }
         }
 
         $evaluationCriteriaMark = EvaluationMark::where('courseYearId', $request->courseYearId)->where('criteriaId', $ecriteriaId)->first();
 
-        if ($evaluationCriteriaMark->count() == 1) {
+        if ($evaluationCriteriaMark) {
             $studentMarks = Mark::where('evaluationMarkId', $evaluationCriteriaMark->id)->get();
 //            dd($studentMarks);
             foreach ($studentMarks as $studentMark) {
@@ -363,7 +370,7 @@ class presentationController extends Controller
         $evaluationCriteriaMarks = EvaluationMark::all();
         $groups = Student::all();
         $marks = Mark::all();
-        return view('presentation.EvaluationStudentMarks', compact('courseYears', 'evaluationCriterias', 'evaluationCriteriaMarks', 'groups' , 'marks'));
+        return view('presentation.EvaluationStudentMarks', compact('courseYears', 'evaluationCriterias', 'evaluationCriteriaMarks', 'groups', 'marks'));
     }
 
     public function createEvaluationStudentMarks(Request $request)

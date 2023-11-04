@@ -333,6 +333,10 @@
                         toastr.success(res.success)
 
                         $('#addGroupForm')[0].reset();
+                        $('#addGroupForm').find('select').val('-1').trigger('change');
+                        $('.member_select_div').html(select_html);
+                        courseYearFill();
+
 
                         // get and replace table body
                         $.ajax({

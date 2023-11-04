@@ -229,6 +229,8 @@
                         toastr.success(res.success)
 
                         $('#scheduleForm')[0].reset();
+                        $('#scheduleForm select').trigger('change');
+                        courseYearFill();
 
                         // get and replace table body
                         $.ajax({

@@ -49,10 +49,17 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <input type="text" id="evaluationCriteria" class="form-control evaluationCriteriaText"
-                                       name="evaluationCriteria"
-                                       placeholder="project" aria-label="project"
-                                       aria-describedby="evaluationCriteria" style="display: none" disabled/>
+
+                                <div class="evaluationCriteriaTextDiv">
+                                    <input type="text" id="evaluationCriteria"
+                                           class="form-control evaluationCriteriaText"
+                                           name="evaluationCriteria"
+                                           placeholder="CIE" aria-label="CIE"
+                                           aria-describedby="evaluationCriteria" style="display: none" disabled/>
+                                    <input type="text" name="etext" id="criteriaText" hidden disabled>
+                                </div>
+                                <button type="button" class="btn btn-dark mt-2" id="toggleCriteria">Add New Criteria
+                                </button>
                                 <label id="evaluationCriteria-error" class="error" for="evaluationCriteria"
                                        style="display: none"></label>
                             </div>
@@ -169,6 +176,35 @@
             // $(".evaluationCriteriaText").eq(0).prop('disabled' , true);
         });
     </script>
+    {{--    toggle criteria--}}
+    <script>
+        $(document).ready(function () {
+            $(".evaluationCriteriaText").hide();
+            $(".evaluationCriteriaText").eq(0).prop('disabled', true);
+            $("#criteriaText").prop('disabled', true);
+
+            $("#toggleCriteria").click(function () {
+                if ($(".evaluationCriteriaText").is(":visible")) {
+                    $(".evaluationCriteriaText").hide();
+                    $(".evaluationCriteriaText").eq(0).prop('disabled', true);
+                    $(".evaluationCriteriaSearch").show();
+                    $(".evaluationCriteriaSearch").eq(0).prop('disabled', false).next('.select2-container').show();
+                    $("#criteriaText").prop('disabled', true);
+
+                    $("#toggleCriteria").text("Add New Criteria");
+                } else {
+                    $(".evaluationCriteriaText").show();
+                    $(".evaluationCriteriaText").eq(0).prop('disabled', false);
+                    $(".evaluationCriteriaSearch").select2('close').next('.select2-container').hide();
+                    $(".evaluationCriteriaSearch").eq(0).prop('disabled', true);
+                    $("#criteriaText").prop('disabled', false);
+
+                    $("#toggleCriteria").text("Select Criteria");
+
+                }
+            });
+        });
+    </script>
     <script>
         $(document).ready(function () {
             $(document).on('change', '#courseYear', function () {
@@ -271,6 +307,8 @@
                         toastr.success(res.success)
 
                         $('#addEvaluationCriteriaMarkForm')[0].reset();
+                        $(document).find('#addEvaluationCriteriaMarkForm select').trigger('change');
+                        courseYearFill();
 
                         // get and replace table body
                         $.ajax({

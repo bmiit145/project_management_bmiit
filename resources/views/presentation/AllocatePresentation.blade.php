@@ -359,6 +359,10 @@
                         toastr.success(res.success)
 
                         $('#AllocatePanelForm')[0].reset();
+                        $('#AllocatePanelForm').find('select').trigger('change');
+                        $('#AllocatePanelForm').find('label.error').hide();
+                        courseYearFill();
+
 
                         // get and replace table body
                         $.ajax({

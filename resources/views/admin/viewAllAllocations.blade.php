@@ -273,10 +273,13 @@
 
                         // reset form
                         $('#AllocationForm')[0].reset();
+                        $('#Allocationform select').trigger('change');
+
                         $('#courseYear').val('-1');
                         $('#courseYear').trigger('change');
                         $('#group').attr('disabled', true);
                         $('#faculty').attr('disabled', true);
+                        courseYearFill();
 
                         // get and replace table bodyy
                         $.ajax({

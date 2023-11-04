@@ -402,7 +402,9 @@
                         toastr.success(res.success)
 
                         $('#addCommitteForm')[0].reset();
-
+                        $(document).find('#addCommitteForm select').val().trigger('change');
+                        courseYearFill();
+                        s
                         // get and replace table body
                         $.ajax({
                             type: "get",

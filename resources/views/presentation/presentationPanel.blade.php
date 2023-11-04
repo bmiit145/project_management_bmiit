@@ -211,8 +211,8 @@
                 },
                 'members[]': {
                     // notEqualValue: "Please select Member Of committee",
-                    uniqueValues: "Please select unique Each Student Of Group",
-                    require_from_group: "Please select at least one Student Of Group",
+                    uniqueValues: "Please select unique Each Faculty Of Panel",
+                    require_from_group: "Please select at least one Faculty for panel",
                 }
             },
             // errorPlacement: function(error, element) {
@@ -250,6 +250,9 @@
                         toastr.success(res.success)
 
                         $('#addPanelForm')[0].reset();
+                        $('#addPanelForm').find('select').val('-1').trigger('change');
+                        $('.member_select_div').html(select_html);
+                        courseYearFill();
 
                         // get and replace table body
                         $.ajax({

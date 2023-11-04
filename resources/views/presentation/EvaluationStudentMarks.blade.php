@@ -110,10 +110,10 @@
                                     <strong>{{ ++$key }}</strong>
                                 </td>
                                 <td>
-                                        <strong>{{ $mark->evaluationMark->courseYear->course->name}}</strong>
+                                    <strong>{{ $mark->evaluationMark->courseYear->course->name}}</strong>
                                 </td>
                                 <td>
-                                        <strong>{{ $mark->evaluationMark->courseYear->year->name}}</strong>
+                                    <strong>{{ $mark->evaluationMark->courseYear->year->name}}</strong>
                                 </td>
                                 <td>
                                     <strong>{{ $mark->group->number  }}</strong>
@@ -271,9 +271,11 @@
 
                         // reset form
                         $('#StudentMarkform')[0].reset();
-                        // $('#courseYear').val('-1');
-                        $('#courseYear').trigger('change');
+                        $('#StudentMarkform').find('select').trigger('change');
+
+                        courseYearFill();
                         $('#group').attr('disabled', true);
+                        // courseYearFill();
 
                         // get and replace table bodyy
                         $.ajax({
@@ -464,7 +466,11 @@
                 success: function (response) {
                     // console.log(response);
                     // $('#outof').text('OUT OF : ' + response);
-                    $('#outof').text(response);
+                    if (response == null) {
+                        $('#outof').text('NULL');
+                    } else {
+                        $('#outof').text(response);
+                    }
                 }
             });
         });
