@@ -268,7 +268,7 @@
         });
     </script>
     <script>
-
+        let select_html = $('.member_select_div select').first().prop('outerHTML');
         $('#addGroupForm').validate({
             ignore: [],
             rules: {

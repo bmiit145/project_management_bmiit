@@ -13,16 +13,20 @@ class CourseController extends Controller
     function setCourseYearSession(Request $request)
     {
         $request->session()->put('courseYear', $request->courseYearId);
+        $request->session()->put('semester', $request->semesterId);
+        $request->session()->put('program', $request->programId);
 
-        return response()->json(["success" => "Course Year Session set successfully"]);
+
+        return response()->json(["success" => "Session set successfully"]);
 
     }
+
     function ViewAllCourses()
     {
         $programsemesters = ProgramSemester::all();
         $courses = Course::all();
 //        return view('admin.course', compact('programsemesters', 'courses'));
-        return view('admin.course', compact(['programsemesters'=>'programsemesters', 'courses' => 'courses']));
+        return view('admin.course', compact(['programsemesters' => 'programsemesters', 'courses' => 'courses']));
     }
 
     function ViewAllCoursesYear()
@@ -31,7 +35,7 @@ class CourseController extends Controller
         $academicyears = academicyear::all();
         $courses = Course::all();
         $courseYears = CourseYear::all();
-        return view('admin.courseYear', compact(['academicyears','courses' , 'courseYears']));
+        return view('admin.courseYear', compact(['academicyears', 'courses', 'courseYears']));
 
 //        return view('admin.courseYear');
     }
@@ -48,7 +52,6 @@ class CourseController extends Controller
             'name.required' => 'The name field is required',
             'programsemesterid.required' => 'Select Program Semester',
         ]);
-
 
 
         $course = new Course();
@@ -74,7 +77,7 @@ class CourseController extends Controller
 
         // for unique course and year
 
-        $count = CourseYear::where('course_id' , $validated['courseid'])->where('year_id' , $validated['academicyearid'])->count();
+        $count = CourseYear::where('course_id', $validated['courseid'])->where('year_id', $validated['academicyearid'])->count();
 
         if ($count == 0) {
             $courseYear = new CourseYear();
@@ -83,22 +86,35 @@ class CourseController extends Controller
             $courseYear->save();
 
             return response()->json(["success" => "Course with Year added successfully"]);
-        }else{
+        } else {
             return response()->json(["error" => "Already exits"]);
         }
     }
 
     function getCourseYears(Request $request)
     {
-        $courseYears = CourseYear::all();
-        $response = [];
-        foreach ($courseYears as $courseYear) {
-            $response[] = [
-                "id" => $courseYear->id,
-                "course" => $courseYear->course,
-                "year" => $courseYear->year,
-            ];
+        if ($request->programId == "-1" || $request->semesterId == "-1") {
+            $courseYears = CourseYear::all();
+            $response = [];
+            foreach ($courseYears as $courseYear) {
+                $response[] = [
+                    "id" => $courseYear->id,
+                    "course" => $courseYear->course,
+                    "year" => $courseYear->year,
+                ];
+            }
+            return response()->json($response);
+        } else {
+            $courseYears = CourseYear::get()->course->programsemester->where('programCode', $request->programId)->where('semesterId', $request->semesterId);
+            $response = [];
+            foreach ($courseYears as $courseYear) {
+                $response[] = [
+                    "id" => $courseYear->id,
+                    "course" => $courseYear->course,
+                    "year" => $courseYear->year,
+                ];
+            }
+            return response()->json($response);
         }
-        return response()->json($response);
     }
 }

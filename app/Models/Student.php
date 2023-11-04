@@ -12,7 +12,7 @@ class Student extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'enro' , 'fname','lname' , 'contactno' , 'email' , 'username' , 'status' , 'courseYearId'
+        'enro' , 'fname','lname' , 'contactno' , 'email' , 'username' , 'status' , 'programId'
     ];
 
     public function user()
@@ -20,9 +20,9 @@ class Student extends Model
         return $this->belongsTo(User::class, 'username', 'username');
     }
 
-    public function courseYear()
+    public function program()
     {
-        return $this->belongsTo(CourseYear::class, 'courseYearId', 'id');
+        return $this->belongsTo(Program::class, 'programId', 'id');
     }
 
     public function studentGroups()

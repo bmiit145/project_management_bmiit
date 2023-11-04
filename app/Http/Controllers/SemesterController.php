@@ -9,6 +9,17 @@ use Illuminate\Http\Request;
 
 class SemesterController extends Controller
 {
+    function getSemesters(Request $request){
+        if ($request->programId != null || $request->programId != "-1" || $request->programId != "") {
+            $programId = $request->programId;
+            $programSemesters = ProgramSemester::where('programCode' , $programId)->get();
+            $semesters = Semester::whereIn('id' , $programSemesters->pluck('semesterid'))->get();
+            return response()->json($semesters);
+        }
+        $semesters = Semester::all();
+        return response()->json($semesters);
+    }
+    
     function ViewAllSemester(){
 
         $semester = Semester::all();
@@ -16,7 +27,7 @@ class SemesterController extends Controller
         return view('admin.semester' , compact(['semester'=>'semester']));
     }
 
-    
+
     function ViewAllProgramSemester(){
 
         $programSemesters = ProgramSemester::with('program')->with('semester')->get();
@@ -51,7 +62,7 @@ class SemesterController extends Controller
             $Programsemester = new ProgramSemester();
             $Programsemester->programCode = $validated['program'];
             $Programsemester->semesterid = $validated['semester'];
-            $Programsemester->save(); 
+            $Programsemester->save();
 
         return response()->json(["success"=> "ProgramSemester added successfully"]);
         }else{
@@ -59,6 +70,6 @@ class SemesterController extends Controller
         }
     }
 
-    
+
 
 }

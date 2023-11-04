@@ -22,11 +22,9 @@
                                 <p class="mb-0">Total Student</p>
                             </div>
                             <div class="avatar">
-            <span class="avatar-initial rounded bg-label-primary">
-              <i class="bx bx-user bx-sm"></i>
-            </span>
-
-
+                                <span class="avatar-initial rounded bg-label-primary">
+                                  <i class="bx bx-user bx-sm"></i>
+                                </span>
                             </div>
                         </div>
                     </div>

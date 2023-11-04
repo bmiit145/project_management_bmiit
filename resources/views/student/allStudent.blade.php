@@ -22,8 +22,8 @@
                 <th>Last Name</th>
                 <th>Phone no.</th>
                 <th>Email</th>
-                <th>Course</th>
-                <th>Year</th>
+                <th>Program Code</th>
+                <th>Program Name</th>
                 <th>Status</th>
                 <th>Actions</th>
             </tr>
@@ -47,8 +47,8 @@
                         </td>
                         <td>{{ $student->contactno }}</td>
                         <td>{{ $student->email }}</td>
-                        <td>{{ $student->courseYear->course->name }}</td>
-                        <td>{{ $student->courseYear->year->name }}</td>
+                        <td>{{ $student->program->code }}</td>
+                        <td>{{ $student->program->name }}</td>
                         @if ($student->status == 1)
                             <td id="status"><span class="badge bg-label-primary me-1">Active</span></td>
                         @else

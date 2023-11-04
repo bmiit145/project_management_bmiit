@@ -235,16 +235,84 @@
     }
 
     $(document).ready(function () {
+
+        // fillup Nav program dropdown
+        $.ajax({
+            method: 'get',
+            url: '{{ route('getPrograms') }}',
+            data: {
+                {{--_token: '{{ csrf_token() }}',--}}
+            },
+            success: function (res) {
+                // here res is array of program object
+                // console.log(res);
+                var html = '<option value="-1" selected>select Program</option>';
+                $.each(res, function (key, value) {
+                    html += '<option value="' + value.code + '">' + value.code + '  ' + value.name + '</option>';
+                });
+                $(document).find('#NavProgram').html(html);
+
+                if (sessionStorage.getItem('NavProgramId')) {
+                    var NavProgramId = sessionStorage.getItem('NavProgramId');
+                } else {
+                    var NavProgramId = $(document).find('#NavSemester').val();
+                }
+
+                $(document).find('#NavProgram').val(NavProgramId);
+                $(document).find("#NavProgram").trigger('change');
+                // $(document).find("select#courseYear").val(NavcourseYearId);
+                // $(document).find("select#courseYear").trigger('change');
+
+            }
+        })
+
+        // change event for Nav program dropdown
+        $(document).on('change', '#NavProgram', function () {
+            var NavProgramId = $(document).find('#NavProgram').val();
+
+            // fill up semester dropdown
+            $.ajax({
+                method: 'get',
+                url: '{{ route('getSemesters') }}',
+                data: {
+                    programId: NavProgramId,
+                },
+                success: function (res) {
+                    // here res is array of semester object
+                    // console.log(res);
+                    var html = '<option value="-1" selected>Semester</option>';
+                    $.each(res, function (key, value) {
+                        html += '<option value="' + value.id + '">' + value.name + '</option>';
+                    });
+                    $(document).find('#NavSemester').html(html);
+
+
+                    // $(document).find("#NavSemester").trigger('change')
+                    // $(document).find("select#courseYear").val(NavcourseYearId);
+                    // $(document).find("select#courseYear").trigger('change');
+
+                }
+            })
+
+        })
+
+        console.log(2222255555);
+
         // fillup Nav course year dropdown
         $.ajax({
             method: 'get',
             url: '{{ route('getCourseYears') }}',
+            data: {
+                {{--_token: '{{ csrf_token() }}',--}}
+                programId: $(document).find('#NavProgram').val(),
+                semesterId: $(document).find('#NavSemester').val(),
+            },
             success: function (res) {
                 // here res is array of course year object
                 // console.log(res);
                 var html = '<option value="-1" selected>select Course and Acadamic Year</option>';
                 $.each(res, function (key, value) {
-                    html += '<option value="' + value.id + '">' + value.course.name + ' - ' + value.year.name + '</option>';
+                    html += '<option value="' + value.id + '">' + value.course.code + '  ' + value.course.name + ' - ' + value.year.name + '</option>';
                 });
                 $(document).find('#NavcourseYear').html(html);
 
@@ -262,15 +330,27 @@
             }
         })
 
+
         // change event for Nav course year dropdown
-        $(document).on('change', '#NavcourseYear', function () {
+        $(document).on('change', '#NavcourseYear , #NavSemester , #NavProgram', function () {
+
             var NavcourseYearId = $(document).find('#NavcourseYear').val();
+            var NavSemesterId = $(document).find('#NavSemester').val();
+            var NavProgramId = $(document).find('#NavProgram').val();
 
             $(document).find("select#courseYear").val(NavcourseYearId);
             $(document).find("select#courseYear").trigger('change');
 
+            // $(document).find("select#semester").val(NavSemesterId);
+            // $(document).find("select#semester").trigger('change');
+
+            $(document).find("select#program").val(NavProgramId);
+            $(document).find("select#program").trigger('change');
+
             //store value in Session storage
             sessionStorage.setItem('NavcourseYearId', NavcourseYearId);
+            sessionStorage.setItem('NavSemesterId', NavSemesterId);
+            sessionStorage.setItem('NavProgramId', NavProgramId);
 
             // store it to laravel session
             $.ajax({
@@ -278,7 +358,9 @@
                 url: '{{ route('setCourseYearSession') }}',
                 data: {
                     _token: '{{ csrf_token() }}',
-                    courseYearId: NavcourseYearId
+                    courseYearId: NavcourseYearId,
+                    semesterId: NavSemesterId,
+                    programId: NavProgramId,
                 },
                 success: function (res) {
                     console.log(res);
@@ -286,8 +368,12 @@
             })
 
         })
+
     })
 </script>
+
+<script src="{{ asset('assets/js/customNavScript.js') }}"></script>
+
 {{-- for search dropBox--}}
 <script>
     // $(document).ready(function () {

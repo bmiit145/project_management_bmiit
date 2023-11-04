@@ -195,7 +195,7 @@
                         }
 
                         $('#addCourseYarForm')[0].reset();
-
+                        $(document).find('#addCourseYarForm').find('select').val('-1').trigger('change');
 
                         // get and replace table bodyy
                         $.ajax({

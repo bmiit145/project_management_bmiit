@@ -8,7 +8,12 @@ use Illuminate\Validation\Validator;
 
 class ProgramController extends Controller
 {
-    //
+
+    function getPrograms(Request $request)
+    {
+        $programs = Program::all();
+        return response()->json($programs);
+    }
 
     function viewAllPrograms()
     {
@@ -32,11 +37,11 @@ class ProgramController extends Controller
             'name.required' => 'The name field is required',
         ]);
 
-        $program  = new Program();
+        $program = new Program();
         $program->code = $validated['code'];
         $program->name = $validated['name'];
         $program->save();
 
-        return response()->json(["success"=> "Program added successfully"]);
+        return response()->json(["success" => "Program added successfully"]);
     }
 }

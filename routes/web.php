@@ -40,6 +40,12 @@ Route::post('/forgotpassword', [UserController::class, 'forgotPassword'])->name(
 Route::get('/resetpassword', [UserController::class, 'resetPassword']);
 Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name('change.password');
 
+
+Route::get('/getCourseYears', [CourseController::class, 'getCourseYears'])->name('getCourseYears');
+Route::get('/getSemesters', [SemesterController::class, 'getSemesters'])->name('getSemesters');
+Route::get('/getPrograms', [ProgramController::class, 'getPrograms'])->name('getPrograms');
+
+
 //setCourseYearSession
 Route::post('/setCourseYearSession', [CourseController::class, 'setCourseYearSession'])->name('setCourseYearSession');
 
@@ -81,7 +87,6 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewAllCoursesYear', [CourseController::class, 'ViewAllCoursesYear'])->name('ManageCourseYears');
     Route::post('/AddCourse', [CourseController::class, 'createCourse'])->name('course.add');
     Route::post('/AddCourseYear', [CourseController::class, 'createCourseYear'])->name('courseYear.add');
-    Route::get('/getCourseYears', [CourseController::class, 'getCourseYears'])->name('getCourseYears');
 
 
     // committee

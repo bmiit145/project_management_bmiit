@@ -23,22 +23,59 @@
         </div>
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- Place this tag where you want the button to render. -->
+
+
+            <!-- Program -->
+            <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center" style="width: 300px">
+                    {{--                    <i class="bx bx-search fs-4 lh-0"></i>--}}
+                    <select class="form-select selectSearch" id="NavProgram"
+                            aria-label="Default select example">
+                        <option value="-1" selected>select Program</option>
+                        {{--                        @foreach ($courseYears as $courseYear)--}}
+                        {{--                            <option value="{{ $courseYear->id }}">{{ $courseYear->course->name }}--}}
+                        {{--                                - {{ $courseYear->year->name }}--}}
+                        {{--                            </option>--}}s
+                        {{--                        @endforeach--}}
+                    </select>
+                </div>
+            </div>
+            <!-- Program -->
+
+            <!-- Semester -->
+            <div class="navbar-nav align-items-center">
+                <div class="nav-item d-flex align-items-center mx-2" style="width: 120px">
+                    {{--                    <i class="bx bx-search fs-4 lh-0"></i>--}}
+                    <select class="form-select selectSearch" id="NavSemester"
+                            aria-label="Default select example">
+                        <option value="-1" selected>Semester</option>
+{{--                                                @foreach ($courseYears as $courseYear)--}}
+{{--                                                    <option value="{{ $courseYear->id }}">{{ $courseYear->course->name }}--}}
+{{--                                                        - {{ $courseYear->year->name }}--}}
+{{--                                                    </option>s--}}
+{{--                                                @endforeach--}}
+                    </select>
+                </div>
+            </div>
+            <!-- Semester -->
+
             <!-- Search -->
             <div class="navbar-nav align-items-center">
                 <div class="nav-item d-flex align-items-center" style="width: 300px">
-{{--                    <i class="bx bx-search fs-4 lh-0"></i>--}}
+                    {{--                    <i class="bx bx-search fs-4 lh-0"></i>--}}
                     <select class="form-select selectSearch" id="NavcourseYear"
-                            aria-label="Default select example" >
+                            aria-label="Default select example">
                         <option value="-1" selected>select Course and Acadamic Year</option>
-{{--                        @foreach ($courseYears as $courseYear)--}}
-{{--                            <option value="{{ $courseYear->id }}">{{ $courseYear->course->name }}--}}
-{{--                                - {{ $courseYear->year->name }}--}}
-{{--                            </option>--}}s
-{{--                        @endforeach--}}
+                        {{--                        @foreach ($courseYears as $courseYear)--}}
+                        {{--                            <option value="{{ $courseYear->id }}">{{ $courseYear->course->name }}--}}
+                        {{--                                - {{ $courseYear->year->name }}--}}
+                        {{--                            </option>--}}s
+                        {{--                        @endforeach--}}
                     </select>
                 </div>
             </div>
             <!-- /Search -->
+
 
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">

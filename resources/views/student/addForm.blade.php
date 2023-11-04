@@ -86,17 +86,17 @@
                                 <label id="contactno-error" class="error" for="contactno"></label>
                             </div>
                             <div class="mb-3">
-                                <label for="courseYear" class="form-label">Course Year</label>
-                                <select class="form-select selectSearch" id="courseYear" name="courseYearId"
+                                <label for="program" class="form-label">Program</label>
+                                <select class="form-select selectSearch" id="program" name="programId"
                                         aria-label="Default select example">
-                                    <option value="-1" selected>select Course Year</option>
-                                    @foreach ($courseYears as $courseYear)
+                                    <option value="-1" selected>select Program</option>
+                                    @foreach ($programs as $program)
                                         <option
-                                            value="{{ $courseYear->id }}">{{ $courseYear->course->name ." - " . $courseYear->year->name }}
+                                            value="{{ $program->id }}">{{ $program->code ." - " . $program->name }}
                                         </option>
                                     @endforeach
                                 </select>
-                                <label id="courseYear-error" class="error" for="courseYear"
+                                <label id="program-error" class="error" for="program"
                                        style="display: none"></label>
                             </div>
 
@@ -149,7 +149,7 @@
                     maxlength: 10, // Maximum length of 10 characters
                     digits: true // Only allow numeric digits
                 },
-                "courseYearId": {
+                "programId": {
                     required: true,
                     notEqualValue: '-1',
                 }
@@ -173,9 +173,9 @@
                 email: {
                     required: "Please Enter Valid Info."
                 },
-                courseYearId: {
-                    required: "Please Select Course Year.",
-                    notEqualValue: "Please Select Course Year."
+                programId: {
+                    required: "Please Select Program.",
+                    notEqualValue: "Please Select Program."
                 }
             },
             // errorPlacement: function(error, element) {

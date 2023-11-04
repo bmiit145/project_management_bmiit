@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Faculty;
+use App\Models\Program;
 use App\Models\User;
 use App\Models\Student;
 use Illuminate\Http\Request;
@@ -17,14 +18,14 @@ class StudentController extends Controller
         $students = Student::all();
         $courseYears = CourseYear::all();
 
-        return view('student.allStudent', compact(['students' => 'students' , 'courseYears' => $courseYears]));
+        return view('student.allStudent', compact(['students' => 'students', 'courseYears' => $courseYears]));
     }
 
     public function ViewAddStudentForm()
     {
-        $courseYears = CourseYear::all();
+        $programs = Program::all();
 
-        return view('student.addForm' , compact('courseYears'));
+        return view('student.addForm', compact('programs'));
     }
 
     public function changeStudentStatus(request $request)
@@ -51,8 +52,8 @@ class StudentController extends Controller
             "lname" => "required",
             "email" => 'required|email|unique:students',
             "contactno" => 'required|min:0|string|max:10',
-            "courseYearId" => 'required',
-        ],[
+            "programId" => 'required',
+        ], [
             'enro.required' => 'Enrollment Number is required',
             'enro.unique' => 'Enrollment Number is already taken',
             'fname.required' => 'First Name is required',
@@ -60,21 +61,25 @@ class StudentController extends Controller
             'email.required' => 'Email is required',
             'email.unique' => 'Email is already taken',
             'contactno.required' => 'Contact Number is required',
-            'courseYearId.required' => 'Course Year is required',
+            'programId.required' => 'Program is required',
         ]);
 
         $username = $validated['enro'];
 
         $student = new Student($validated);
         $student->username = $username;
-        $student->save();
 
-
-        if ($student->id) {
-            User::create([
-                'username'=> $username,
-                'password' => Hash::make('password'),
-                'role'=>0,
+        if ($student->save()) {
+            if ($student->id) {
+                User::create([
+                    'username' => $username,
+                    'password' => Hash::make('password'),
+                    'role' => 0,
+                ]);
+            }
+        } else {
+            return response()->json([
+                "error" => "Student Not created",
             ]);
         }
 

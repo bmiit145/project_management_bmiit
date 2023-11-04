@@ -18,8 +18,7 @@ class AddFieldStatusAndCourseYearId extends Migration
 
         Schema::table('students', function (Blueprint $table) {
             $table->integer('status')->default(1)->comment('1 = active , 0 = inactive');
-            $table->foreignId('courseYearId')->constrained('course_years')->onDelete('cascade');
-
+            $table->foreignId('programId')->constrained('program')->onDelete('cascade');
         });
     }
 
@@ -34,7 +33,7 @@ class AddFieldStatusAndCourseYearId extends Migration
             // drop field status and courseYearId from students table
             Schema::table('students', function (Blueprint $table) {
                 $table->dropColumn('status');
-                $table->dropColumn('courseYearId');
+                $table->dropColumn('programId');
             });
     }
 }

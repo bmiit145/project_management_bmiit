@@ -54,10 +54,11 @@ class AdminController extends Controller
 
 
         } else {
-
-            $totalStudent = Student::all()->count();
-            $InactiveStudent = Student::where('courseYearId', $courseYearId)->where('status', 0)->count();
-            $ActiveStudent = Student::where('courseYearId', $courseYearId)->where('status', 1)->count();
+            $programId = CourseYear::find($courseYearId)->course->programsemester->program->id;
+            $student = Student::where('programid' , $programId)->get();
+            $totalStudent = $student->count();
+            $InactiveStudent = $student->where('status', 0)->count();
+            $ActiveStudent = $student->where('status', 1)->count();
             $activeFaculties = Faculty::where('status', 1)->count();
             $InactiveFaculties = Faculty::where('status', 0)->count();
             $totalFaculties = Faculty::all()->count();

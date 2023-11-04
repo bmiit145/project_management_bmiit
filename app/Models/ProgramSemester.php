@@ -21,4 +21,9 @@ class ProgramSemester extends Model
         return $this->belongsTo(Semester::class , 'semesterid' , 'id');
     }
 
+    public function courses()
+    {
+        return $this->hasMany(Course::class , 'programSemesterId' , 'id');
+    }
+
 }
