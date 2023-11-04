@@ -44,9 +44,9 @@
 <script src="{{ asset('../assets/js/config.js')}}"></script>
 <!-- toastr -->
 
-<link rel="stylesheet" type="text/css" 
+<link rel="stylesheet" type="text/css"
      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-	
+
 </head>
 
 <body>
@@ -155,7 +155,8 @@
                 </div>
                 <div class="mb-3">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="remember" name="remember" />
+{{--                    <input class="form-check-input" type="checkbox" id="remember" name="remember" />--}}
+                      <input  class="form-check-input"  type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                     <label class="form-check-label" for="remember"> Remember Me </label>
                   </div>
                 </div>
@@ -179,7 +180,7 @@
 
     <!-- / Content -->
 
-    
+
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{ asset('../assets/vendor/libs/jquery/jquery.js')}}"></script>

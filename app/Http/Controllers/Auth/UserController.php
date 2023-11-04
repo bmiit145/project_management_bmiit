@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ForgotPasswordEmail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cookie;
 
 class UserController extends Controller
 {
@@ -48,18 +49,19 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        // $user = User::where('username' , $request->username)->first();
+//         $user = User::where('username' , $request->username)->first();
 
         $credentials = $request->validate([
             'username' => 'required',
             'password' => 'required',
         ]);
-        
-        $remember = $request->filled('remember'); // Check if 'remember' checkbox is checked
 
-        
+//        $credentials = $request->only('username', 'password');
+        $remember = $request->filled('remember');
+
+
         if (Auth::attempt($credentials, $remember)) {
-            // $user = Auth::login();
+//            $user = Auth::login($user);
             // $user= Auth::guard('faculty');
             // Auth::login($user);
             if (auth()->user()->role == 0) {
@@ -73,9 +75,9 @@ class UserController extends Controller
                 return redirect('faculty/dashboard');
             }
             // $this->showDashboard();
-
         } else {
             // dd("Not Login");
+            Auth::logout();
             return back()->with("error", "credentials are not correct");
         }
     }
@@ -83,6 +85,8 @@ class UserController extends Controller
     public function logout()
     {
         Auth::logout();
+        Cookie::queue('rememberme', '', -1);
+        echo '<script>window.sessionStorage.clear();</script>';
 
         return redirect('login');
     }

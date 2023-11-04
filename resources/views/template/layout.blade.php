@@ -233,6 +233,7 @@
         $(document).find("select#courseYear").val(courseYearId);
         $(document).find("select#courseYear").trigger('change');
     }
+
     $(document).ready(function () {
         // fillup Nav course year dropdown
         $.ajax({
@@ -247,8 +248,8 @@
                 });
                 $(document).find('#NavcourseYear').html(html);
 
-                if (localStorage.getItem('NavcourseYearId')) {
-                    var NavcourseYearId = localStorage.getItem('NavcourseYearId');
+                if (sessionStorage.getItem('NavcourseYearId')) {
+                    var NavcourseYearId = sessionStorage.getItem('NavcourseYearId');
 
                 } else {
                     var NavcourseYearId = $(document).find('#NavcourseYear').val();
@@ -269,8 +270,9 @@
             $(document).find("select#courseYear").val(NavcourseYearId);
             $(document).find("select#courseYear").trigger('change');
 
-            //store value in local storage
-            localStorage.setItem('NavcourseYearId', NavcourseYearId);
+            //store value in Session storage
+            sessionStorage.setItem('NavcourseYearId', NavcourseYearId);
+
         })
     })
 </script>
