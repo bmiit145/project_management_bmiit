@@ -15,7 +15,7 @@ class CreateEvaluationCriteriasTable extends Migration
     {
         Schema::create('evaluationCriteria', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }

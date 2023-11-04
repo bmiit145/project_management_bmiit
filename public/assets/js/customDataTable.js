@@ -54,7 +54,7 @@ function CreateDataTable(param) {
         param = "dataTable";
     }
 
-    var dataTable = $(document).find('#'+param).DataTable({
+    var dataTable = $(document).find('#' + param).DataTable({
             paging: true, // Enable pagination
             pageLength: 10, // Number of rows per page
             // responsive: true,
@@ -122,9 +122,11 @@ function CreateDataTable(param) {
             language:
                 {
                     emptyTable: "No records available", // Customize the "No record Found" message
-                },
+                }
+            ,
             select: true,
-        });
+        })
+    ;
 
     dataTable
         .on('order.dt search.dt', function () {
@@ -138,6 +140,7 @@ function CreateDataTable(param) {
         })
         .draw();
 
+
     $('#dataTable tbody').on('draw.dt', function () {
         $('#yourDataTable tbody td').each(function () {
             if ($(this).text() === 'NULL' || $(this).text() === 'null' || $(this).text() === 'Not Assigned') {
@@ -145,6 +148,16 @@ function CreateDataTable(param) {
             }
         });
     });
+
+
+    $('#DataTables_Table_0_filter input').on('keyup', function () {
+        dataTable.search(this.value).draw();
+    });
+
+    $('#DataTables_Table_0_length select').on('change', function () {
+        dataTable.page.len($(this).val()).draw();
+    });
+
 
     return dataTable;
 }
@@ -213,5 +226,5 @@ function DestroyDataTable(param) {
         param = "dataTable";
     }
 
-    $(document).find('#'+param).DataTable().destroy();
+    $(document).find('#' + param).DataTable().destroy();
 }

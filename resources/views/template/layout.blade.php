@@ -48,8 +48,6 @@
     <script src="{{ asset('js/jquery.validate.js') }}"></script>
 
 
-
-
     {{-- data Tables --}}
 
     <!--datatable css-->
@@ -226,10 +224,56 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+
+        // fillup Nav course year dropdown
+        $.ajax({
+            method: 'get',
+            url: '{{ route('getCourseYears') }}',
+            success: function (res) {
+                // here res is array of course year object
+                // console.log(res);
+                var html = '<option value="-1" selected>select Course and Acadamic Year</option>';
+                $.each(res, function (key, value) {
+                    html += '<option value="' + value.id + '">' + value.course.name + ' - ' + value.year.name + '</option>';
+                });
+                $(document).find('#NavcourseYear').html(html);
+
+
+                if (localStorage.getItem('NavcourseYearId')) {
+                    var NavcourseYearId = localStorage.getItem('NavcourseYearId');
+                    $(document).find('#NavcourseYear').val(NavcourseYearId);
+                    $(document).find("#NavcourseYear").trigger('change');
+                    $(document).find("select#courseYear").val(NavcourseYearId);
+                    $(document).find("select#courseYear").trigger('change');
+                } else {
+                    var NavcourseYearId = $(document).find('#NavcourseYear').val();
+                }
+
+            }
+        })
+
+        //get value from local storage
+
+        $(document).on('change', '#NavcourseYear', function () {
+            var NavcourseYearId = $(document).find('#NavcourseYear').val();
+
+            $(document).find("select#courseYear").val(NavcourseYearId);
+            $(document).find("select#courseYear").trigger('change');
+
+            //store value in local storage
+            localStorage.setItem('NavcourseYearId', NavcourseYearId);
+        })
+    })
+</script>
 {{-- for search dropBox--}}
 <script>
     // $(document).ready(function () {
-    $('.selectSearch').select2();
+    $(document).find('.selectSearch').select2();
+    // $(document).find('.MultipleselectSearch').select2();
+
     $('.MultipleselectSearch').select2({
         // tags: true,
         tokenSeparators: [',', ' '],

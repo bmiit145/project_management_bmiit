@@ -15,8 +15,9 @@ class StudentController extends Controller
     {
 
         $students = Student::all();
+        $courseYears = CourseYear::all();
 
-        return view('student.allStudent', compact(['students' => 'students']));
+        return view('student.allStudent', compact(['students' => 'students' , 'courseYears' => $courseYears]));
     }
 
     public function ViewAddStudentForm()

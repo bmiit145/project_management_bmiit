@@ -80,4 +80,18 @@ class CourseController extends Controller
             return response()->json(["error" => "Already exits"]);
         }
     }
+
+    function getCourseYears(Request $request)
+    {
+        $courseYears = CourseYear::all();
+        $response = [];
+        foreach ($courseYears as $courseYear) {
+            $response[] = [
+                "id" => $courseYear->id,
+                "course" => $courseYear->course,
+                "year" => $courseYear->year,
+            ];
+        }
+        return response()->json($response);
+    }
 }

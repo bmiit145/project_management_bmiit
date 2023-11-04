@@ -14,4 +14,15 @@ class Mark extends Model
         'evaluationMarkId',
         'marks',
     ];
+
+    public function group()
+    {
+        return $this->belongsTo(Group::class , 'groupId' , 'id');
+    }
+
+    public function evaluationMark()
+    {
+        return $this->belongsTo(EvaluationMark::class , 'evaluationMarkId' , 'id');
+    }
+
 }

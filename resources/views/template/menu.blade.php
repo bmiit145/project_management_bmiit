@@ -236,8 +236,34 @@
                     </a>
                 </li>
             </ul>
+
         </li>
 
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-layout"></i>
+                <div data-i18n="Presentation">Evaluation</div>
+            </a>
+
+            <ul class="menu-sub">
+                <li class="menu-item ">
+                    <a href="{{route('ManageEvaluations')}}" id="Schedule" class="menu-link">
+                        <div data-i18n="Schedule">Add Evaluation Criteria</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('ManageAllEvaluations')}}" id="evaluation" class="menu-link">
+                        <div data-i18n="evaluation">Evaluations Marks</div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('ManageEvaluationStudentMarks')}}" id="Panel" class="menu-link">
+                        <div data-i18n="Panels">Student Marks</div>
+                    </a>
+                </li>
+            </ul>
+
+        </li>
 
     </ul>
 </aside>

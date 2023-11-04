@@ -9,7 +9,6 @@
 
     <div class="row">
         <div class="col-md-6">
-
             <div class="col-xl">
                 <div class="card mb-4">
                     <div class="card-header d-flex justify-content-between align-items-center">
@@ -77,8 +76,41 @@
             <div class="card">
                 <h5 class="card-header "><strong> Guide Allocation Details</strong></h5>
                 <div class="table-responsive text-nowrap p-2">
-                    <table class="dt-scrollableTable table-responsive datatables-ajax dtr-column  table table-hover dataTable "
-                           id="dataTable">
+                    <div class="row mx-2">
+                        <div class="col-sm-12 col-md-4 col-lg-6">
+                            <div class="dataTables_length" id="DataTables_Table_0_length"><label><select
+                                        name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                        class="form-select">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="100">100</option>
+                                    </select></label></div>
+                        </div>
+                        <div class="col-sm-12 col-md-8 col-lg-6">
+                            <div
+                                class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center align-items-center flex-sm-nowrap flex-wrap me-1">
+                                <div class="me-3">
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search<input
+                                                type="search" class="form-control" placeholder="Search.."
+                                                aria-controls="DataTables_Table_0"></label></div>
+                                </div>
+                                <div class="user_role w-px-200 pb-3 pb-sm-0"><select id="UserRole"
+                                                                                     class="form-select text-capitalize">
+                                        <option value=""> Select Role</option>
+                                        <option value="Admin" class="text-capitalize">Admin</option>
+                                        <option value="Author" class="text-capitalize">Author</option>
+                                        <option value="Editor" class="text-capitalize">Editor</option>
+                                        <option value="Maintainer" class="text-capitalize">Maintainer</option>
+                                        <option value="Subscriber" class="text-capitalize">Subscriber</option>
+                                    </select></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <table
+                        class="dt-scrollableTable table-responsive datatables-ajax dtr-column  table table-hover dataTable "
+                        id="dataTable">
                         <thead>
                         <tr>
                             <th>No.</th>
@@ -177,7 +209,7 @@
     <script>
         $(document).ready(function () {
             // Initialize the DataTable
-            CreateDataTable();
+            var table = CreateDataTable();
         });
     </script>
     <script>
@@ -333,7 +365,7 @@
                     var groups = response;
                     var options = '<option value="-1" selected>select Group</option>';
                     $.each(groups, function (index, group) {
-                        options += '<option value="' + group.id + '">' + group.number + '\t - \t'+ group.title+ '</option>';
+                        options += '<option value="' + group.id + '">' + group.number + '\t - \t' + group.title + '</option>';
                     });
                     $('#group').html(options);
                     $('#group').attr('disabled', false);

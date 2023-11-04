@@ -80,6 +80,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewAllCoursesYear', [CourseController::class, 'ViewAllCoursesYear'])->name('ManageCourseYears');
     Route::post('/AddCourse', [CourseController::class, 'createCourse'])->name('course.add');
     Route::post('/AddCourseYear', [CourseController::class, 'createCourseYear'])->name('courseYear.add');
+    Route::get('/getCourseYears', [CourseController::class, 'getCourseYears'])->name('getCourseYears');
 
 
     // committee
@@ -98,7 +99,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::post('/AddAllocation', [allocationController::class, 'createAllocation'])->name('allocation.add');
 
     // project
-    Route::get('/ViewAllProjects', [ProjectController::class, 'ViewAllProjects'])->name('ManageProjects');
+    Route::get('/Projects', [ProjectController::class, 'ViewAllProjects'])->name('ManageProjects');
     Route::get('/getProject', [ProjectController::class, 'getProject'])->name('getProject');
     Route::post('/AddProject', [ProjectController::class, 'createProject'])->name('Project.add');
 
@@ -113,8 +114,21 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/getPanels', [presentationController::class, 'getPanels'])->name('getPanels');
     Route::post('/AddAllocatePresentation', [presentationController::class, 'createAllocatePresentation'])->name('panel.allocate');
 
-    Route::get('/ViewAllPresentations', [presentationController::class, 'ViewAllPresentations'])->name('ManagePresentations');
+    Route::get('/AllPresentations', [presentationController::class, 'ViewAllPresentations'])->name('ManagePresentations');
 
+    // Evalueation
+
+    Route::get('/EvaluationCriteria', [presentationController::class, 'viewAllEvaluationCriteria'])->name('ManageEvaluations');
+    Route::post('/AddEvaluation', [presentationController::class, 'createEvaluationCriteria'])->name('EvaluationCriteria.add');
+    Route::get('/ViewAllEvaluations', [presentationController::class, 'ViewAllEvaluations'])->name('ManageAllEvaluations');
+    Route::post('/AddEvaluationCriteriaMarks', [presentationController::class, 'createEvaluationCriteriaMarks'])->name('evaluationCriteriaMark.add');
+
+    Route::get('/EvaluationStudentMarks', [presentationController::class, 'EvaluationStudentMarks'])->name('ManageEvaluationStudentMarks');
+    Route::get('getEvaluationCriteria', [presentationController::class, 'getEvaluationCriteria'])->name('getEvaluationCriteria');
+    Route::get('/getOutOf', [presentationController::class, 'getOutOf'])->name('getOutOf');
+    Route::get('getOutOfByCriteriaId', [presentationController::class, 'getOutOfByCriteriaId'])->name('getOutOfByCriteriaId');
+    Route::get('/getGroupMark', [presentationController::class, 'getGroupMark'])->name('getGroupMark');
+    Route::post('/AddEvaluationStudentMarks', [presentationController::class, 'createEvaluationStudentMarks'])->name('evaluaionGroupMark.add');
 });
 
 // faculty route
