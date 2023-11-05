@@ -16,17 +16,21 @@ class allocationController extends Controller
         $courseYears = CourseYear::all();
         $faculties = Faculty::all();
         $allocations = Allocation::all();
-        return view('admin.viewAllAllocations', compact('courseYears', 'faculties' , 'allocations'));
+        return view('admin.viewAllAllocations', compact('courseYears', 'faculties', 'allocations'));
     }
 
     public function getGroups(Request $request)
     {
         $studentgroups = StudentGroup::where('courseYearId', $request->courseYearId)->get();
+
+        $studentgroups = $studentgroups->groupBy('groupid');
+
+//        dd($studentgroups);
         $groups = [];
         foreach ($studentgroups as $studentgroup) {
-            $group = $studentgroup->group;
+            $group = $studentgroup[0]->group;
 
-            $project = Project::where('groupid',$studentgroup->groupid )->first();
+            $project = Project::where('groupid', $studentgroup[0]->groupid)->first();
             if ($project != null) {
                 $title = $project->title;
             } else {
@@ -35,6 +39,7 @@ class allocationController extends Controller
             $group->title = $title;
             $groups[] = $group;
         }
+
         return response()->json($groups);
     }
 

@@ -97,6 +97,7 @@ Route::group(['middleware' => 'admin'], function () {
     // Group
     Route::get('/ViewAllGroups', [GroupController::class, 'ViewAllGroups'])->name('ManageGroups');
     Route::post('/AddGroup', [GroupController::class, 'createGroup'])->name('studentGroup.add');
+    Route::get('/getStudents', [GroupController::class, 'getStudents'])->name('getStudents');
 
     //allocation
     Route::get('/ViewAllAllocations', [allocationController::class, 'ViewAllAllocations'])->name('ManageAllocations');

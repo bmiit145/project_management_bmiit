@@ -257,13 +257,54 @@
             });
 
             $(document).on('change', '#courseYear', function () {
-                let value = $(this).val();
-                if (value != -1) {
-                    $('#name').val($(this).find(':selected').text().trim());
-                    // console.log($(this).find(':selected').text().trim())
-                } else {
-                    $('#name').val('');
+                // get Students of selected course year
+                var courseYearId = $(this).val();
+
+                if (courseYearId == -1) {
+                    $('.member_select_div select').html('<option value="-1" selected>select Student</option>');
+                    $('.member_select_div select').select2();
+                    $('.member_select_div select').val('-1').trigger('change');
+                    return;
                 }
+
+                $.ajax({
+                    type: "get",
+                    url: "{{ route('getStudents') }}",
+                    data: {courseYearId: courseYearId},
+                    // dataType: "dataType",
+                    success: function (res) {
+                        if (res.error) {
+                            toastr.error(res.error)
+                        }
+                        // console.log(res.success);
+                        // toastr.success(res.success)
+                        var students = res.students;
+                        var options = '<option value="-1" selected>select Student</option>';
+                        $.each(students, function (index, student) {
+                            options += '<option value="' + student.enro + '">' + student.fname + ' ' + student.lname + '</option>';
+                        });
+
+
+                        $('.member_select_div select').html(options);
+                        $('.member_select_div select').select2();
+                        $('.member_select_div select').val('-1').trigger('change');
+
+                    },
+                    error: function (xhr, response) {
+                        if (xhr.status == 422) {
+                            var errors = xhr.responseJSON.errors;
+                            $.each(errors, function (field, messages) {
+                                $.each(messages, function (index,
+                                                           message) {
+                                    toastr.error(messages)
+                                });
+                            });
+                        } else if (xhr.status == 500) {
+                            // toastr.error(xhr.responseJSON.message)
+                            toastr.error('Something went wrong !')
+                        }
+                    }
+                });
             });
         });
     </script>

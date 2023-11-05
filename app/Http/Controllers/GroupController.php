@@ -80,4 +80,19 @@ class GroupController extends Controller
 
         return response()->json(['success' => 'Group created successfully']);
     }
+
+    public function getStudents(Request $request)
+    {
+        $validated = $request->validate([
+            'courseYearId' => 'required | numeric | exists:course_years,id',
+        ]);
+
+        $courseYear = CourseYear::find($request->courseYearId);
+        $students = $courseYear->course->programsemester->program->students;
+            if ($students->isEmpty() || $students == null || $students == [] || $students == '' || $students->count() < 1) {
+                return response()->json(['error' => 'No students found']);
+            }
+        return response()->json(['students' => $students]);
+
+    }
 }
