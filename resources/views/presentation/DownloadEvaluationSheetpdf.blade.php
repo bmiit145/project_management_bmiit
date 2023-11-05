@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>PDF</title>
+    <title>{{ $code .'   -   '. $cname}} </title>
     <style>
         table {
             width: 100%; /* the table width to 100% */
@@ -53,7 +53,10 @@
                 {{--      Criteria Count          --}}
                 {{--                @dd($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"])--}}
                 @foreach($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"] as $no => $ecriteria)
-                    <th>{{ $ecriteria["evaluation_criteria"]["name"] . "\n( " . $ecriteria["outof"] ." )"}} </th>
+{{--                    @dd($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"]["id"] , $evaluations);--}}
+                    @if((in_array( $ecriteria["id"] , $evaluations ) || $evaluations[0] == -1 ))
+                        <th>{{ $ecriteria["evaluation_criteria"]["name"] . "\n( " . $ecriteria["outof"] ." )"}} </th>
+                    @endif
                 @endforeach
                 <th>Total</th>
             </tr>
@@ -77,32 +80,17 @@
                         <td>{{ $group['student']['fname'] . "\t" . $group['student']['lname']  }}</td>
                     @endif
                     @foreach($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"] as $no => $ecriteria)
-                        <td></td>
+                        @if((in_array( $ecriteria["id"] , $evaluations ) || $evaluations[0] == -1 ))
+                            <td></td>
+                        @endif
                     @endforeach
                     <td></td>
                 </tr>
+                {{--                only one row for project --}}
                 @if(!$withStudent)
                     @break
                 @endif
             @endforeach
-            {{--                    @endforeach--}}
-            {{--                @endforeach--}}
-
-            {{--        @foreach ($data as $row)--}}
-            {{--            <tr>--}}
-            {{--                <td rowspan="{{ $rowspan }}">{{ $row['No.'] }}</td>--}}
-            {{--                <td rowspan="{{ $rowspan }}">{{ $row['Group No.'] }}</td>--}}
-            {{--                <td rowspan="{{ $rowspan }}">{{ $row['Project Name'] }}</td>--}}
-            {{--                <td>{{ $row['Student Enrollment'] }}</td>--}}
-            {{--                <td>{{ $row['Student Name'] }}</td>--}}
-            {{--                <td>{{ $row['Criteria 1'] }}</td>--}}
-            {{--                <td>{{ $row['Criteria 2'] }}</td>--}}
-            {{--                <td>{{ $row['Criteria 3'] }}</td>--}}
-            {{--                <td>{{ $row['Criteria 4'] }}</td>--}}
-            {{--                <td>{{ $row['Criteria 5'] }}</td>--}}
-            {{--                <td>{{ $row['total'] }}</td>--}}
-            {{--            </tr>--}}
-            {{--        @endforeach--}}
             </tbody>
         </table>
         <br>

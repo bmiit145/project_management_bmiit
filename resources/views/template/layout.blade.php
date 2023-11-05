@@ -26,8 +26,10 @@
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{ asset('../assets/vendor/css/core.css') }}" class="template-customizer-core-css"/>
+    <link rel="stylesheet" href="{{ asset('assets/css/core.css') }}"/>
     <link rel="stylesheet" href="{{ asset('../assets/vendor/css/theme-default.css') }}"
           class="template-customizer-theme-css"/>
+
     <link rel="stylesheet" href="{{ asset('../assets/css/demo.css') }}"/>
 
     <!-- Vendors CSS -->
@@ -67,7 +69,6 @@
     {{--  Select 2 link  --}}
     <link rel="stylesheet" href="{{ mix('css/select2.min.css') }}"/>
     <script src="{{ mix('js/select2.min.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('assets/css/core.css') }}"/>
 
     <style>
         .dt-down-arrow {

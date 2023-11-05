@@ -422,16 +422,24 @@ class presentationController extends Controller
 
     public function DownloadEvaluationSheetPdf(Request $request)
     {
+//        dd($request->all());
+
         $validated = $request->validate([
             'courseYearId' => 'required | numeric | exists:course_years,id',
+            'withStudent' => 'required',
+            'evaluation' => 'required | array | min:1',
         ]);
 
-        $courseYearId = $request->courseYearId;
-//        $courseYear = CourseYear::where('id', $courseYearId)->first();
-//
-//        $evaluationCriteriaMarks = EvaluationMark::where('courseYearId', $courseYearId)->get();
-//        $groups = StudentGroup::where('courseYearId', $courseYearId)->get();
 
+        $courseYearId = $request->courseYearId;
+        $withStudent = $request->withStudent;
+        $evaluations = $request->evaluation;
+
+        if ($withStudent == "TRUE") {
+            $withStudent = true;
+        } else {
+            $withStudent = false;
+        }
 
 //        $panel = PanelProject::join('panels', 'panel_projects.panelId', '=', 'panels.id')
 //            ->join('groups', 'panel_projects.groupId', '=', 'groups.id')
@@ -450,15 +458,21 @@ class presentationController extends Controller
                 $query->where('courseYearId', $courseYearId);
             })->get();
 
-
         $data = $panel->groupBy('panelId')->toArray();
-        $withStudent = TRUE;
+
+        $course = CourseYear::where('id', $courseYearId)->first()->course;
+        $code = $course->code;
+        $cname = $course->name;
+
+        if (empty($data)) {
+            // return with error and status code as 404
+            return response()->json(['error' => 'No Sheet found'], 404);
+        }
 
 //        return response()->json($data);
 //        dd($panel->toArray());
 
-
-        $pdf = PDF::loadView('presentation.DownloadEvaluationSheetpdf', compact('data', 'withStudent'));
+        $pdf = PDF::loadView('presentation.DownloadEvaluationSheetpdf', compact('data', 'withStudent', 'code', 'cname' , 'evaluations'));
 
         $pdf->setOptions([
             'isPhpEnabled' => true,
@@ -478,12 +492,18 @@ class presentationController extends Controller
         $pdf->setPaper('legal', 'landscape');
 //        $pdf->setPaper('A3', 'landscape');
 //        $pdf->setPaper('auto');
+
         $pdfContent = $pdf->output();
+
+        //set name of download
+
+        $filename = $code . '_' . $cname . '_EvaluationSheet';
+
         // Set response headers for PDF download
-        $filename = 'EvaluationSheet';
         $headers = [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename='.$filename .'.pdf',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '.pdf"',
+            'filename' => "$filename",
         ];
 
         return response($pdfContent, 200, $headers);
