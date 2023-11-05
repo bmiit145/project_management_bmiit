@@ -255,7 +255,7 @@
                 if (sessionStorage.getItem('NavProgramId')) {
                     var NavProgramId = sessionStorage.getItem('NavProgramId');
                 } else {
-                    var NavProgramId = $(document).find('#NavSemester').val();
+                    var NavProgramId = '-1';
                 }
 
                 $(document).find('#NavProgram').val(NavProgramId);
@@ -268,6 +268,7 @@
 
         // change event for Nav program dropdown
         $(document).on('change', '#NavProgram', function () {
+            console.log("Program Change")
             var NavProgramId = $(document).find('#NavProgram').val();
 
             // fill up semester dropdown
@@ -279,15 +280,31 @@
                 },
                 success: function (res) {
                     // here res is array of semester object
-                    // console.log(res);
-                    var html = '<option value="-1" selected>Semester</option>';
-                    $.each(res, function (key, value) {
-                        html += '<option value="' + value.id + '">' + value.name + '</option>';
-                    });
+                    // console.log(res.length);
+
+                    var NavSemesterId = '-1';
+                    if (res.length != 0) {
+                        var html = '<option value="-1" selected>Semester</option>';
+                        $.each(res, function (key, value) {
+
+                            if (sessionStorage.getItem('NavSemesterId') && sessionStorage.getItem('NavSemesterId') == value.id) {
+                                console.log("Semester Id Matched");
+                                NavSemesterId = sessionStorage.getItem('NavSemesterId');
+                            }
+
+                            html += '<option value="' + value.id + '">' + value.name + '</option>';
+                        });
+
+                    } else {
+                        var html = '<option value="-1" selected>No Semester Found</option>';
+                    }
+
                     $(document).find('#NavSemester').html(html);
 
 
-                    // $(document).find("#NavSemester").trigger('change')
+                    $(document).find('#NavSemester').val(NavSemesterId);
+                    $(document).find("#NavSemester").trigger('change')
+
                     // $(document).find("select#courseYear").val(NavcourseYearId);
                     // $(document).find("select#courseYear").trigger('change');
 
@@ -298,54 +315,69 @@
 
         console.log(2222255555);
 
-        // fillup Nav course year dropdown
-        $.ajax({
-            method: 'get',
-            url: '{{ route('getCourseYears') }}',
-            data: {
-                {{--_token: '{{ csrf_token() }}',--}}
-                programId: $(document).find('#NavProgram').val(),
-                semesterId: $(document).find('#NavSemester').val(),
-            },
-            success: function (res) {
-                // here res is array of course year object
-                // console.log(res);
-                var html = '<option value="-1" selected>select Course and Acadamic Year</option>';
-                $.each(res, function (key, value) {
-                    html += '<option value="' + value.id + '">' + value.course.code + '  ' + value.course.name + ' - ' + value.year.name + '</option>';
-                });
-                $(document).find('#NavcourseYear').html(html);
+        //change event for Nav semester dropdown
+        $(document).on('change', '#NavSemester', function () {
+            console.log("Semester Change")
 
-                if (sessionStorage.getItem('NavcourseYearId')) {
-                    var NavcourseYearId = sessionStorage.getItem('NavcourseYearId');
-                } else {
-                    var NavcourseYearId = $(document).find('#NavcourseYear').val();
+            // fillup Nav course year dropdown
+            $.ajax({
+                method: 'get',
+                url: '{{ route('getCourseYears') }}',
+                data: {
+                    {{--_token: '{{ csrf_token() }}',--}}
+                    programId: $(document).find('#NavProgram').val(),
+                    semesterId: $(document).find('#NavSemester').val(),
+                },
+                success: function (res) {
+                    // here res is array of course year object
+                    // console.log(res);
+
+                    var NavcourseYearId = '-1';
+                    if (!res.error) {
+                        var html = '<option value="-1" selected>select Course and Acadamic Year</option>';
+                        $.each(res, function (key, value) {
+                            html += '<option value="' + value.id + '">' + value.course.code + '  ' + value.course.name + ' - ' + value.year.name + '</option>';
+                            //check for session storage id in course year dropdown
+                            if (sessionStorage.getItem('NavcourseYearId') && sessionStorage.getItem('NavcourseYearId') == value.id) {
+                                console.log("Course Year Id Matched");
+                                NavcourseYearId = sessionStorage.getItem('NavcourseYearId');
+                            }
+                        });
+                    } else {
+                        var html = '<option value="-1" selected>No Course Year Found</option>';
+                    }
+
+                    $(document).find('#NavcourseYear').html(html);
+
+                    $(document).find('#NavcourseYear').val(NavcourseYearId);
+                    $(document).find("#NavcourseYear").trigger('change');
+
+                    courseYearFill();
+                    // $(document).find("select#courseYear").val(NavcourseYearId);
+                    // $(document).find("select#courseYear").trigger('change');
+
                 }
-
-                $(document).find('#NavcourseYear').val(NavcourseYearId);
-                $(document).find("#NavcourseYear").trigger('change');
-                // $(document).find("select#courseYear").val(NavcourseYearId);
-                // $(document).find("select#courseYear").trigger('change');
-
-            }
+            })
         })
 
 
         // change event for Nav course year dropdown
-        $(document).on('change', '#NavcourseYear , #NavSemester , #NavProgram', function () {
+        $(document).on('change', '#NavcourseYear', function () {
+            console.log("Course Year Change");
 
             var NavcourseYearId = $(document).find('#NavcourseYear').val();
             var NavSemesterId = $(document).find('#NavSemester').val();
             var NavProgramId = $(document).find('#NavProgram').val();
 
-            $(document).find("select#courseYear").val(NavcourseYearId);
-            $(document).find("select#courseYear").trigger('change');
 
+            // $(document).find("select#program").val(NavProgramId);
+            // $(document).find("select#program").trigger('change');
+            //
             // $(document).find("select#semester").val(NavSemesterId);
             // $(document).find("select#semester").trigger('change');
-
-            $(document).find("select#program").val(NavProgramId);
-            $(document).find("select#program").trigger('change');
+            //
+            // $(document).find("select#courseYear").val(NavcourseYearId);
+            // $(document).find("select#courseYear").trigger('change');
 
             //store value in Session storage
             sessionStorage.setItem('NavcourseYearId', NavcourseYearId);

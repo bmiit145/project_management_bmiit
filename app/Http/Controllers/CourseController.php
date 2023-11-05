@@ -94,8 +94,25 @@ class CourseController extends Controller
     function getCourseYears(Request $request)
     {
         if ($request->programId == "-1" || $request->semesterId == "-1") {
-            $courseYears = CourseYear::all();
+
+            if ($request->programId == "-1" && $request->semesterId == "-1") {
+                $courseYears = CourseYear::all();
+            } else {
+                if ($request->programId == "-1") {
+                    $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($request) {
+                        $query->where('semesterid', $request->semesterId);
+                    })->get();
+                } else {
+                    $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($request) {
+                        $query->where('programCode', $request->programId);
+                    })->get();
+                }
+            }
+
             $response = [];
+            if ($courseYears->count() == 0) {
+                return response()->json([$response, "error" => "No course found"]);
+            }
             foreach ($courseYears as $courseYear) {
                 $response[] = [
                     "id" => $courseYear->id,
@@ -105,8 +122,13 @@ class CourseController extends Controller
             }
             return response()->json($response);
         } else {
-            $courseYears = CourseYear::get()->course->programsemester->where('programCode', $request->programId)->where('semesterId', $request->semesterId);
+            $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($request) {
+                $query->where('programCode', $request->programId)->where('semesterid', $request->semesterId);
+            })->get();
             $response = [];
+            if ($courseYears->count() == 0) {
+                return response()->json([$response, "error" => "No course found"]);
+            }
             foreach ($courseYears as $courseYear) {
                 $response[] = [
                     "id" => $courseYear->id,

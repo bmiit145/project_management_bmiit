@@ -18,17 +18,17 @@ class CourseYear extends Model
 
     public function course()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsTo(Course::class , 'course_id' , 'id');
     }
 
     public function year()
     {
-        return $this->belongsTo(academicyear::class);
+        return $this->belongsTo(academicyear::class , 'year_id' , 'id');
     }
 
     public  function committee()
     {
-        return $this->hasMany(Committee::class);
+        return $this->hasMany(Committee::class , 'courseYearId' , 'id');
     }
 
     public function schedule()

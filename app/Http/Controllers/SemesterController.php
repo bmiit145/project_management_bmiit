@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class SemesterController extends Controller
 {
     function getSemesters(Request $request){
-        if ($request->programId != null || $request->programId != "-1" || $request->programId != "") {
+        if ($request->programId != null && $request->programId != "-1" && $request->programId != "") {
             $programId = $request->programId;
             $programSemesters = ProgramSemester::where('programCode' , $programId)->get();
             $semesters = Semester::whereIn('id' , $programSemesters->pluck('semesterid'))->get();
@@ -19,7 +19,7 @@ class SemesterController extends Controller
         $semesters = Semester::all();
         return response()->json($semesters);
     }
-    
+
     function ViewAllSemester(){
 
         $semester = Semester::all();
