@@ -53,7 +53,7 @@
                 {{--      Criteria Count          --}}
                 {{--                @dd($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"])--}}
                 @foreach($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"] as $no => $ecriteria)
-{{--                    @dd($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"]["id"] , $evaluations);--}}
+                    {{--                    @dd($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"]["id"] , $evaluations);--}}
                     @if((in_array( $ecriteria["id"] , $evaluations ) || $evaluations[0] == -1 ))
                         <th>{{ $ecriteria["evaluation_criteria"]["name"] . "\n( " . $ecriteria["outof"] ." )"}} </th>
                     @endif
@@ -62,35 +62,40 @@
             </tr>
             </thead>
             <tbody>
-            @if($withStudent)
-                    <?php $rowspan = count($panel[0]["group"]["student_groups"]) ?>
-            @else
-                    <?php $rowspan = 1 ?>
-            @endif
 
-            @foreach($panel[0]["group"]["student_groups"] as $gkey => $group)
-                <tr>
-                    @if( $gkey == 0 || !$withStudent)
-                        <td rowspan="{{ $rowspan }}"> {{ ++$gkey }}</td>
-                        <td rowspan="{{ $rowspan }}"> {{ $panel[0]["group"]["number"] }}</td>
-                        <td rowspan="{{ $rowspan }}"> {{ $panel[0]["group"]["project"] ? $panel[0]["group"]["project"]["title"] : "No Project" }}</td>
-                    @endif
-                    @if($withStudent)
-                        <td>{{ $group['student']['enro'] }}</td>
-                        <td>{{ $group['student']['fname'] . "\t" . $group['student']['lname']  }}</td>
-                    @endif
-                    @foreach($panel[0]["group"]["student_groups"][0]["course_year"]["evaluation_mark"] as $no => $ecriteria)
-                        @if((in_array( $ecriteria["id"] , $evaluations ) || $evaluations[0] == -1 ))
-                            <td></td>
-                        @endif
-                    @endforeach
-                    <td></td>
-                </tr>
-                {{--                only one row for project --}}
-                @if(!$withStudent)
-                    @break
+
+            @foreach($panel as $pkey => $groups)
+                {{--                @dd($groups)--}}
+                @if($withStudent)
+                        <?php $rowspan = count($groups["group"]["student_groups"]) ?>
+                @else
+                        <?php $rowspan = 1 ?>
                 @endif
+                @foreach($groups["group"]["student_groups"] as $gkey => $group)
+                    <tr>
+                        @if( $gkey == 0 || !$withStudent)
+                            <td rowspan="{{ $rowspan }}"> {{ ++$pkey }}</td>
+                            <td rowspan="{{ $rowspan }}"> {{ $groups["group"]["number"] }}</td>
+                            <td rowspan="{{ $rowspan }}"> {{ $groups["group"]["project"] ? $groups["group"]["project"]["title"] : "No Project" }}</td>
+                        @endif
+                        @if($withStudent)
+                            <td>{{ $group['student']['enro'] }}</td>
+                            <td>{{ $group['student']['fname'] . "\t" . $group['student']['lname']  }}</td>
+                        @endif
+                        @foreach($groups["group"]["student_groups"][0]["course_year"]["evaluation_mark"] as $no => $ecriteria)
+                            @if((in_array( $ecriteria["id"] , $evaluations ) || $evaluations[0] == -1 ))
+                                <td></td>
+                            @endif
+                        @endforeach
+                        <td></td>
+                    </tr>
+                    {{--                only one row for project --}}
+                    @if(!$withStudent)
+                        @break
+                    @endif
+                @endforeach
             @endforeach
+
             </tbody>
         </table>
         <br>
