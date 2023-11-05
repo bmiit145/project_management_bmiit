@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EvaluationMark;
 use App\Models\Panel;
 use App\Models\Project;
+use App\Models\StudentGroup;
 use Illuminate\Http\Request;
 use App\Models\CourseYear;
 use App\Models\Schedule;
@@ -15,6 +16,7 @@ use App\Models\PanelProject;
 use App\Models\EvaluationCriteria;
 use App\Models\Mark;
 use function PHPUnit\Framework\isEmpty;
+use PDF;
 
 class presentationController extends Controller
 {
@@ -407,4 +409,84 @@ class presentationController extends Controller
             }
         }
     }
+
+    public function DownloadEvaluationSheet()
+    {
+        $courseYears = CourseYear::all();
+        $evaluationCriterias = EvaluationCriteria::all();
+        $evaluationCriteriaMarks = EvaluationMark::all();
+        $groups = Student::all();
+        $marks = Mark::all();
+        return view('presentation.DownloadEvaluationSheet', compact('courseYears', 'evaluationCriterias', 'evaluationCriteriaMarks', 'groups', 'marks'));
+    }
+
+    public function DownloadEvaluationSheetPdf(Request $request)
+    {
+        $validated = $request->validate([
+            'courseYearId' => 'required | numeric | exists:course_years,id',
+        ]);
+
+        $courseYearId = $request->courseYearId;
+//        $courseYear = CourseYear::where('id', $courseYearId)->first();
+//
+//        $evaluationCriteriaMarks = EvaluationMark::where('courseYearId', $courseYearId)->get();
+//        $groups = StudentGroup::where('courseYearId', $courseYearId)->get();
+
+
+//        $panel = PanelProject::join('panels', 'panel_projects.panelId', '=', 'panels.id')
+//            ->join('groups', 'panel_projects.groupId', '=', 'groups.id')
+////          ->join('projects', 'panel_projects.groupId', '=', 'projects.groupId')
+//            ->join('student_groups' , 'groups.id' , '=' , 'student_groups.groupId')
+//            ->join('course_years' , 'student_groups.courseYearId' , '=' , 'course_years.id')
+//            ->join('courses' , 'course_years.course_id' , '=' , 'courses.id')
+//            ->join('academicyears' , 'course_years.year_id' , '=' , 'academicyears.id')
+//            ->join('students' , 'student_groups.studentenro' , '=' , 'students.enro')
+//            ->join('programs' , 'students.programId' , '=' , 'programs.id')
+//            ->where('courseYearId', $courseYearId)
+//            ->get();
+
+        $panel = PanelProject::with(['panel', 'group.studentGroups.courseYear.year', 'group.studentGroups.courseYear.course', 'group.studentGroups.student.program', 'group.studentGroups.student', 'group.project', 'group.studentGroups.courseYear.evaluationMark.evaluationCriteria'])
+            ->whereHas('group.studentGroups', function ($query) use ($courseYearId) {
+                $query->where('courseYearId', $courseYearId);
+            })->get();
+
+
+        $data = $panel->groupBy('panelId')->toArray();
+        $withStudent = TRUE;
+
+//        return response()->json($data);
+//        dd($panel->toArray());
+
+
+        $pdf = PDF::loadView('presentation.DownloadEvaluationSheetpdf', compact('data', 'withStudent'));
+
+        $pdf->setOptions([
+            'isPhpEnabled' => true,
+            'isHtml5ParserEnabled' => true,
+            'isFontSubsettingEnabled' => true,
+            'isRemoteEnabled' => true,
+            'defaultPaperSize' => 'A4',
+            'defaultFont' => 'Arial',
+            'margin_top' => 0,
+            'margin_bottom' => 0,
+            'margin_left' => 0,
+            'margin_right' => 0,
+            'dpi' => 1500,
+            'fontHeightRatio' => 1.5,
+        ]);
+
+        $pdf->setPaper('legal', 'landscape');
+//        $pdf->setPaper('A3', 'landscape');
+//        $pdf->setPaper('auto');
+        $pdfContent = $pdf->output();
+        // Set response headers for PDF download
+        $filename = 'EvaluationSheet';
+        $headers = [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename='.$filename .'.pdf',
+        ];
+
+        return response($pdfContent, 200, $headers);
+    }
+
 }

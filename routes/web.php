@@ -135,7 +135,11 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('getOutOfByCriteriaId', [presentationController::class, 'getOutOfByCriteriaId'])->name('getOutOfByCriteriaId');
     Route::get('/getGroupMark', [presentationController::class, 'getGroupMark'])->name('getGroupMark');
     Route::post('/AddEvaluationStudentMarks', [presentationController::class, 'createEvaluationStudentMarks'])->name('evaluaionGroupMark.add');
+
+    // Evaluation Sheet
+    Route::get('/DownloadEvaluationSheet' , [presentationController::class, 'DownloadEvaluationSheet'])->name('DownloadEvaluationSheet');
 });
+    Route::post('/DownloadEvaluationSheet' , [presentationController::class, 'DownloadEvaluationSheetPdf'])->name('DownloadEvaluationSheetPdf');
 
 // faculty route
 Route::group(['middleware' => 'faculty'], function () {

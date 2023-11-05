@@ -261,6 +261,11 @@
                         <div data-i18n="Panels">Student Marks</div>
                     </a>
                 </li>
+                <li class="menu-item">
+                    <a href="{{route('DownloadEvaluationSheet')}}" id="Panel" class="menu-link">
+                        <div data-i18n="Panels">Evaluation Sheet Download</div>
+                    </a>
+                </li>
             </ul>
 
         </li>

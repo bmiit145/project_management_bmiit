@@ -33,17 +33,17 @@ class CourseYear extends Model
 
     public function schedule()
     {
-        return $this->hasMany(Schedule::class);
+        return $this->hasMany(Schedule::class , 'courseYearId' , 'id');
     }
 
     public function presentationPanel()
     {
-        return $this->hasMany(PresentationPanel::class);
+        return $this->hasMany(PresentationPanel::class , 'courseYearId' , 'id');
     }
 
     public function evaluationMark()
     {
-        return $this->hasMany(EvaluationMark::class);
+        return $this->hasMany(EvaluationMark::class , 'courseYearId' , 'id');
     }
 
 }
