@@ -76,7 +76,9 @@
             <div class="card">
                 <h5 class="card-header "><strong> Guide Allocation Details</strong></h5>
                 <div class="table-responsive text-nowrap p-2">
-                    <div class="row mx-2">
+
+                    {{--                Search --}}
+                    <div class="row mx-2 my-2">
                         <div class="col-sm-12 col-md-4 col-lg-6">
                             <div class="dataTables_length" id="DataTables_Table_0_length"><label><select
                                         name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
@@ -85,29 +87,21 @@
                                         <option value="25">25</option>
                                         <option value="50">50</option>
                                         <option value="100">100</option>
+                                        <option value="-1">Show All</option>
                                     </select></label></div>
                         </div>
                         <div class="col-sm-12 col-md-8 col-lg-6">
                             <div
                                 class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center align-items-center flex-sm-nowrap flex-wrap me-1">
                                 <div class="me-3">
-                                    <div id="DataTables_Table_0_filter" class="dataTables_filter"><label>Search<input
+                                    <div id="DataTables_Table_0_filter" class="dataTables_filter"><label><input
                                                 type="search" class="form-control" placeholder="Search.."
                                                 aria-controls="DataTables_Table_0"></label></div>
                                 </div>
-                                <div class="user_role w-px-200 pb-3 pb-sm-0"><select id="UserRole"
-                                                                                     class="form-select text-capitalize">
-                                        <option value=""> Select Role</option>
-                                        <option value="Admin" class="text-capitalize">Admin</option>
-                                        <option value="Author" class="text-capitalize">Author</option>
-                                        <option value="Editor" class="text-capitalize">Editor</option>
-                                        <option value="Maintainer" class="text-capitalize">Maintainer</option>
-                                        <option value="Subscriber" class="text-capitalize">Subscriber</option>
-                                    </select></div>
                             </div>
                         </div>
+                        {{--                        <hr class="mt-0">--}}
                     </div>
-
                     <table
                         class="dt-scrollableTable table-responsive datatables-ajax dtr-column  table table-hover dataTable "
                         id="dataTable">

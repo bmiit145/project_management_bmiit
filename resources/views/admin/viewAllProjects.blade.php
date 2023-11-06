@@ -205,7 +205,6 @@
 
     <script>
 
-
         $(document).ready(function () {
             CreateDataTableProject();
         });

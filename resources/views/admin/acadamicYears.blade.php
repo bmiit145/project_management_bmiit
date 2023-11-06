@@ -26,19 +26,19 @@
                                                                     <div class="input-group input-group-merge">
                                                                         {{-- <span id="code2" class="input-group-text">
                                         <i class="bx bx-buildings"></i></span> --}}
-                                                                        <input type="text" id="code" class="form-control" name="code"
-                                                                            placeholder="IT4003" aria-label="IT4003" aria-describedby="code2" />
-                                                                    </div>
-                                                                    <label id="code-error" class="error" for="code"></label>
-                                                                </div>
-                                                            -->
+                            <input type="text" id="code" class="form-control" name="code"
+                                placeholder="IT4003" aria-label="IT4003" aria-describedby="code2" />
+                        </div>
+                        <label id="code-error" class="error" for="code"></label>
+                    </div>
+-->
                             <div class="mb-3">
                                 <label class="form-label" for="name">Year Name</label>
                                 <div class="input-group input-group-merge">
                                     {{-- <span id="name2" class="input-group-text">
                                         <i class="bx bx-buildings"></i></span> --}}
                                     <input type="text" id="name" class="form-control" name="name"
-                                        placeholder="2023-24" aria-label="2023-24" aria-describedby="name2" />
+                                           placeholder="2023-24" aria-label="2023-24" aria-describedby="name2"/>
                                 </div>
                                 <label id="name-error" class="error" for="name"></label>
                             </div>
@@ -53,68 +53,95 @@
         </div>
         <div class="col-md-6">
             <div class="card">
-                <h5 class="card-header "> <strong> Acadamic Year List</strong></h5>
+                <h5 class="card-header "><strong> Acadamic Year List</strong></h5>
+                {{--                SEARCH BAR --}}
+
+                {{--                Search --}}
+                <div class="row mx-2 my-2">
+                    <div class="col-sm-12 col-md-4 col-lg-6">
+                        <div class="dataTables_length" id="DataTables_Table_0_length"><label><select
+                                    name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                    class="form-select">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="-1">Show All</option>
+                                </select></label></div>
+                    </div>
+                    <div class="col-sm-12 col-md-8 col-lg-6">
+                        <div
+                            class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center align-items-center flex-sm-nowrap flex-wrap me-1">
+                            <div class="me-3">
+                                <div id="DataTables_Table_0_filter" class="dataTables_filter"><label><input
+                                            type="search" class="form-control" placeholder="Search.."
+                                            aria-controls="DataTables_Table_0"></label></div>
+                            </div>
+                        </div>
+                    </div>
+                    {{--                        <hr class="mt-0">--}}
+                </div>
                 <div class="table-responsive text-nowrap p-2">
                     <table class="table table-hover table-responsive text-nowrap" id="dataTable">
                         <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>Name</th>
-                                {{-- <th>Name</th> --}}
-                                {{-- <th>Status</th>
-                                <th>Actions</th> --}}
-                            </tr>
+                        <tr>
+                            <th>No.</th>
+                            <th>Name</th>
+                            {{-- <th>Name</th> --}}
+                            {{-- <th>Status</th>
+                            <th>Actions</th> --}}
+                        </tr>
                         </thead>
                         <tbody class="table-border-bottom-0">
-                            {{-- @if (count($years) != 0) --}}
-                            @foreach ($years as $key => $year)
-                                <tr>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                        <strong>{{ ++$key }}</strong>
-                                    </td>
-                                    <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                        <strong>{{ $year->name }}</strong>
-                                    </td>
-                                    {{-- <td>
-                                    @if ($program->status == 1)
-                                        <td id="status"><span class="badge bg-label-primary me-1">Active</span></td>
-                                    @else
-                                        <td id="status"><span class="badge bg-label-danger me-1">InActive</span></td>
-                                    @endif
-                                    </td> --}}
-                                    {{-- <td>
-                                        <div class="dropdown">
-                                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                                data-bs-toggle="dropdown">
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item" href="javascript:void(0);"><i
-                                                        class="bx bx-edit-alt me-1"></i>
-                                                    Edit</a>
-                                                @if ($program->status == 1)
-                                                    <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
-                                                        data-username="{{ $program->code }}"
-                                                        data-status="{{ $program->status }}"><i class="bx bx-refresh"></i>
-                                                        <span>Inactive</span></a>
-                                                @else
-                                                    <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
-                                                        data-username="{{ $program->code }}"
-                                                        data-status="{{ $program->status }}"><i
-                                                            class="bx bx-refresh"></i>
-                                                        <span>Active</span></a>
-                                                @endif
+                        {{-- @if (count($years) != 0) --}}
+                        @foreach ($years as $key => $year)
+                            <tr>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                    <strong>{{ ++$key }}</strong>
+                                </td>
+                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                    <strong>{{ $year->name }}</strong>
+                                </td>
+                                {{-- <td>
+                                @if ($program->status == 1)
+                                    <td id="status"><span class="badge bg-label-primary me-1">Active</span></td>
+                                @else
+                                    <td id="status"><span class="badge bg-label-danger me-1">InActive</span></td>
+                                @endif
+                                </td> --}}
+                                {{-- <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                            data-bs-toggle="dropdown">
+                                            <i class="bx bx-dots-vertical-rounded"></i>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="javascript:void(0);"><i
+                                                    class="bx bx-edit-alt me-1"></i>
+                                                Edit</a>
+                                            @if ($program->status == 1)
+                                                <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
+                                                    data-username="{{ $program->code }}"
+                                                    data-status="{{ $program->status }}"><i class="bx bx-refresh"></i>
+                                                    <span>Inactive</span></a>
+                                            @else
+                                                <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
+                                                    data-username="{{ $program->code }}"
+                                                    data-status="{{ $program->status }}"><i
+                                                        class="bx bx-refresh"></i>
+                                                    <span>Active</span></a>
+                                            @endif
 
-                                            </div>
                                         </div>
-                                    </td> --}}
-                                </tr>
-                            @endforeach
-                            {{-- @else
-                                <tr>
-                                    <td colspan="3" style="text-align: center">No record Found !</td>
-                                </tr>
-                            @endif --}}
+                                    </div>
+                                </td> --}}
+                            </tr>
+                        @endforeach
+                        {{-- @else
+                            <tr>
+                                <td colspan="3" style="text-align: center">No record Found !</td>
+                            </tr>
+                        @endif --}}
                         </tbody>
                     </table>
                 </div>
@@ -126,7 +153,7 @@
 
 @push('scripts')
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Initialize the DataTable
             CreateDataTable();
         });
@@ -151,7 +178,7 @@
             // // Use Toastr to show a summary error message
             // toastr.error('Please fix the highlighted fields');
             // },
-            submitHandler: function(form, event) {
+            submitHandler: function (form, event) {
                 // form.submit();
                 event.preventDefault();
 
@@ -169,7 +196,7 @@
                     url: "{{ route('acadamicYear.add') }}",
                     data: formData,
                     // dataType: "dataType",
-                    success: function(res) {
+                    success: function (res) {
                         // console.log(res.success);
                         toastr.success(res.success)
                         $('#addYearForm')[0].reset();
@@ -181,7 +208,7 @@
                             url: "{{ route('ManageYears') }}",
                             // data: ,
                             // dataType: "dataType",
-                            success: function(r) {
+                            success: function (r) {
                                 DestroyDataTable()
 
                                 var response = $(r);
@@ -192,13 +219,13 @@
 
                             },
 
-                            error: function(xhr, response) {
+                            error: function (xhr, response) {
                                 if (xhr.status == 422) {
                                     var errors = xhr.responseJSON.errors;
 
-                                    $.each(errors, function(field, messages) {
-                                        $.each(messages, function(index,
-                                            message) {
+                                    $.each(errors, function (field, messages) {
+                                        $.each(messages, function (index,
+                                                                   message) {
                                             toastr.error(messages)
                                         });
                                     });
@@ -209,12 +236,12 @@
 
                     },
 
-                    error: function(xhr, response) {
+                    error: function (xhr, response) {
                         if (xhr.status == 422) {
                             var errors = xhr.responseJSON.errors;
 
-                            $.each(errors, function(field, messages) {
-                                $.each(messages, function(index, message) {
+                            $.each(errors, function (field, messages) {
+                                $.each(messages, function (index, message) {
                                     toastr.error(messages)
                                 });
                             });

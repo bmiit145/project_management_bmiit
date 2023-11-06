@@ -73,13 +73,13 @@ function CreateDataTable(param) {
                 ['10 rows', '25 rows', '50 rows', 'Show all']
             ],
             // dom: 'lBfrtip',
-            dom: 'Bfrtip',
+            dom: 'Brtip',
             buttons: [
-                {
-                    extend: 'pageLength',
-                    className: 'btn btn-label-primary dropdown-toggle',
-
-                },
+                // {
+                //     extend: 'pageLength',
+                //     className: 'btn btn-label-primary dropdown-toggle',
+                //
+                // },
                 'spacer',  // not a button, just an empty space
                 {
                     extend: 'collection',
@@ -158,6 +158,13 @@ function CreateDataTable(param) {
         dataTable.page.len($(this).val()).draw();
     });
 
+    $('#DataTables_Table_0_filter input').on('keyup', function() {
+        dataTable.search(this.value).draw();
+    });
+
+    $('#DataTables_Table_0_length select').on('change', function() {
+        datTable.page.len($(this).val()).draw();
+    });
 
     return dataTable;
 }
@@ -228,3 +235,15 @@ function DestroyDataTable(param) {
 
     $(document).find('#' + param).DataTable().destroy();
 }
+
+
+function ColumnSearch(className , table , column){
+    $(document).find(className).on( 'keyup', function () {
+        table
+            .columns( column )
+            .search( this.value )
+            .draw();
+    } );
+}
+
+

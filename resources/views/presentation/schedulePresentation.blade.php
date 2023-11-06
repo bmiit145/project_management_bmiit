@@ -84,6 +84,32 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive text-nowrap p-2">
+
+                            {{--                Search --}}
+                            <div class="row mx-2 my-2">
+                                <div class="col-sm-12 col-md-4 col-lg-6">
+                                    <div class="dataTables_length" id="DataTables_Table_0_length"><label><select
+                                                name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
+                                                class="form-select">
+                                                <option value="10">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                                <option value="-1">Show All</option>
+                                            </select></label></div>
+                                </div>
+                                <div class="col-sm-12 col-md-8 col-lg-6">
+                                    <div
+                                        class="dt-action-buttons text-xl-end text-lg-start text-md-end text-start d-flex align-items-center justify-content-md-end justify-content-center align-items-center flex-sm-nowrap flex-wrap me-1">
+                                        <div class="me-3">
+                                            <div id="DataTables_Table_0_filter" class="dataTables_filter"><label><input
+                                                        type="search" class="form-control" placeholder="Search.."
+                                                        aria-controls="DataTables_Table_0"></label></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{--                        <hr class="mt-0">--}}
+                            </div>
                             <table class="table table-striped table-bordered dataTable" style="width:100%"
                                    id="dataTable">
                                 <thead>
