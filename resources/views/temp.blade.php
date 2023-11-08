@@ -1,7 +1,7 @@
 {{--page length--}}
 
 <div class="row mx-2">
-    <div class="col-sm-12 col-md-4 col-lg-6">
+    <div class="col-sm-12 col-md-4 col-lg-6 my-2">
         <div class="dataTables_length" id="DataTables_Table_0_length"><label><select
                     name="DataTables_Table_0_length" aria-controls="DataTables_Table_0"
                     class="form-select">

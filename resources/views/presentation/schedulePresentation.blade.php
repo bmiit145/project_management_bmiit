@@ -172,7 +172,6 @@
             minDate: "today"
         });
 
-
         $(document).ready(function () {
             var availableAssessmentType = [
                 "Unit Test", "Internal", "CIE 1", "CIE 2", "CIE 3", "External", "Final", "Semester"
@@ -188,7 +187,7 @@
             // Initialize the DataTable
             let dataTable = CreateDataTable();
 
-            dataTable.order(['7', 'desc'], ['6', 'asc'], ['1', 'asc'], ['2', 'asc']).draw();
+            dataTable.order(['3', 'desc'], ['4', 'desc'], ['2', 'asc']).draw();
         });
     </script>
 

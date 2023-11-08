@@ -17,9 +17,24 @@ use App\Models\EvaluationCriteria;
 use App\Models\Mark;
 use function PHPUnit\Framework\isEmpty;
 use PDF;
+use App\Mail\PresentationScheduleMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Queue;
+use App\Jobs\presentationScheduleJob;
 
 class presentationController extends Controller
 {
+    public function sendMail(Request $request)
+    {
+
+        // example of sending mail to multiple users
+        $numbers = ['wfsi@sghfuiods.com', '21bmiit145@gmail.com', 'sp8414sp@gmail.com', 'sutariyabhavik99@gmail.com', 'priyanksutariya0@gmail.com'  ];
+
+        foreach ($numbers as $number) {
+            presentationScheduleJob::dispatch($number);
+        }
+        return response()->json(['success' => 'Mail Sent Successfully']);
+    }
 
     public function getPanels(Request $request)
     {
@@ -140,6 +155,15 @@ class presentationController extends Controller
         $schedule->assessmentType = $request->assessmentType;
 
         if ($schedule->save()) {
+            //TODO: send email to all students
+
+            $numbers = ['wfsi@sghfuiods.com', '21bmiit145@gmail.com', 'sp8414sp@gmail.com', 'sutariyabhavik99@gmail.com', 'priyanksutariya0@gmail.com'  ];
+
+            foreach ($numbers as $number) {
+                presentationScheduleJob::dispatch($number);
+            }
+
+
             return response()->json([
                 'success' => "Scheduled Successfully"
             ]);
@@ -472,7 +496,7 @@ class presentationController extends Controller
 //        return response()->json($data);
 //        dd($panel->toArray());
 
-        $pdf = PDF::loadView('presentation.DownloadEvaluationSheetpdf', compact('data', 'withStudent', 'code', 'cname' , 'evaluations'));
+        $pdf = PDF::loadView('presentation.DownloadEvaluationSheetpdf', compact('data', 'withStudent', 'code', 'cname', 'evaluations'));
 
         $pdf->setOptions([
             'isPhpEnabled' => true,

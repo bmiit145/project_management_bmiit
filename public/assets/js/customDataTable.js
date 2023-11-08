@@ -158,14 +158,6 @@ function CreateDataTable(param) {
         dataTable.page.len($(this).val()).draw();
     });
 
-    $('#DataTables_Table_0_filter input').on('keyup', function() {
-        dataTable.search(this.value).draw();
-    });
-
-    $('#DataTables_Table_0_length select').on('change', function() {
-        datTable.page.len($(this).val()).draw();
-    });
-
     return dataTable;
 }
 
@@ -240,6 +232,7 @@ function DestroyDataTable(param) {
 function ColumnSearch(className , table , column){
     $(document).find(className).on( 'keyup', function () {
         table
+            .api()
             .columns( column )
             .search( this.value )
             .draw();

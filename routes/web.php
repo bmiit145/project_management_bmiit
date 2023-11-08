@@ -137,8 +137,15 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/getGroupMark', [presentationController::class, 'getGroupMark'])->name('getGroupMark');
     Route::post('/AddEvaluationStudentMarks', [presentationController::class, 'createEvaluationStudentMarks'])->name('evaluaionGroupMark.add');
 
+
     // Evaluation Sheet
     Route::get('/DownloadEvaluationSheet' , [presentationController::class, 'DownloadEvaluationSheet'])->name('DownloadEvaluationSheet');
+
+
+    // Send a mail
+
+//    Route::get('/sendMail' , [presentationController::class, 'sendMail'])->name('sendMail');
+
 });
     Route::post('/DownloadEvaluationSheet' , [presentationController::class, 'DownloadEvaluationSheetPdf'])->name('DownloadEvaluationSheetPdf');
 
