@@ -65,7 +65,10 @@
                                 </div>
                                 <label id="datetime-error" class="error" for="datetime" style="display: none"></label>
                             </div>
-
+                            <div class="mb-3">
+                                <textarea id="emailBody" name="emailBody"></textarea>
+                                <label id="emailBody-error" class="error" for="emailBody" style="display: none"></label>
+                            </div>
                             <button type="submit" class="btn btn-primary">Schedule Presentation</button>
                         </form>
                     </div>
@@ -161,6 +164,18 @@
 @endsection
 
 @push('scripts')
+    <script src="https://cdn.tiny.cloud/1/694jsilu2i2a150wdh5m7uhmno49slwk405uxocc8cqogt5i/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+
+    <script>
+        tinymce.init({
+            selector: '#emailBody',
+            plugins: 'autoresize',
+            // toolbar: 'undo redo | formatselect|  bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat'
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+        });
+    </script>
+
     <script src="{{ asset('../assets/js/flatpickr.js') }}"></script>
     <!-- jQuery library -->
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>

@@ -23,10 +23,13 @@ class presentationScheduleJob implements ShouldQueue
      *
      * @return void
      */
-    public $email;
-    public function __construct($email)
+    public $emails;
+    public $emailBody;
+
+    public function __construct($emails, $emailBody)
     {
-    $this->email = $email;
+        $this->emails = $emails;
+        $this->emailBody = $emailBody;
     }
 
     /**
@@ -36,12 +39,14 @@ class presentationScheduleJob implements ShouldQueue
      */
     public function handle()
     {
-            // for invalid mail as not found mail  , log it
-        try {
-            Mail::to($this->email)->queue(new PresentationScheduleMail("schedule"));
-        }catch(\Exception $e){
-            Log::error("Error in sending mail to ".$this->email." ".$e->getMessage());
-        }
+        // for invalid mail as not found mail  , log it
 
+        foreach ($this->emails as $email) {
+            try {
+                Mail::to($email)->queue(new PresentationScheduleMail($this->emailBody));
+            } catch (\Exception $e) {
+                Log::error("Error in sending mail to " . $email . " " . $e->getMessage());
+            }
+        }
     }
 }

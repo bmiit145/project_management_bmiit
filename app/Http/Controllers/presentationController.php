@@ -28,11 +28,11 @@ class presentationController extends Controller
     {
 
         // example of sending mail to multiple users
-        $numbers = ['wfsi@sghfuiods.com', '21bmiit145@gmail.com', 'sp8414sp@gmail.com', 'sutariyabhavik99@gmail.com', 'priyanksutariya0@gmail.com'  ];
+        $numbers = ['wfsi@sghfuiods.com', '21bmiit145@gmail.com', 'sp8414sp@gmail.com', 'sutariyabhavik99@gmail.com', 'priyanksutariya0@gmail.com'];
 
-        foreach ($numbers as $number) {
-            presentationScheduleJob::dispatch($number);
-        }
+//        foreach ($numbers as $number) {
+        presentationScheduleJob::dispatch($numbers);
+//        }
         return response()->json(['success' => 'Mail Sent Successfully']);
     }
 
@@ -135,6 +135,8 @@ class presentationController extends Controller
 
     public function createSchedule(Request $request)
     {
+//        dd($request->all());
+
         $request->validate([
             'courseYearId' => 'required | numeric | exists:course_years,id',
             'datetime' => 'required | date | after:today',
@@ -156,13 +158,20 @@ class presentationController extends Controller
 
         if ($schedule->save()) {
             //TODO: send email to all students
+//            $emails = ['wfsi@sghfuiods.com', '21bmiit145@gmail.com', 'sp8414sp@gmail.com', 'sutariyabhavik99@gmail.com', 'priyanksutariya0@gmail.com'];
 
-            $numbers = ['wfsi@sghfuiods.com', '21bmiit145@gmail.com', 'sp8414sp@gmail.com', 'sutariyabhavik99@gmail.com', 'priyanksutariya0@gmail.com'  ];
 
-            foreach ($numbers as $number) {
-                presentationScheduleJob::dispatch($number);
+            // Fetching student emails
+            $emails = Student::whereHas('studentGroups', function ($query) use ($request) {
+                $query->where('courseYearId', $request->courseYearId);
+            })->get()
+                ->map(function ($student) {
+                    return $student->email;
+                })->toArray();
+
+            if (!empty($emails)) {
+                presentationScheduleJob::dispatch($emails, $request->emailBody);
             }
-
 
             return response()->json([
                 'success' => "Scheduled Successfully"
