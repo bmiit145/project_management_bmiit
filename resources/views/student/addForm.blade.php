@@ -66,7 +66,7 @@
                                 <div class="input-group input-group-merge">
                                     <span class="input-group-text"><i class="bx bx-envelope"></i></span>
                                     <input type="text" id="email" class="form-control" name="email"
-                                           placeholder="john.doe" aria-label="john.doe"
+                                           placeholder="john.doe@gmail.com" aria-label="john.doe.gmail.com"
                                            aria-describedby="email2"/>
                                     {{--                                <span id="email2" class="input-group-text">@utu.ac.in</span>--}}
                                 </div>

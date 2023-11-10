@@ -28,7 +28,7 @@
                                     {{-- <span id="code2" class="input-group-text">
                                         <i class="bx bx-buildings"></i></span> --}}
                                     <input type="text" id="code" class="form-control" name="code"
-                                           placeholder="IT4003" aria-label="IT4003" aria-describedby="code2"/>
+                                           placeholder="0310341" aria-label="0310341" aria-describedby="code2"/>
                                 </div>
                                 <label id="code-error" class="error" for="code"></label>
                             </div>
