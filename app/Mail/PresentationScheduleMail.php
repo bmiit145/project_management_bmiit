@@ -40,6 +40,8 @@ class PresentationScheduleMail extends Mailable
         $timeOnly = date_format($date, 'h:i A');
 
         return $this->subject("$this->assessmentType Schedule on $dateOnly at $timeOnly")
+            ->name('PMS Committee')
+//            ->replyTo('21bmiit145@gmail.com', 'PMS Committee')
             ->view('mail.presentationScheduleMail')
             ->with([
                 'mailBody' => $this->mailBody,

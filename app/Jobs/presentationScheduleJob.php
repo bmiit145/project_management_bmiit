@@ -48,6 +48,7 @@ class presentationScheduleJob implements ShouldQueue
         foreach ($this->emails as $email) {
             try {
                 Mail::to($email)->queue(new PresentationScheduleMail($this->emailBody, $this->datetime, $this->assessmentType));
+
             } catch (\Exception $e) {
                 Log::error("Error in sending mail to " . $email . " " . $e->getMessage());
             }
