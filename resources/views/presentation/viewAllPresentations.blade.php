@@ -32,7 +32,7 @@
                                     <option value="-1" selected>select Course Year</option>
                                     @foreach ($courseYears as $courseYear)
                                         <option
-                                            value="{{ $courseYear->id }}">{{ $courseYear->course->name ." - " . $courseYear->year->name }}
+                                            value="{{ $courseYear->id }}">{{ $courseYear->course->code ."  " .$courseYear->course->name ." - " . $courseYear->year->name }}
                                         </option>
                                     @endforeach
                                 </select>
