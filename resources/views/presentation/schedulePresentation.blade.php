@@ -184,7 +184,9 @@
             enableTime: true,
             dateFormat: "Y-m-d H:i",
             time_24hr: false,
-            minDate: "today"
+            minDate: "today",
+            allowInput: true,
+            defaultDate: new Date(),
         });
 
         $(document).ready(function () {
@@ -254,7 +256,12 @@
 
                 // }
 
-                var formData = $('#scheduleForm').serialize()
+                // get and set email body
+                var content = tinymce.get('emailBody').getContent();
+                $('#emailBody').val(content);
+
+                var formData = $('#scheduleForm').serialize();
+
                 $.ajax({
                     type: "post",
                     url: "{{ route('Schedule.add') }}",

@@ -9,7 +9,7 @@
 </head>
 <body>
 @if($mailBody != null && $mailBody != '' &&  $mailBody != ' ' &&  str_replace(' ', '', $mailBody) != '')
-    {{ $mailBody }}
+    {!! $mailBody !!}
 @else
     <p>Dear Students,</p>
     <p>Kindly find the attached schedule for your {{ $assessmentType }}  on {{ $dateOnly }}
