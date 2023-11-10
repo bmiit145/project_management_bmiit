@@ -185,14 +185,12 @@
                 // form.submit();
                 event.preventDefault();
 
-
                 // name = $(document).find('#name').val();
 
                 // //send ajax for similar name check
                 // if (similarName) {
 
                 // }
-
                 var formData = $('#addYearForm').serialize()
                 $.ajax({
                     type: "post",

@@ -147,11 +147,15 @@
             rules: {
                 "name": {
                     required: true,
+                    number: true,
+                    max: 18,
                 },
             },
             messages: {
                 name: {
                     required: "Please enter Program name",
+                    number: "Please enter only number",
+                    max: "Maximum Limit is 18",
                 },
             },
             // errorPlacement: function(error, element) {
