@@ -164,9 +164,8 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.tiny.cloud/1/694jsilu2i2a150wdh5m7uhmno49slwk405uxocc8cqogt5i/tinymce/5/tinymce.min.js"
-            referrerpolicy="origin"></script>
-
+    <script src="https://cdn.tiny.cloud/1/694jsilu2i2a150wdh5m7uhmno49slwk405uxocc8cqogt5i/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+{{--<script src="{{ asset('../assets/js/tinymce.min.js') }}"></script>--}}
     <script>
         tinymce.init({
             selector: '#emailBody',
@@ -178,7 +177,8 @@
 
     <script src="{{ asset('../assets/js/flatpickr.js') }}"></script>
     <!-- jQuery library -->
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+{{--    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>--}}
+    <script src="{{ asset('../assets/js/jquery-ui.min.js') }}"></script>
     <script>
         flatpickr("#datetime", {
             enableTime: true,

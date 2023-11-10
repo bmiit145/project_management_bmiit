@@ -38,7 +38,7 @@
                                     {{-- <span id="name2" class="input-group-text">
                                         <i class="bx bx-buildings"></i></span> --}}
                                     <input type="text" id="name" class="form-control" name="name"
-                                           placeholder="2023-24" aria-label="2023-24" aria-describedby="name2"/>
+                                           placeholder="2023-24" aria-label="2023-24" pattern="\d{4}-\d{4}" aria-describedby="name2"/>
                                 </div>
                                 <label id="name-error" class="error" for="name"></label>
                             </div>
@@ -86,7 +86,7 @@
                         <thead>
                         <tr>
                             <th>No.</th>
-                            <th>Name</th>
+                            <th>Year</th>
                             {{-- <th>Name</th> --}}
                             {{-- <th>Status</th>
                             <th>Actions</th> --}}
@@ -163,11 +163,14 @@
             rules: {
                 'name': {
                     required: true,
+                    // pattern: /^\d{4}-\d{4}$/,
+                    pattern: /^(?:\d{4}-\d{4}|\d{4}-\d{2})$/,
                 },
             },
             messages: {
                 'name': {
                     'required': "Please enter Acadamic year",
+                    'pattern': "Please enter valid Acadamic year Pattern (2023-24) or (2023-2024)",
                 },
             },
             // errorPlacement: function(error, element) {

@@ -38,3 +38,8 @@ $.validator.addMethod("validDateTime", function(value, element) {
     return this.optional(element) || /^\d{4}-\d{2}-\d{2} \d{2}:\d{2}$/.test(value);
 }, "Please enter a valid date and time in the format YYYY-MM-DD HH:MM");
 
+$.validator.addMethod("pattern", function(value, element, pattern) {
+    return this.optional(element) || new RegExp(pattern).test(value);
+}, "Invalid format.");
+
+
