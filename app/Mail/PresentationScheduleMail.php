@@ -11,16 +11,21 @@ class PresentationScheduleMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $schedule;
+    public $mailBody;
+    public $datetime;
+    public $assessmentType;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
 
-    public function __construct($schedule)
+    public function __construct($mailBody, $datetime, $assessmentType)
     {
-        $this->schedule = $schedule;
+        $this->mailBody = $mailBody;
+        $this->datetime = $datetime;
+        $this->assessmentType = $assessmentType;
     }
 
     /**
@@ -30,6 +35,19 @@ class PresentationScheduleMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mail.presentationScheduleMail')->with('schedule', $this->schedule);
+        $date = date_create($this->datetime);
+        $dateOnly = date_format($date, 'Y-m-d');
+        $timeOnly = date_format($date, 'h:i A');
+
+        return $this->subject("$this->assessmentType Schedule on $dateOnly at $timeOnly")
+            ->view('mail.presentationScheduleMail')
+            ->with([
+                'mailBody' => $this->mailBody,
+                'dateOnly' => $dateOnly,
+                'timeOnly' => $timeOnly,
+                'assessmentType' => $this->assessmentType
+            ]);
     }
 }
+
+?>

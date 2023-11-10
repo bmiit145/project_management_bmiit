@@ -160,7 +160,6 @@ class presentationController extends Controller
             //TODO: send email to all students
 //            $emails = ['wfsi@sghfuiods.com', '21bmiit145@gmail.com', 'sp8414sp@gmail.com', 'sutariyabhavik99@gmail.com', 'priyanksutariya0@gmail.com'];
 
-
             // Fetching student emails
             $emails = Student::whereHas('studentGroups', function ($query) use ($request) {
                 $query->where('courseYearId', $request->courseYearId);
@@ -170,8 +169,9 @@ class presentationController extends Controller
                 })->toArray();
 
             if (!empty($emails)) {
-                presentationScheduleJob::dispatch($emails, $request->emailBody);
+                presentationScheduleJob::dispatch($emails, $request->emailBody ,$request->datetime , $request->assessmentType);
             }
+
 
             return response()->json([
                 'success' => "Scheduled Successfully"
