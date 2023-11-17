@@ -6,12 +6,29 @@ use App\Models\Faculty;
 use App\Models\Program;
 use App\Models\User;
 use App\Models\Student;
+use App\Models\Course;
+use App\Models\Group;
+use App\Models\Project;
+use App\Models\Committee;
+use App\Models\AcadamicYear;
+use App\Models\Semester;
+use App\Models\Allocation;
+use App\Models\CourseYear;
+use App\Models\presentation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Models\CourseYear;
 
 class StudentController extends Controller
 {
+
+    public function index()
+    {
+        $students = Student::all();
+        $courseYears = CourseYear::all();
+
+        return view('student.dashboard', compact('students', 'courseYears'));
+    }
+
     public function viewAllStudent()
     {
 

@@ -35,7 +35,8 @@ class UserController extends Controller
         if (auth()->user()) {
             if (auth()->user()->role == 0) {
                 // return Auth::guard('student');
-                dd("Student Login");
+//                dd("Student Login");
+                return redirect('student/dashboard');
             } elseif (auth()->user()->role == 1) {
                 // return Auth::guard('faculty');
                 return redirect('admin/dashboard');
@@ -66,7 +67,8 @@ class UserController extends Controller
             // Auth::login($user);
             if (auth()->user()->role == 0) {
                 // return Auth::guard('student');
-                dd("Student Login");
+//                dd("Student Login");
+                return redirect('student/dashboard');
             } elseif (auth()->user()->role == 1) {
                 // return Auth::guard('faculty');
                 return redirect('admin/dashboard');

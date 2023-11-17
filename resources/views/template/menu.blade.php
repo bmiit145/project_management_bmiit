@@ -58,218 +58,222 @@
 
     <div class="menu-inner-shadow"></div>
 
-    <ul class="menu-inner py-1 sidebar-menu ps ps--active-y">
-        <!-- Dashboard -->
-        <!-- active open class for future -->
-        <li class="menu-item">
-            <a href=" {{ url('/dashboard') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Analytics">Dashboard</div>
-            </a>
-        </li>
+{{--    if role is admin--}}
+    @if( Auth::user()->role == 1)
+        <ul class="menu-inner py-1 sidebar-menu ps ps--active-y">
+            <!-- Dashboard -->
+            <!-- active open class for future -->
+            <li class="menu-item">
+                <a href=" {{ url('/admin/dashboard') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Analytics">Dashboard</div>
+                </a>
+            </li>
 
 
-        <!-- Heading -->
-        <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">USERS</span>
-        </li>
+            <!-- Heading -->
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">USERS</span>
+            </li>
 
-        <!-- Faculty -->
-        <li class="menu-item ">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Faculties">Faculties</div>
-            </a>
+            <!-- Faculty -->
+            <li class="menu-item ">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Faculties">Faculties</div>
+                </a>
 
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="javascript:void(0);" id="add_faculty" class="menu-link">
-                        <div data-i18n="Add Faculty">Add Faculty</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="javascript:void(0);" id="view_faculty" class="menu-link">
-                        <div data-i18n="Without navbar">List Faculties</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" id="add_faculty" class="menu-link">
+                            <div data-i18n="Add Faculty">Add Faculty</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" id="view_faculty" class="menu-link">
+                            <div data-i18n="Without navbar">List Faculties</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-        <!-- <li class="menu-header small text-uppercase">
-      <span class="menu-header-text">Pages</span>
-    </li> -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Students</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{ route('student.addForm') }}" class="menu-link">
-                        <div data-i18n="Account">Add Students</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{ route('ManageStudent') }}" class="menu-link">
-                        <div data-i18n="Notifications">List Students</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li class="menu-item">
-            <a href="{{ route('ManageProgram') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Program</div>
-            </a>
-            {{-- <ul class="menu-sub">
-        <li class="menu-item">
-          <a href="pages-account-settings-account.html" class="menu-link">
-            <div data-i18n="Account">Add Students</div>
-          </a>
-        </li>
-        <li class="menu-item">
-          <a href="pages-account-settings-notifications.html" class="menu-link">
-            <div data-i18n="Notifications">List Students</div>
-          </a>
-        </li>
-        </ul> --}}
-        </li>
-        {{--  Acadamic Year --}}
-        <li class="menu-item">
-            <a href="{{ route('ManageYears') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Acadamic Years</div>
-            </a>
-        </li>
-        <!-- Semester -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="semester">Semester</div>
-            </a>
+            <!-- <li class="menu-header small text-uppercase">
+          <span class="menu-header-text">Pages</span>
+        </li> -->
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Students</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('student.addForm') }}" class="menu-link">
+                            <div data-i18n="Account">Add Students</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('ManageStudent') }}" class="menu-link">
+                            <div data-i18n="Notifications">List Students</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <a href="{{ route('ManageProgram') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Program</div>
+                </a>
+                {{-- <ul class="menu-sub">
+            <li class="menu-item">
+              <a href="pages-account-settings-account.html" class="menu-link">
+                <div data-i18n="Account">Add Students</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="pages-account-settings-notifications.html" class="menu-link">
+                <div data-i18n="Notifications">List Students</div>
+              </a>
+            </li>
+            </ul> --}}
+            </li>
+            {{--  Acadamic Year --}}
+            <li class="menu-item">
+                <a href="{{ route('ManageYears') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Acadamic Years</div>
+                </a>
+            </li>
+            <!-- Semester -->
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="semester">Semester</div>
+                </a>
 
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{route('ManageSemester')}}" id="semester" class="menu-link">
-                        <div data-i18n="semester">Manage Semester</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{route('ManageProgramSemester')}}" id="programSemester" class="menu-link">
-                        <div data-i18n="Without navbar">Program Semester</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <!-- Courses -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Courses">Courses</div>
-            </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{route('ManageSemester')}}" id="semester" class="menu-link">
+                            <div data-i18n="semester">Manage Semester</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{route('ManageProgramSemester')}}" id="programSemester" class="menu-link">
+                            <div data-i18n="Without navbar">Program Semester</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <!-- Courses -->
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Courses">Courses</div>
+                </a>
 
-            <ul class="menu-sub">
-                <li class="menu-item ">
-                    <a href="{{route('ManageCourses')}}" id="Courses" class="menu-link">
-                        <div data-i18n="Courses">Courses</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{route('ManageCourseYears')}}" id="courseYear" class="menu-link">
-                        <div data-i18n="Without navbar">Course Year</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+                <ul class="menu-sub">
+                    <li class="menu-item ">
+                        <a href="{{route('ManageCourses')}}" id="Courses" class="menu-link">
+                            <div data-i18n="Courses">Courses</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{route('ManageCourseYears')}}" id="courseYear" class="menu-link">
+                            <div data-i18n="Without navbar">Course Year</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
 
-        <!-- Committee -->
-        <li class="menu-item">
-            <a href="{{ route('ManageCommittees') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Committees</div>
-            </a>
-        </li>
-        <!-- Group -->
-        <li class="menu-item">
-            <a href="{{ route('ManageGroups')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Group</div>
-            </a>
-        </li>
-        <!-- Allocation -->
-        <li class="menu-item">
-            <a href="{{ route('ManageAllocations')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Guide Allocation</div>
-            </a>
-        </li>
+            <!-- Committee -->
+            <li class="menu-item">
+                <a href="{{ route('ManageCommittees') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Committees</div>
+                </a>
+            </li>
+            <!-- Group -->
+            <li class="menu-item">
+                <a href="{{ route('ManageGroups')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Group</div>
+                </a>
+            </li>
+            <!-- Allocation -->
+            <li class="menu-item">
+                <a href="{{ route('ManageAllocations')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Guide Allocation</div>
+                </a>
+            </li>
 
-        <!-- Allocation -->
-        <li class="menu-item">
-            <a href="{{ route('ManageProjects')}}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Project Allocation</div>
-            </a>
-        </li>
+            <!-- Allocation -->
+            <li class="menu-item">
+                <a href="{{ route('ManageProjects')}}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Project Allocation</div>
+                </a>
+            </li>
 
-        <!-- Presentation  -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Presentation">Presentation</div>
-            </a>
+            <!-- Presentation  -->
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Presentation">Presentation</div>
+                </a>
 
-            <ul class="menu-sub">
-                <li class="menu-item ">
-                    <a href="{{route('ManageSchedule')}}" id="Schedule" class="menu-link">
-                        <div data-i18n="Schedule">Presentation Schedule</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{route('ManagePresentationPanel')}}" id="Panel" class="menu-link">
-                        <div data-i18n="Panels">Presentation Panel</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{route('ManageAllocatePresentation')}}" id="Panel" class="menu-link">
-                        <div data-i18n="Panels">Allocate Presentation Panel</div>
-                    </a>
-                </li>
-            </ul>
+                <ul class="menu-sub">
+                    <li class="menu-item ">
+                        <a href="{{route('ManageSchedule')}}" id="Schedule" class="menu-link">
+                            <div data-i18n="Schedule">Presentation Schedule</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{route('ManagePresentationPanel')}}" id="Panel" class="menu-link">
+                            <div data-i18n="Panels">Presentation Panel</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{route('ManageAllocatePresentation')}}" id="Panel" class="menu-link">
+                            <div data-i18n="Panels">Allocate Presentation Panel</div>
+                        </a>
+                    </li>
+                </ul>
 
-        </li>
+            </li>
 
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-layout"></i>
-                <div data-i18n="Presentation">Evaluation</div>
-            </a>
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Presentation">Evaluation</div>
+                </a>
 
-            <ul class="menu-sub">
-                <li class="menu-item ">
-                    <a href="{{route('ManageEvaluations')}}" id="Schedule" class="menu-link">
-                        <div data-i18n="Schedule">Add Evaluation Criteria</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{route('ManageAllEvaluations')}}" id="evaluation" class="menu-link">
-                        <div data-i18n="evaluation">Evaluations Total Marks</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{route('ManageEvaluationStudentMarks')}}" id="Panel" class="menu-link">
-                        <div data-i18n="Panels">Student Marks</div>
-                    </a>
-                </li>
-                <li class="menu-item">
-                    <a href="{{route('DownloadEvaluationSheet')}}" id="Panel" class="menu-link">
-                        <div data-i18n="Panels">Evaluation Sheet Download</div>
-                    </a>
-                </li>
-            </ul>
+                <ul class="menu-sub">
+                    <li class="menu-item ">
+                        <a href="{{route('ManageEvaluations')}}" id="Schedule" class="menu-link">
+                            <div data-i18n="Schedule">Add Evaluation Criteria</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{route('ManageAllEvaluations')}}" id="evaluation" class="menu-link">
+                            <div data-i18n="evaluation">Evaluations Total Marks</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{route('ManageEvaluationStudentMarks')}}" id="Panel" class="menu-link">
+                            <div data-i18n="Panels">Student Marks</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{route('DownloadEvaluationSheet')}}" id="Panel" class="menu-link">
+                            <div data-i18n="Panels">Evaluation Sheet Download</div>
+                        </a>
+                    </li>
+                </ul>
 
-        </li>
+            </li>
 
-    </ul>
+        </ul>
+    @endif
+
 </aside>
 <!-- / Menu -->

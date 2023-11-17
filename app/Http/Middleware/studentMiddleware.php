@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class faculty
+class studentMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,18 +16,11 @@ class faculty
      */
     public function handle(Request $request, Closure $next)
     {
-
-
-        if (auth()->check() && auth()->user()->role == 2) {
-            $faculty = \App\Models\Faculty::where('username', auth()->user()->username)->first();
-            if (!$faculty->status) {
-                Auth::logout();
-                return redirect('/login')->with("error", "Inactive User.");
-            }
-            return $next($request);
+        if(auth()->check() && auth()->user()->role == 0) {
+        return $next($request);
         }
 
         // abort(403, 'Unauthorized action.');
-        return redirect('/login')->with("error" , "Unauthorized action.\nSession Expired!");
+        return redirect('/login')->with("error" , "Unauthorized action. OR Session Expired!");
     }
 }

@@ -67,7 +67,10 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+//    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
+//    'date_format' => 'd-m-Y',
+//    'time_format' => 'H:i:s',
 
     /*
     |--------------------------------------------------------------------------

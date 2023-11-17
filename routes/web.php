@@ -50,10 +50,10 @@ Route::get('/getPrograms', [ProgramController::class, 'getPrograms'])->name('get
 Route::post('/setCourseYearSession', [CourseController::class, 'setCourseYearSession'])->name('setCourseYearSession');
 
 // admin route
-Route::group(['middleware' => 'admin'], function () {
-    Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
-    Route::get('/dashboard', [AdminController::class, 'index']);
+Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
+Route::get('/dashboard', [AdminController::class, 'index']);
 
+Route::group(['middleware' => 'admin'], function () {
     // faculty
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
     Route::post('/AddFaculty', [FacultyController::class, 'create'])->name('faculty.add');
@@ -139,7 +139,8 @@ Route::group(['middleware' => 'admin'], function () {
 
 
     // Evaluation Sheet
-    Route::get('/DownloadEvaluationSheet' , [presentationController::class, 'DownloadEvaluationSheet'])->name('DownloadEvaluationSheet');
+    Route::get('/DownloadEvaluationSheet', [presentationController::class, 'DownloadEvaluationSheet'])->name('DownloadEvaluationSheet');
+    Route::post('/DownloadEvaluationSheet', [presentationController::class, 'DownloadEvaluationSheetPdf'])->name('DownloadEvaluationSheetPdf');
 
 
     // Send a mail
@@ -147,9 +148,13 @@ Route::group(['middleware' => 'admin'], function () {
 //    Route::get('/sendMail' , [presentationController::class, 'sendMail'])->name('sendMail');
 
 });
-    Route::post('/DownloadEvaluationSheet' , [presentationController::class, 'DownloadEvaluationSheetPdf'])->name('DownloadEvaluationSheetPdf');
 
 // faculty route
 Route::group(['middleware' => 'faculty'], function () {
     Route::get('faculty/dashboard', [FacultyController::class, 'index'])->name('show.faculty.dashboard');
+});
+
+// student route
+Route::group(['middleware' => 'student'], function () {
+    Route::get('student/dashboard', [StudentController::class, 'index'])->name('show.student.dashboard');
 });
