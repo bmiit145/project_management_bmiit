@@ -24,9 +24,8 @@ class StudentController extends Controller
     public function index()
     {
         $students = Student::all();
-        $courseYears = CourseYear::all();
 
-        return view('student.dashboard', compact('students', 'courseYears'));
+        return view('student.dashboard', compact('students'));
     }
 
     public function viewAllStudent()

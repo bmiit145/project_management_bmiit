@@ -275,7 +275,7 @@
         </ul>
 
     @elseif(Auth::user()->role == 0)
-
+        
         <ul class="menu-inner py-1 sidebar-menu ps ps--active-y">
             <!-- Dashboard -->
             <!-- active open class for future -->
