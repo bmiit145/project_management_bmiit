@@ -46,4 +46,7 @@ class CourseYear extends Model
         return $this->hasMany(EvaluationMark::class , 'courseYearId' , 'id');
     }
 
+    public function studentGroups(){
+        return $this->hasMany(StudentGroup::class , 'courseYearId' , 'id');
+    }
 }

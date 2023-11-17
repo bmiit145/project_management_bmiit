@@ -17,7 +17,7 @@
                         <!-- <small class="text-muted float-end">Merged input group</small> -->
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('committee.add') }}" id="addGroupForm">
+                        <form method="post" action="{{ route('studentGroup.add') }}" id="addGroupForm">
                             @csrf
                             <span id="error_info">
 
@@ -62,7 +62,7 @@
                                         <option value="-1" selected>select Student</option>
                                         @foreach ($students as $student)
                                             <option
-                                                value="{{ $student->enro }}">{{ $student->fname . " ". $student->lname }}
+                                                value="{{ $student->enro }}">{{ $student->enro ." ". $student->fname . " ". $student->lname }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -81,7 +81,6 @@
 
     </div>
     <div class="row">
-
         <div class="col-md-12">
             <div class="card">
                 <h5 class="card-header "><strong> Group List</strong></h5>
@@ -255,6 +254,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 @endsection
 
@@ -312,6 +312,7 @@
 
 
                         $('.member_select_div select').html(options);
+                        select_html = $('.member_select_div select').first().prop('outerHTML');
                         $('.member_select_div select').select2();
                         $('.member_select_div select').val('-1').trigger('change');
 

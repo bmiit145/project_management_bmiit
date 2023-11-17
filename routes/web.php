@@ -40,11 +40,12 @@ Route::post('/forgotpassword', [UserController::class, 'forgotPassword'])->name(
 Route::get('/resetpassword', [UserController::class, 'resetPassword']);
 Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name('change.password');
 
+// extra
 
 Route::get('/getCourseYears', [CourseController::class, 'getCourseYears'])->name('getCourseYears');
 Route::get('/getSemesters', [SemesterController::class, 'getSemesters'])->name('getSemesters');
 Route::get('/getPrograms', [ProgramController::class, 'getPrograms'])->name('getPrograms');
-
+Route::get('/getStudents', [GroupController::class, 'getStudents'])->name('getStudents');
 
 //setCourseYearSession
 Route::post('/setCourseYearSession', [CourseController::class, 'setCourseYearSession'])->name('setCourseYearSession');
@@ -99,7 +100,6 @@ Route::group(['middleware' => 'admin'], function () {
     // Group
     Route::get('/ViewAllGroups', [GroupController::class, 'ViewAllGroups'])->name('ManageGroups');
     Route::post('/AddGroup', [GroupController::class, 'createGroup'])->name('studentGroup.add');
-    Route::get('/getStudents', [GroupController::class, 'getStudents'])->name('getStudents');
 
     //allocation
     Route::get('/ViewAllAllocations', [allocationController::class, 'ViewAllAllocations'])->name('ManageAllocations');
@@ -159,4 +159,7 @@ Route::group(['middleware' => 'faculty'], function () {
 // student route
 Route::group(['middleware' => 'student'], function () {
     Route::get('student/dashboard', [StudentController::class, 'index'])->name('show.student.dashboard');
+
+//    group
+    Route::get('/ViewStudentGroup', [GroupController::class, 'ViewStudentGroup'])->name('ManageStudentGroup');
 });

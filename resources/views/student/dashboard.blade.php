@@ -1,6 +1,6 @@
 @extends('../template/layout')
 
-@section('title', 'Admin Dashboard | PMS')
+@section('title', 'Student Dashboard | PMS')
 
 <!-- @section('content')
 @endsection -->
@@ -14,12 +14,12 @@
                     <div class="card-body">
                         <div class="d-flex align-items-start justify-content-between">
                             <div class="content-left">
-                                <span>Active Student</span>
+                                <span>Total Projects</span>
                                 <div class="d-flex align-items-end mt-2">
-                                    <h4 class="mb-0 me-2">{{number_format($students->count())}}</h4>
+                                    <h4 class="mb-0 me-2">{{number_format($studentGroups->count())}}</h4>
                                     {{--                                <small class="text-success">(+29%)</small>--}}
                                 </div>
-                                <p class="mb-0">Total Student</p>
+                                <p class="mb-0">Total Project</p>
                             </div>
                             <div class="avatar">
                                 <span class="avatar-initial rounded bg-label-primary">

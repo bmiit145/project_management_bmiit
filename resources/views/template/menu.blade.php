@@ -275,7 +275,7 @@
         </ul>
 
     @elseif(Auth::user()->role == 0)
-        
+
         <ul class="menu-inner py-1 sidebar-menu ps ps--active-y">
             <!-- Dashboard -->
             <!-- active open class for future -->
@@ -319,7 +319,7 @@
 
             {{-- groups --}}
             <li class="menu-item">
-                <a href="{{ route('ManageYears') }}" class="menu-link">
+                <a href="{{ route('ManageStudentGroup') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-dock-top"></i>
                     <div data-i18n="Account Settings">Group</div>
                 </a>

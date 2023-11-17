@@ -9,6 +9,7 @@ use App\Models\Group;
 use App\Models\StudentGroup;
 use App\Models\Faculty;
 use App\Models\Allocation;
+use Illuminate\Support\Facades\Auth;
 
 class GroupController extends Controller
 {
@@ -89,10 +90,48 @@ class GroupController extends Controller
 
         $courseYear = CourseYear::find($request->courseYearId);
         $students = $courseYear->course->programsemester->program->students;
-            if ($students->isEmpty() || $students == null || $students == [] || $students == '' || $students->count() < 1) {
-                return response()->json(['error' => 'No students found']);
-            }
-        return response()->json(['students' => $students]);
 
+        //         get student who is not in any group for selected courseYear
+        $students = $students->whereNotIn('enro', StudentGroup::where('courseYearId', $courseYear->first()->id)->pluck('studentenro'));
+        // if role is student
+        if (Auth::user()->user() && Auth::user()->user->role == 0) {
+            $students = $students->where('enro', '!=', Auth::user()->user->enro);
+        }
+
+        if ($students->isEmpty() || $students == null || $students == [] || $students == '' || $students->count() < 1) {
+            return response()->json(['error' => 'No students found']);
+        }
+        return response()->json(['students' => $students]);
+    }
+
+
+//    student
+
+
+    public function ViewStudentGroup()
+    {
+        $programId = Auth::user()->user->program->code;
+        $enro = Auth::user()->user->enro;
+
+
+        // get a courseYear where student is not enrolled in that group and program is same
+        $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($programId) {
+            $query->where('programCode', $programId);
+        })->whereDoesntHave('studentGroups', function ($query) use ($enro) {
+            $query->where('studentenro', $enro);
+        })->get();
+
+        //get student who is not in any group for selected courseYear
+        $students = Auth::user()->user->program->students->whereNotIn('enro', Auth::user()->user->enro);
+
+        // get from session storage
+        $courseYear = session('courseYear');
+        if ($courseYear && $courseYear != null && $courseYear > 0) {
+            $students = $students->whereNotIn('enro', StudentGroup::where('courseYearId', $courseYears->first()->id)->pluck('studentenro'));
+        }
+
+        return view('student.viewStudentGroup', compact('courseYears', 'students'));
     }
 }
+
+

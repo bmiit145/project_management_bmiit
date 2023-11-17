@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Faculty;
 use App\Models\Program;
+use App\Models\StudentGroup;
 use App\Models\User;
 use App\Models\Student;
 use App\Models\Course;
@@ -23,9 +24,11 @@ class StudentController extends Controller
 
     public function index()
     {
-        $students = Student::all();
 
-        return view('student.dashboard', compact('students'));
+        // number of groups  in which user have
+        $studentGroups = StudentGroup::where('studentenro' , auth()->user()->username)->get();
+
+        return view('student.dashboard', compact( 'studentGroups'));
     }
 
     public function viewAllStudent()
