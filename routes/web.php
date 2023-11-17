@@ -50,10 +50,12 @@ Route::get('/getPrograms', [ProgramController::class, 'getPrograms'])->name('get
 Route::post('/setCourseYearSession', [CourseController::class, 'setCourseYearSession'])->name('setCourseYearSession');
 
 // admin route
-Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
-Route::get('/dashboard', [AdminController::class, 'index']);
 
 Route::group(['middleware' => 'admin'], function () {
+
+    Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
+    Route::get('/dashboard', [AdminController::class, 'index']);
+
     // faculty
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
     Route::post('/AddFaculty', [FacultyController::class, 'create'])->name('faculty.add');

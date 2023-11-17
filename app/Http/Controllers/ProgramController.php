@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Program;
 use Illuminate\Validation\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class ProgramController extends Controller
 {
@@ -12,6 +13,13 @@ class ProgramController extends Controller
     function getPrograms(Request $request)
     {
         $programs = Program::all();
+
+        if (Auth::user()->role == 0) {
+            $programId = Auth::user()->user->program->id;
+            $programs = Program::where('id', $programId)->get();
+        }
+//        dd($programs);
+            
         return response()->json($programs);
     }
 

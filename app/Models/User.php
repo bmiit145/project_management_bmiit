@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username' , 'password', 'role',
+        'username', 'password', 'role',
     ];
 
     /**
@@ -39,7 +39,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function userInfo(){
-        return $this->belongsTo(Faculty::class , 'username');
+    public function userInfo()
+    {
+        return $this->belongsTo(Faculty::class, 'username');
+    }
+
+    public function user()
+    {
+        if ($this->role == 0) {
+            return $this->belongsTo(Student::class, 'username' , 'username');
+        } elseif ($this->role == 2) {
+            return $this->belongsTo(Faculty::class, 'username' , 'username');
+        }
     }
 }

@@ -7,6 +7,7 @@ use App\Models\CourseYear;
 use Illuminate\Http\Request;
 use App\Models\ProgramSemester;
 use App\Models\Course;
+use Illuminate\Support\Facades\Auth;
 
 class CourseController extends Controller
 {
@@ -96,16 +97,31 @@ class CourseController extends Controller
         if ($request->programId == "-1" || $request->semesterId == "-1") {
 
             if ($request->programId == "-1" && $request->semesterId == "-1") {
-                $courseYears = CourseYear::all();
+                if (Auth::user()->role == 0) {
+                    $programId = Auth::user()->user->program->code;
+                    $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($programId) {
+                        $query->where('programCode', $programId);
+                    })->get();
+                } else {
+                    $courseYears = CourseYear::all();
+                }
             } else {
                 if ($request->programId == "-1") {
                     $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($request) {
                         $query->where('semesterid', $request->semesterId);
                     })->get();
                 } else {
-                    $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($request) {
-                        $query->where('programCode', $request->programId);
-                    })->get();
+
+                    if (Auth::user()->role == 0) {
+                        $programId = Auth::user()->user->program->code;
+                        $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($programId) {
+                            $query->where('programCode', $programId);
+                        })->get();
+                    } else {
+                        $courseYears = CourseYear::whereHas('course.programsemester', function ($query) use ($request) {
+                            $query->where('programCode', $request->programId);
+                        })->get();
+                    }
                 }
             }
 
