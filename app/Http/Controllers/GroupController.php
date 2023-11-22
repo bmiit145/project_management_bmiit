@@ -133,7 +133,7 @@ class GroupController extends Controller
         // get from session storage
         $courseYear = session('courseYear');
         if ($courseYear && $courseYear != null && $courseYear > 0) {
-            $students = $students->whereNotIn('enro', StudentGroup::where('courseYearId', $courseYears->first()->id)->pluck('studentenro'))->whereNotIn('enro', PanddingGroups::where('courseYearId', $courseYears->first()->id)->pluck('studentenro'));
+            $students = $students->whereNotIn('enro', StudentGroup::where('courseYearId', $courseYear)->pluck('studentenro'))->whereNotIn('enro', PanddingGroups::where('courseYearId', $courseYear)->pluck('studentenro'));
         }
 
 
@@ -147,13 +147,58 @@ class GroupController extends Controller
         return view('student.viewStudentGroup', compact('courseYears', 'students', 'groups', 'panddingGroups'));
     }
 
-    public function createStudentGroup(Request $request){
+    public function createStudentGroup(Request $request)
+    {
         $validated = $request->validate([
             'members' => 'required | array | min:1',
             'courseYearId' => 'required | numeric | exists:course_years,id',
             'title' => 'required | string | max:255',
             'definition' => 'required | string',
         ]);
+        $members = $request->members;
+        $members[] = auth()->user()->user->enro;
+
+        // member unique but as per course year id as student must not repeat for each course id
+        $PanddingStudentGroups = PanddingGroups::where('courseYearId', $request->courseYearId)->get();
+        $studentGroups = StudentGroup::where('courseYearId', $request->courseYearId)->get();
+        foreach ($request->members as $member) {
+            if ($member == null || $member < 1) {
+                continue;
+            }
+
+            $panddingStudentGroup = $PanddingStudentGroups->where('studentenro', $member)->first();
+            $studentGroup = $studentGroups->where('studentenro', $member)->first();
+
+            if ($panddingStudentGroup || $studentGroup) {
+                return response()->json(['error' => 'Any students already exists in another group']);
+            }
+        }
+
+        // group number generate
+        if ($PanddingStudentGroups->isEmpty()) {
+            $GroupNumber = 1;
+        } else {
+            $GroupNumber = PanddingGroups::where('courseYearId', $request->courseYearId)->orderBy('groupNumber', 'desc')->first()->groupNumber + 1;
+        }
+
+
+        // save pandding group by each student
+        foreach ($members as $member) {
+            if ($member == null || $member < 1) {
+                continue;
+            }
+            $panddingGroup = new PanddingGroups();
+            $panddingGroup->groupNumber = $GroupNumber;
+            $panddingGroup->studentenro = $member;
+            $panddingGroup->courseYearId = $request->courseYearId;
+            $panddingGroup->title = $request->title;
+            $panddingGroup->definition = $request->definition;
+            $panddingGroup->created_by = auth()->user()->username;
+            $panddingGroup->save();
+        }
+
+        return response()->json(['success' => 'Group created successfully and waiting for approval']);
+
     }
 }
 
