@@ -307,7 +307,7 @@
                         var students = res.students;
                         var options = '<option value="-1" selected>select Student</option>';
                         $.each(students, function (index, student) {
-                            options += '<option value="' + student.enro + '">' + student.fname + ' ' + student.lname + '</option>';
+                            options += '<option value="' + student.enro + '">' + student.enro  + '  ' + student.fname + ' ' + student.lname + '</option>';
                         });
 
 

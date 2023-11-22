@@ -162,4 +162,6 @@ Route::group(['middleware' => 'student'], function () {
 
 //    group
     Route::get('/ViewStudentGroup', [GroupController::class, 'ViewStudentGroup'])->name('ManageStudentGroup');
+    Route::post('/AddStudentGroup', [GroupController::class, 'createStudentGroup'])->name('PanddingGroup.add');
+
 });

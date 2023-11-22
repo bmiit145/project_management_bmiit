@@ -49,4 +49,9 @@ class CourseYear extends Model
     public function studentGroups(){
         return $this->hasMany(StudentGroup::class , 'courseYearId' , 'id');
     }
+
+    public function panddingGroups(){
+        return $this->hasMany(PanddingGroups::class , 'courseYearId' , 'id');
+    }
+
 }

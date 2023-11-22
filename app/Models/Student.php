@@ -30,5 +30,14 @@ class Student extends Model
         return $this->hasMany(StudentGroup::class, 'studentenro', 'enro');
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'student_groups', 'studentenro', 'groupid');
+    }
+
+    public function panddingGroups()
+    {
+        return $this->hasMany(PanddingGroups::class, 'studentenro', 'enro');
+    }
 
 }

@@ -8,9 +8,8 @@
 @section('body')
 
     <div class="row">
-        @if($courseYears && $courseYears->count() != 0)
+        @if(($courseYears && $courseYears->count() != 0))
             <div class="col-md-6">
-
                 <div class="col-xl">
                     <div class="card mb-4">
                         <div class="card-header d-flex justify-content-between align-items-center">
@@ -18,7 +17,7 @@
                             <!-- <small class="text-muted float-end">Merged input group</small> -->
                         </div>
                         <div class="card-body">
-                            <form method="post" action="{{ route('studentGroup.add') }}" id="addGroupForm">
+                            <form method="post" action="{{ route('PanddingGroup.add') }}" id="addPanddingGroupForm">
                                 @csrf
                                 <span id="error_info">
                             </span>
@@ -54,6 +53,26 @@
                                            style="display: none"></label><br>
                                     <button type="button" class="btn btn-dark mt-2 add_member">Add Student</button>
                                 </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="c">title</label>
+                                    <div class="input-group input-group-merge">
+                                        {{-- <span id="title2" class="input-group-text">
+                                            <i class="bx bx-buildings"></i></span> --}}
+                                        <input type="text" id="title" class="form-control" name="title"
+                                               placeholder="Project Title " aria-label="Project Title "
+                                               aria-describedby="title"/>
+                                    </div>
+                                    <label id="title-error" class="error" for="title"></label>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="definition">definition</label>
+                                    <textarea id="definition" name="definition" class="form-control"
+                                              placeholder="Definition"></textarea>
+{{--                                    <small class="font-light float-end" style="color: darkgreen">( Optional )</small>--}}
+                                    <label id="definition-error" class="error" for="definition"></label><br>
+                                </div>
                                 <button type="submit" class="btn btn-primary">Make Group</button>
                             </form>
                         </div>
@@ -73,6 +92,52 @@
             </div>
         @endif
     </div>
+
+    {{--   All Panding Groups for approval --}}
+    @if($panddingGroups && $panddingGroups->count() != 0)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"> Pending Groups </h5>
+                        <!-- <small class="text-muted float-end">Merged input group</small> -->
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Project Title</th>
+                                <th>Project Definition</th>
+                                <th>Students</th>
+                                <th>Course Year</th>
+                                <th>Created By</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach( $panddingGroups as $group)
+                                <tr>
+                                    <td>{{ $group->title ? $group->title:"No any Project Title Given" }}</td>
+                                    <td>{{ $group->definition?$group->definition == null ?"No any Project Definition Given": $group->definition : "No any Project Title Given" }}</td>
+                                    <td>
+                                        <ul>
+                                            @foreach( $group->panddingGroups as $member)
+                                                <li>
+                                                    <small>{{$member->studentenro . "\t" . $member->student->fname . "\t" . $member->student->lname }}</small>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td>{{ $group->courseYear->course->code . " - " . $group->courseYear->course->name . " - " . $group->courseYear->year->name }}</td>
+                                    <td>{{ $group->created_by  }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
     {{--    view all students group where login student have--}}
     <div class="row">
@@ -172,7 +237,7 @@
                         var students = res.students;
                         var options = '<option value="-1" selected>select Student</option>';
                         $.each(students, function (index, student) {
-                            options += '<option value="' + student.enro + '">' + student.fname + ' ' + student.lname + '</option>';
+                            options += '<option value="' + student.enro + '">'+ student.enro + '  ' + student.fname + ' ' + student.lname + '</option>';
                         });
 
 
@@ -202,7 +267,7 @@
     </script>
     <script>
         let select_html = $('.member_select_div select').first().prop('outerHTML');
-        $('#addGroupForm').validate({
+        $('#addPanddingGroupForm').validate({
             ignore: [],
             rules: {
                 "courseYearId": {
@@ -213,15 +278,16 @@
                     uniqueValues: 'unique-dropdown',
                     require_from_group: [1, '.member-dropdown']
                 },
-                // 'guide': {
-                //     notEqualValue: "-2",
-                // }
+                title: {
+                    required: true,
+                    minlength: 3,
+                    maxlength: 255,
+                },
+                definition: {
+                    required:true,
+                },
             },
             messages: {
-
-                // guide: {
-                //     notEqualValue: "Please select Head Of committee",
-                // },
                 courseYearId: {
                     notEqualValue: "Please select Course Year",
                 },
@@ -229,7 +295,15 @@
                     // notEqualValue: "Please select Member Of committee",
                     uniqueValues: "Please select unique Each Student Of Group",
                     require_from_group: "Please select at least one Student Of Group",
-                }
+                },
+                title: {
+                    required: "Please enter Project Title",
+                    minlength: "Project Title must be at least 3 characters long",
+                    maxlength: "Project Title must be at least 255 characters long",
+                },
+                definition: {
+                    required: "Please enter Project Definition",
+                },
             },
             // errorPlacement: function(error, element) {
             // // Use Toastr to show error messages
@@ -251,10 +325,10 @@
 
                 // }
 
-                var formData = $('#addGroupForm').serialize()
+                var formData = $('#addPanddingGroupForm').serialize()
                 $.ajax({
                     type: "post",
-                    url: "{{ route('studentGroup.add') }}",
+                    url: "{{ route('PanddingGroup.add') }}",
                     data: formData,
                     // dataType: "dataType",
                     success: function (res) {
@@ -265,8 +339,8 @@
                         // console.log(res.success);
                         toastr.success(res.success)
 
-                        $('#addGroupForm')[0].reset();
-                        $('#addGroupForm').find('select').val('-1').trigger('change');
+                        $('#addPanddingGroupForm')[0].reset();
+                        $('#addPanddingGroupForm').find('select').val('-1').trigger('change');
                         $('.member_select_div').html(select_html);
                         courseYearFill();
 
