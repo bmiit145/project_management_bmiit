@@ -130,7 +130,13 @@ class GroupController extends Controller
             $students = $students->whereNotIn('enro', StudentGroup::where('courseYearId', $courseYears->first()->id)->pluck('studentenro'));
         }
 
-        return view('student.viewStudentGroup', compact('courseYears', 'students'));
+
+
+        // get groups with number , students , courseYear , guide , project tile and definition
+        $groups = StudentGroup::where('studentenro', $enro)->with('group', 'courseYear', 'group.allocation.faculty', 'group.project' , 'group.studentGroups')->get();
+
+
+        return view('student.viewStudentGroup', compact('courseYears', 'students' , 'groups'));
     }
 }
 

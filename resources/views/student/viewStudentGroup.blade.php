@@ -64,14 +64,62 @@
         @else
             <div class="col-md-6">
                 <div class="alert alert-danger" role="alert">
-                    <h4 class="alert-heading">No Course Year Found</h4>
-                    <p>There is no Course Year Found for upcoming project or course</p>
-                    <hr>
+                    <h4 class="alert-heading">No Upcoming Project Found</h4>
+                    <p>There is no project Found for upcoming Course Year or course</p>
+                    {{--                    <hr>--}}
                     <p class="mb-0">contact committee for further details</p>
                     <a href="{{ route('show.student.dashboard') }}" class="btn btn-primary mt-3">Go to dashboard</a>
                 </div>
             </div>
         @endif
+    </div>
+
+    {{--    view all students group where login student have--}}
+    <div class="row">
+        @foreach($groups as $group)
+            <div class="col-md-12 col-lg-6 mb-4">
+                <div class="card">
+                    <div class="col-12">
+                        <div class="card-header">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="w-100 d-flex justify-content-between align-items-center">
+                                    <div class="ms-2 me-2 w-100 d-flex flex-column justify-content-between"
+                                         style="text-align: center ;">
+                                        <div class="font-weight-bold">
+                                            <a href="">
+                                                {{"Group No .\t" . $group->group->number }}
+                                            </a>
+                                        </div>
+                                        <div class="text-gray-600">
+                                            {{ $group->courseYear->course->code . " - " . $group->courseYear->course->name . " - " . $group->courseYear->year->name }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <span class="badge badge-primary text-dark">{{ $group->group->studentGroups->count() }} Members</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h4 class="card-title mb-1 text-nowrap">{{ $group->group->project?$group->group->project->title:"No any Project Title Given" }}</h4>
+                            <p class="d-block mb-3 text-wrap"
+                               style="font-size: medium">{{ $group->group->project?$group->group->project->definition == null ?"No any Project Definition Given": $group->group->project->definition : "No any Project Title Given" }}</p>
+
+                            <h5 class="card-title  mb-2">Guide : <span
+                                    class="text-primary">{{ $group->group->allocation ? $group->group->allocation->faculty->fname . " " . $group->group->allocation->faculty->lname :"No any Guide Assigned" }}</span>
+                            </h5>
+
+                            @foreach( $group->group->studentGroups as $student)
+                                <small class="d-block pb-1"
+                                       style="font-size: math">{{$student->studentenro . "\t" . $student->student->fname . "\t" . $student->student->lname }}</small>
+                            @endforeach
+
+                            {{--                            <a href="javascript:;" class="btn btn-sm mt-3 btn-primary">View sales</a>--}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
 @endsection
 
