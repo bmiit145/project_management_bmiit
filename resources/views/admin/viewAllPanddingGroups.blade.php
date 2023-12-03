@@ -304,8 +304,12 @@
                         return;
                     }
                     toastr.success(res.success)
-
                     $('#panddingGroupModal').modal('hide');
+
+                    $('button[data-group-num="' + GroupNumber + '"]').closest('tr').remove();
+                    if ($('table tbody tr').length == 0) {
+                        $('.card-body.text-center').html('<h5 class="mb-0"> No Pending Groups </h5>');
+                    }
                 },
                 error: function (xhr, response) {
                     if (xhr.status == 422) {
