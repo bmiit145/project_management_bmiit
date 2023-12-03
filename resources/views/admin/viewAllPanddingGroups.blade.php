@@ -45,7 +45,11 @@
                                     <td>{{ $group->created_by  }}</td>
                                     <td>
                                         <div class="d-flex justify-content-center">
-                                            <a href="" class="btn btn-primary btn-sm me-2"><i class='bx bxs-card'></i></a>
+                                            <button class="btn btn-primary btn-sm me-2 view-details-btn"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#panddingGroupModal"
+                                                    data-group-num="{{ $group->groupNumber }}"><i
+                                                    class='bx bxs-card'></i></button>
                                             <form action="{{ route('PanddingGroup.delete', $group->groupNumber) }}"
                                                   method="post">
                                                 @csrf
@@ -73,6 +77,74 @@
             </div>
         </div>
     @endif
+
+    {{--   Model for view a data of pandding group --}}
+    <div class="modal fade" id="panddingGroupModal" tabindex="-1" aria-modal="true" role="dialog">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalScrollableTitle">Review a Group</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="ModalForm">
+                        @csrf
+                        <input type="hidden" name="groupNumber">
+                        <div class="row">
+                            <div class="col-md-12 ">
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="w-100 d-flex justify-content-between align-items-center">
+                                            <div class="text-gray-600 font-weight-bold">
+                                                <span id="model_courseYear"></span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <span class="badge badge-primary text-dark"
+                                                  id="member_length">10 Members</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="members" class="form-label">Students</label>
+                                    <ul id="member_list">
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Project Title</label>
+                                    <input type="text" class="form-control" id="title" name="title"
+                                           placeholder="Enter Project Title" required>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="definition" class="form-label">Project Definition</label>
+                                    <textarea class="form-control" id="definition" name="definition"
+                                              placeholder="Enter Project Definition" required></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Approve</button>
+
+                    <form action="{{ route('PanddingGroup.delete' , 0) }}"
+                          method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Reject</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{--    view all students group where login student have--}}
 
@@ -124,7 +196,96 @@
 @endsection
 
 @push('scripts')
+    {{-- for modal --}}
+    <script>
+        $(document).ready(function () {
+            $('.view-details-btn').on('click', function () {
+                const groupNum = $(this).data('group-num');
 
+                // Simulate data retrieval (replace with actual API call)
+                const groupDetails = getGroupDetails(groupNum);
+
+            });
+        });
+
+        function getGroupDetails(groupNum) {
+            // send ajax to get the Pandding Group Details
+            $.ajax({
+                type: 'get',
+                url: "{{ route('PanddingGroup.getDetails') }}",
+                data: {groupNum: groupNum},
+                success: function (res) {
+                    // console.log(res);
+
+                    // Display group details in the modal
+                    displayGroupDetails(res);
+
+                    return res;
+                },
+            })
+        }
+
+
+        function displayGroupDetails(groupDetails) {
+// Display group details in the modal
+            var groupDetail = groupDetails[0];
+            var members = groupDetails[0].member;
+            var memberCount = members.length;
+
+            $('#panddingGroupModal').find('input[name="groupNumber"]').val(groupDetail.groupNumber);
+            $('#panddingGroupModal').find('#model_courseYear').text(groupDetail.code + " - " + groupDetail.course + "   " + groupDetail.year);
+            $('#panddingGroupModal').find('#title').val(groupDetail.title);
+            $('#panddingGroupModal').find('#definition').val(groupDetail.definition);
+            $('#panddingGroupModal').find('#member_length').text(memberCount + " Members");
+            $('#panddingGroupModal').find('#member_list').html('');
+            $.each(members, function (index, member) {
+                $('#panddingGroupModal').find('#member_list').append('<li>' + member.enro + "\t" + member.fname + "\t" + member.lname + '</li>');
+            });
+
+            // set form action in model for delete
+            $('#panddingGroupModal').find('form').attr('action', "{{ route('PanddingGroup.delete', '') }}" + "/" + groupDetail.groupNumber);
+
+            // set form action in model for approve
+            $('#panddingGroupModal').find('.btn-primary').attr('onclick', "approveGroup(" + groupDetail.groupNumber + ")");
+        }
+
+        function approveGroup(GroupNumber) {
+            // submit form for approve with ajax
+
+            var formData = $('#panddingGroupModal').find('#ModalForm').serialize();
+            formData += "&GroupNum=" + GroupNumber;
+
+            $.ajax({
+                type: 'post',
+                url: "{{ route('PanddingGroup.approve') }}",
+                data: formData,
+                success: function (res) {
+                    // console.log(res);
+                    if (res.error) {
+                        toastr.error(res.error)
+                        return;
+                    }
+                    toastr.success(res.success)
+
+                    $('#panddingGroupModal').modal('hide');
+                },
+                error: function (xhr, response) {
+                    if (xhr.status == 422) {
+                        var errors = xhr.responseJSON.errors;
+
+                        $.each(errors, function (field, messages) {
+                            $.each(messages, function (index, message) {
+                                toastr.error(messages)
+                            });
+                        });
+                    } else if (xhr.status == 500) {
+                        // toastr.error(xhr.responseJSON.message)
+                        toastr.error('Something went wrong !')
+                    }
+                }
+            })
+        }
+    </script>
     <script>
         $(document).ready(function () {
             // Initialize the DataTable
@@ -134,70 +295,6 @@
             dataTable.rowGroup({
                 dataSrc: '[7 , 6 , 1 , 2]'
             })
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            var select_html = $('.member_select_div select').first().prop('outerHTML');
-            $(document).on('click', '.add_member', function () {
-                // console.log(select_html);
-                $('.member_select_div').append(select_html);
-
-                $('.member_select_div select').select2();
-
-            });
-
-            $(document).on('change', '#courseYear', function () {
-                // get Students of selected course year
-                var courseYearId = $(this).val();
-
-                if (courseYearId == -1) {
-                    $('.member_select_div select').html('<option value="-1" selected>select Student</option>');
-                    $('.member_select_div select').select2();
-                    $('.member_select_div select').val('-1').trigger('change');
-                    return;
-                }
-
-                $.ajax({
-                    type: "get",
-                    url: "{{ route('getStudents') }}",
-                    data: {courseYearId: courseYearId},
-                    // dataType: "dataType",
-                    success: function (res) {
-                        if (res.error) {
-                            toastr.error(res.error)
-                        }
-                        // console.log(res.success);
-                        // toastr.success(res.success)
-                        var students = res.students;
-                        var options = '<option value="-1" selected>select Student</option>';
-                        $.each(students, function (index, student) {
-                            options += '<option value="' + student.enro + '">' + student.enro + '  ' + student.fname + ' ' + student.lname + '</option>';
-                        });
-
-
-                        $('.member_select_div select').html(options);
-                        select_html = $('.member_select_div select').first().prop('outerHTML');
-                        $('.member_select_div select').select2();
-                        $('.member_select_div select').val('-1').trigger('change');
-
-                    },
-                    error: function (xhr, response) {
-                        if (xhr.status == 422) {
-                            var errors = xhr.responseJSON.errors;
-                            $.each(errors, function (field, messages) {
-                                $.each(messages, function (index,
-                                                           message) {
-                                    toastr.error(messages)
-                                });
-                            });
-                        } else if (xhr.status == 500) {
-                            // toastr.error(xhr.responseJSON.message)
-                            toastr.error('Something went wrong !')
-                        }
-                    }
-                });
-            });
         });
     </script>
     <script>

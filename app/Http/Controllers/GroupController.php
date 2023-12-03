@@ -139,7 +139,118 @@ class GroupController extends Controller
         return redirect()->back()->with('error', 'Something went wrong');
     }
 
+    public function ApproveGroup(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required | string | max:255',
+            'definition' => 'required | string',
+            'GroupNum' => 'required | numeric | exists:pandding_groups,groupNumber',
+        ], [
+            'GroupNum.exists' => 'Group number not exists',
+        ]);
 
+        // get pandding group by groupNumber
+        $panddingGroup = PanddingGroups::where('groupNumber', $request->GroupNum)->with('courseYear', 'student', 'courseYear.course', 'courseYear.year')->get();
+
+        if ($panddingGroup) {
+            $courseYearId = $panddingGroup->first()->courseYearId;
+            $studentGroups = StudentGroup::where('courseYearId', $courseYearId)->get();
+
+            $members = $panddingGroup->pluck('studentenro');
+
+            foreach ($members as $member) {
+                $studentGroup = $studentGroups->where('studentenro', $member)->first();
+                if ($studentGroup) {
+                    return response()->json(['error' => 'Any students already exists in another group']);
+                }
+            }
+
+            if ($studentGroups->isEmpty()) {
+                $GroupNumber = 1;
+            } else {
+                $GroupNumber = StudentGroup::where('courseYearId', $courseYearId)->orderBy('groupid', 'desc')->first()->group->number + 1;
+            }
+
+            $group = new Group();
+            $group->number = $GroupNumber;
+            $group->created_by = $panddingGroup->first()->created_by;
+            if ($group->save()) {
+                $newgroupId = $group->id;
+                foreach ($members as $member) {
+                    if ($member == null || $member < 1) {
+                        continue;
+                    }
+                    $studentGroup = new StudentGroup();
+                    $studentGroup->studentenro = $member;
+                    $studentGroup->groupid = $newgroupId;
+                    $studentGroup->courseYearId = $courseYearId;
+                    $studentGroup->status = 1;
+                    $studentGroup->save();
+                }
+
+                if ($request->guide != null && $request->guide > 0) {
+                    $allocation = new Allocation();
+                    $allocation->studentgroupno = $newgroupId;
+                    $allocation->facultyid = $request->guide;
+                    $allocation->save();
+                }
+
+                // add project title and definition
+                $group->project()->create([
+                    'title' => $request->title,
+                    'definition' => $request->definition,
+                ]);
+
+                // delete pandding group by groupNumber
+                $panddingGroup = PanddingGroups::where('groupNumber', $request->GroupNum);
+                if ($panddingGroup) {
+                    $panddingGroup->delete();
+                }
+            } else {
+                return respone()->json(['error' => 'Something went wrong']);
+            }
+
+            return response()->json(['success' => 'Group created successfully']);
+        } else {
+            return response()->json(['error' => 'Group Not Found']);
+        }
+    }
+
+    public function getPanndingGroup(Request $request)
+    {
+        $validated = $request->validate([
+            'groupNum' => 'required | numeric',
+        ]);
+
+        // get pandding group by groupNumber
+        $panddingGroup = PanddingGroups::where('groupNumber', $request->groupNum)->with('courseYear', 'student', 'courseYear.course', 'courseYear.year')->get();
+
+        if ($panddingGroup) {
+            $arr = [];
+            $arr[] = [
+                'groupNumber' => $panddingGroup->first()->groupNumber,
+                'code' => $panddingGroup->first()->courseYear->course->code,
+                'course' => $panddingGroup->first()->courseYear->course->name,
+                'year' => $panddingGroup->first()->courseYear->year->name,
+                'title' => $panddingGroup->first()->title,
+                'definition' => $panddingGroup->first()->definition,
+            ];
+            foreach ($panddingGroup as $group) {
+//                $arr['member'] = [
+//                    'enro' => $group->studentenro,
+//                    'name' => $group->student->fname . $group->student->lname,
+//                ];
+
+                $arr[0]['member'][] = [
+                    'enro' => $group->studentenro,
+                    'fname' => $group->student->fname,
+                    'lname' => $group->student->lname,
+                ];
+            }
+            return response()->json($arr);
+        }
+        return response()->json(['error' => 'Something went wrong']);
+    }
 
     //    student
 

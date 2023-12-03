@@ -101,7 +101,9 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewAllGroups', [GroupController::class, 'ViewAllGroups'])->name('ManageGroups');
     Route::post('/AddGroup', [GroupController::class, 'createGroup'])->name('studentGroup.add');
     Route::get('/ViewAllPanddingGroups', [GroupController::class, 'ViewAllPanddingGroups'])->name('ReviewGroups');
+    Route::get('/getPanndingGroup', [GroupController::class, 'getPanndingGroup'])->name('PanddingGroup.getDetails');
     Route::delete('/pandding-group/{id}', [GroupController::class, 'delete'])->name('PanddingGroup.delete');
+    Route::post('/pandding-group', [GroupController::class, 'ApproveGroup'])->name('PanddingGroup.approve');
 
     //allocation
     Route::get('/ViewAllAllocations', [allocationController::class, 'ViewAllAllocations'])->name('ManageAllocations');
@@ -165,5 +167,4 @@ Route::group(['middleware' => 'student'], function () {
 //    group
     Route::get('/ViewStudentGroup', [GroupController::class, 'ViewStudentGroup'])->name('ManageStudentGroup');
     Route::post('/AddStudentGroup', [GroupController::class, 'createStudentGroup'])->name('PanddingGroup.add');
-
 });
