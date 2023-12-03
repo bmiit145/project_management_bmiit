@@ -74,6 +74,13 @@
         .dt-down-arrow {
             display: none !important;
         }
+        .select2-container--open {
+            z-index: 999999 !important; /* You can adjust the value based on your needs */
+        }
+
+        .select2-search__field {
+            z-index: 9999999 !important; /* You can adjust the value based on your needs */
+        }
 
         /*.dataTables_wrapper .dt-buttons{*/
         /*    width: 125px;*/

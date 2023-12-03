@@ -6,7 +6,6 @@
 @endsection -->
 
 @section('body')
-
     {{--   All Panding Groups for approval --}}
     @if($panddingGroups && $panddingGroups->count() != 0)
         <div class="row">
@@ -119,6 +118,9 @@
                                     <label for="title" class="form-label">Project Title</label>
                                     <input type="text" class="form-control" id="title" name="title"
                                            placeholder="Enter Project Title" required>
+                                    <label id="title-error" class="error" for="title"
+                                           style="display: none"></label>
+
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -126,6 +128,23 @@
                                     <label for="definition" class="form-label">Project Definition</label>
                                     <textarea class="form-control" id="definition" name="definition"
                                               placeholder="Enter Project Definition" required></textarea>
+                                    <label id="definition-error" class="error" for="definition"
+                                           style="display: none"></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3">
+                                    <label for="faculty" class="form-label">Guide</label>
+                                    <select class="form-select" id="guide_select" name="guide">
+                                        <option value="-1" selected>select Guide</option>
+                                        @foreach ($faculties as $faculty)
+                                            <option
+                                                value="{{ $faculty->id }}">{{ $faculty->fname . ' - '  . $faculty->lname }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    <label id="guide-error" class="error" for="guide"
+                                           style="display: none"></label>
                                 </div>
                             </div>
                         </div>
@@ -196,9 +215,13 @@
 @endsection
 
 @push('scripts')
-    {{-- for modal --}}
     <script>
         $(document).ready(function () {
+            $('#guide_select').select2({
+                placeholder: "Select Guide",
+                minimumResultsForSearch: Infinity,  // disable search
+            });
+
             $('.view-details-btn').on('click', function () {
                 const groupNum = $(this).data('group-num');
 
@@ -247,6 +270,7 @@
 
             // set form action in model for approve
             $('#panddingGroupModal').find('.btn-primary').attr('onclick', "approveGroup(" + groupDetail.groupNumber + ")");
+
         }
 
         function approveGroup(GroupNumber) {
@@ -285,148 +309,14 @@
                 }
             })
         }
+
+
     </script>
     <script>
         $(document).ready(function () {
             // Initialize the DataTable
             let dataTable = CreateDataTable();
 
-            dataTable.order(['7', 'desc'], ['6', 'asc'], ['1', 'asc'], ['2', 'asc']).draw();
-            dataTable.rowGroup({
-                dataSrc: '[7 , 6 , 1 , 2]'
-            })
         });
-    </script>
-    <script>
-        let select_html = $('.member_select_div select').first().prop('outerHTML');
-        $('#addPanddingGroupForm').validate({
-            ignore: [],
-            rules: {
-                "courseYearId": {
-                    notEqualValue: "-1",
-                },
-                'members[]': {
-                    // notEqualValue: "-1",
-                    uniqueValues: 'unique-dropdown',
-                    require_from_group: [1, '.member-dropdown']
-                },
-                title: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 255,
-                },
-                definition: {
-                    required: true,
-                },
-            },
-            messages: {
-                courseYearId: {
-                    notEqualValue: "Please select Course Year",
-                },
-                'members[]': {
-                    // notEqualValue: "Please select Member Of committee",
-                    uniqueValues: "Please select unique Each Student Of Group",
-                    require_from_group: "Please select at least one Student Of Group",
-                },
-                title: {
-                    required: "Please enter Project Title",
-                    minlength: "Project Title must be at least 3 characters long",
-                    maxlength: "Project Title must be at least 255 characters long",
-                },
-                definition: {
-                    required: "Please enter Project Definition",
-                },
-            },
-            // errorPlacement: function(error, element) {
-            // // Use Toastr to show error messages
-            // // toastr.error(error.text());
-            // },
-            // invalidHandler: function(event, validator) {
-            // // Use Toastr to show a summary error message
-            // toastr.error('Please fix the highlighted fields');
-            // },
-            submitHandler: function (form, event) {
-                // form.submit();
-                event.preventDefault();
-
-
-                // name = $(document).find('#name').val();
-
-                // //send ajax for similar name check
-                // if (similarName) {
-
-                // }
-
-                var formData = $('#addPanddingGroupForm').serialize()
-                $.ajax({
-                    type: "post",
-                    url: "{{ route('PanddingGroup.add') }}",
-                    data: formData,
-                    // dataType: "dataType",
-                    success: function (res) {
-                        if (res.error) {
-                            toastr.error(res.error)
-                            return;
-                        }
-                        // console.log(res.success);
-                        toastr.success(res.success)
-
-                        $('#addPanddingGroupForm')[0].reset();
-                        $('#addPanddingGroupForm').find('select').val('-1').trigger('change');
-                        $('.member_select_div').html(select_html);
-                        courseYearFill();
-
-
-                        // get and replace table body
-                        $.ajax({
-                            type: "get",
-                            url: "{{ route('ManageGroups') }}",
-                            // data: ,
-                            // dataType: "dataType",
-                            success: function (r) {
-                                DestroyDataTable();
-                                var response = $(r);
-                                var tbody = response.find('tbody').html();
-                                // console.log(tbody);
-                                $(document).find('tbody').html(tbody)
-                                CreateDataTable();
-                            },
-
-                            error: function (xhr, response) {
-                                if (xhr.status == 422) {
-                                    var errors = xhr.responseJSON.errors;
-                                    $.each(errors, function (field, messages) {
-                                        $.each(messages, function (index,
-                                                                   message) {
-                                            toastr.error(messages)
-                                        });
-                                    });
-                                } else if (xhr.status == 500) {
-                                    // toastr.error(xhr.responseJSON.message)
-                                    toastr.error('Something went wrong !')
-                                }
-                            }
-
-                        })
-
-                    },
-
-                    error: function (xhr, response) {
-                        if (xhr.status == 422) {
-                            var errors = xhr.responseJSON.errors;
-
-                            $.each(errors, function (field, messages) {
-                                $.each(messages, function (index, message) {
-                                    toastr.error(messages)
-                                });
-                            });
-                        } else if (xhr.status == 500) {
-                            // toastr.error(xhr.responseJSON.message)
-                            toastr.error('Something went wrong !')
-                        }
-                    }
-                });
-            }
-        })
     </script>
 @endpush

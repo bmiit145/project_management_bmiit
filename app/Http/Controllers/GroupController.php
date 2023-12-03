@@ -112,19 +112,11 @@ class GroupController extends Controller
         // get all pandding groups with all row By groupNumber is distinct
         $panddingGroups = PanddingGroups::all()->unique('groupNumber');
         $faculties = Faculty::all();
-        $students = Student::all();
-        $studentGroups = StudentGroup::all();
-        $courseYears = CourseYear::all();
-        $groups = Group::all();
 
         return view('admin.viewAllPanddingGroups',
             [
                 'panddingGroups' => $panddingGroups,
-                'students' => $students,
-                'studentGroups' => $studentGroups,
                 'faculties' => $faculties,
-                'courseYears' => $courseYears,
-                'groups' => $groups
             ]);
     }
 

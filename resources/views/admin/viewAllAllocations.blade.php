@@ -54,7 +54,7 @@
                                 <label for="faculty" class="form-label">Guide</label>
                                 <select class="form-select selectSearch" id="faculty" name="facultyId"
                                         aria-label="Default select example">
-                                    <option value="-1" selected>select Group</option>
+                                    <option value="-1" selected>select Guide</option>
                                     @foreach ($faculties as $faculty)
                                         <option
                                             value="{{ $faculty->id }}">{{ $faculty->fname . ' - '  . $faculty->lname }}
