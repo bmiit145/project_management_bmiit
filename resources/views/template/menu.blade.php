@@ -191,14 +191,35 @@
                     <div data-i18n="Account Settings">Committees</div>
                 </a>
             </li>
+
+
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Groups</span>
+            </li>
+
             <!-- Group -->
             <li class="menu-item">
-                <a href="{{ route('ManageGroups')}}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                    <div data-i18n="Account Settings">Group</div>
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Groups">Groups</div>
                 </a>
-            </li>
-            <!-- Allocation -->
+
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('ManageGroups')}}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="New Group">Create Group</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-item">
+                        <a href="{{ route('ReviewGroups')}}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="New Group">Review Group</div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- Allocation -->
             <li class="menu-item">
                 <a href="{{ route('ManageAllocations')}}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-dock-top"></i>

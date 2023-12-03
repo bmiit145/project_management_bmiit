@@ -100,6 +100,8 @@ Route::group(['middleware' => 'admin'], function () {
     // Group
     Route::get('/ViewAllGroups', [GroupController::class, 'ViewAllGroups'])->name('ManageGroups');
     Route::post('/AddGroup', [GroupController::class, 'createGroup'])->name('studentGroup.add');
+    Route::get('/ViewAllPanddingGroups', [GroupController::class, 'ViewAllPanddingGroups'])->name('ReviewGroups');
+    Route::delete('/pandding-group/{id}', [GroupController::class, 'delete'])->name('PanddingGroup.delete');
 
     //allocation
     Route::get('/ViewAllAllocations', [allocationController::class, 'ViewAllAllocations'])->name('ManageAllocations');

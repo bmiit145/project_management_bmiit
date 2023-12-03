@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Allocation;
 use App\Models\Faculty;
 use App\Models\Group;
+use App\Models\PanddingGroups;
 use App\Models\Project;
 use App\Models\Student;
 use App\Models\StudentGroup;
@@ -51,11 +52,10 @@ class AdminController extends Controller
                 ->join('projects', 'allocations.studentgroupno', '=', 'projects.groupId')
                 ->distinct('allocations.studentgroupno')
                 ->count('allocations.studentgroupno');
-
-
+            $panddingGroups = PanddingGroups::all()->count();
         } else {
             $programId = CourseYear::find($courseYearId)->course->programsemester->program->id;
-            $student = Student::where('programid' , $programId)->get();
+            $student = Student::where('programid', $programId)->get();
             $totalStudent = $student->count();
             $InactiveStudent = $student->where('status', 0)->count();
             $ActiveStudent = $student->where('status', 1)->count();
@@ -99,7 +99,10 @@ class AdminController extends Controller
                 ->distinct('student_groups.groupid')
                 ->where('student_groups.courseyearid', $courseYearId)
                 ->count();
+            $panddingGroups = PanddingGroups::where('courseYearId', $courseYearId)->count();
+
         }
-        return view('admin.dashboard', compact('totalStudent', 'InactiveStudent', 'ActiveStudent', 'activeFaculties', 'InactiveFaculties', 'totalFaculties', 'totalGroups', 'projectAllocated', 'projectNotAllocated', 'GroupWithoutGuide', 'GroupWithGuide', 'GroupWithoutProject', 'GroupWithProject', 'GroupWithGuideWithoutProject', 'GroupWithGuideWithProject'));
+        return view('admin.dashboard', compact('totalStudent', 'InactiveStudent', 'ActiveStudent', 'activeFaculties', 'InactiveFaculties', 'totalFaculties', 'totalGroups', 'projectAllocated', 'projectNotAllocated', 'GroupWithoutGuide', 'GroupWithGuide', 'GroupWithoutProject', 'GroupWithProject', 'GroupWithGuideWithoutProject', 'GroupWithGuideWithProject',
+            'panddingGroups'));
     }
 }

@@ -107,8 +107,41 @@ class GroupController extends Controller
         return response()->json(['students' => $students]);
     }
 
+    public function ViewAllPanddingGroups()
+    {
+        // get all pandding groups with all row By groupNumber is distinct
+        $panddingGroups = PanddingGroups::all()->unique('groupNumber');
+        $faculties = Faculty::all();
+        $students = Student::all();
+        $studentGroups = StudentGroup::all();
+        $courseYears = CourseYear::all();
+        $groups = Group::all();
 
-//    student
+        return view('admin.viewAllPanddingGroups',
+            [
+                'panddingGroups' => $panddingGroups,
+                'students' => $students,
+                'studentGroups' => $studentGroups,
+                'faculties' => $faculties,
+                'courseYears' => $courseYears,
+                'groups' => $groups
+            ]);
+    }
+
+    public function delete($id)
+    {
+        // delete pandding group by groupNumber
+        $panddingGroup = PanddingGroups::where('groupNumber', $id);
+        if ($panddingGroup) {
+            $panddingGroup->delete();
+            return redirect()->back()->with('success', 'Group deleted successfully');
+        }
+        return redirect()->back()->with('error', 'Something went wrong');
+    }
+
+
+
+    //    student
 
 
     public function ViewStudentGroup()
@@ -198,8 +231,9 @@ class GroupController extends Controller
         }
 
         return response()->json(['success' => 'Group created successfully and waiting for approval']);
-
     }
+
+
 }
 
 
