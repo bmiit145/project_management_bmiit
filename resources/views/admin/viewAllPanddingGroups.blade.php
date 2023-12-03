@@ -143,6 +143,8 @@
                                             </option>
                                         @endforeach
                                     </select>
+                                    <small class="font-light float-end" style="color: darkgreen">( Optional )</small>
+                                    <br>
                                     <label id="guide-error" class="error" for="guide"
                                            style="display: none"></label>
                                 </div>
@@ -274,8 +276,20 @@
         }
 
         function approveGroup(GroupNumber) {
-            // submit form for approve with ajax
+            // submit form for approve with ajax and validate
 
+            var title = $('#panddingGroupModal').find('#title').val();
+            var definition = $('#panddingGroupModal').find('#definition').val();
+            var guide = $('#panddingGroupModal').find('#guide_select').val();
+
+            if (title != "" && definition != "" && title != null && definition != null) {
+                submitModalForm(GroupNumber);
+            } else {
+                toastr.error('Please Fill All Required Fields !')
+            }
+        }
+
+        function submitModalForm(GroupNumber) {
             var formData = $('#panddingGroupModal').find('#ModalForm').serialize();
             formData += "&GroupNum=" + GroupNumber;
 
