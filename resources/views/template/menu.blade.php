@@ -70,54 +70,12 @@
                 </a>
             </li>
 
-
             <!-- Heading -->
             <li class="menu-header small text-uppercase">
-                <span class="menu-header-text">USERS</span>
+                <span class="menu-header-text">Basic</span>
             </li>
 
-            <!-- Faculty -->
-            <li class="menu-item ">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-layout"></i>
-                    <div data-i18n="Faculties">Faculties</div>
-                </a>
 
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" id="add_faculty" class="menu-link">
-                            <div data-i18n="Add Faculty">Add Faculty</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="javascript:void(0);" id="view_faculty" class="menu-link">
-                            <div data-i18n="Without navbar">List Faculties</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
-
-            <!-- <li class="menu-header small text-uppercase">
-          <span class="menu-header-text">Pages</span>
-        </li> -->
-            <li class="menu-item">
-                <a href="javascript:void(0);" class="menu-link menu-toggle">
-                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                    <div data-i18n="Account Settings">Students</div>
-                </a>
-                <ul class="menu-sub">
-                    <li class="menu-item">
-                        <a href="{{ route('student.addForm') }}" class="menu-link">
-                            <div data-i18n="Account">Add Students</div>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="{{ route('ManageStudent') }}" class="menu-link">
-                            <div data-i18n="Notifications">List Students</div>
-                        </a>
-                    </li>
-                </ul>
-            </li>
             <li class="menu-item">
                 <a href="{{ route('ManageProgram') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -179,6 +137,55 @@
                     <li class="menu-item">
                         <a href="{{route('ManageCourseYears')}}" id="courseYear" class="menu-link">
                             <div data-i18n="Without navbar">Course Year</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <!-- Heading -->
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">USERS</span>
+            </li>
+
+            <!-- Faculty -->
+            <li class="menu-item ">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Faculties">Faculties</div>
+                </a>
+
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" id="add_faculty" class="menu-link">
+                            <div data-i18n="Add Faculty">Add Faculty</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0);" id="view_faculty" class="menu-link">
+                            <div data-i18n="Without navbar">List Faculties</div>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <!-- <li class="menu-header small text-uppercase">
+          <span class="menu-header-text">Pages</span>
+        </li> -->
+            <li class="menu-item">
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div data-i18n="Account Settings">Students</div>
+                </a>
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('student.addForm') }}" class="menu-link">
+                            <div data-i18n="Account">Add Students</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="{{ route('ManageStudent') }}" class="menu-link">
+                            <div data-i18n="Notifications">List Students</div>
                         </a>
                     </li>
                 </ul>

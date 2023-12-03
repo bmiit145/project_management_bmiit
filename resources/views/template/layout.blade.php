@@ -276,7 +276,7 @@
 
         // change event for Nav program dropdown
         $(document).on('change', '#NavProgram', function () {
-            console.log("Program Change")
+            // console.log("Program Change")
             var NavProgramId = $(document).find('#NavProgram').val();
 
             // fill up semester dropdown
@@ -321,11 +321,11 @@
 
         })
 
-        console.log(2222255555);
+        // console.log(2222255555);
 
         //change event for Nav semester dropdown
         $(document).on('change', '#NavSemester', function () {
-            console.log("Semester Change")
+            // console.log("Semester Change")
 
             // fillup Nav course year dropdown
             $.ajax({
@@ -371,7 +371,7 @@
 
         // change event for Nav course year dropdown
         $(document).on('change', '#NavcourseYear', function () {
-            console.log("Course Year Change");
+            // console.log("Course Year Change");
 
             var NavcourseYearId = $(document).find('#NavcourseYear').val();
             var NavSemesterId = $(document).find('#NavSemester').val();
