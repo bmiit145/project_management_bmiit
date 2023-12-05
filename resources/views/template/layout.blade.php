@@ -70,6 +70,10 @@
     <link rel="stylesheet" href="{{ mix('css/select2.min.css') }}"/>
     <script src="{{ mix('js/select2.min.js') }}"></script>
 
+{{--    dataTable --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/editor.dataTables.min.css') }}"/>
+    <script src="{{ asset('assets/js/dataTable/dataTables.editor.min.js') }}"></script>
+
     <style>
         .dt-down-arrow {
             display: none !important;

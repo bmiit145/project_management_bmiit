@@ -57,7 +57,7 @@
                 <h5 class="card-header "><strong> Program List</strong></h5>
 
                 <div class="table-responsive text-nowrap p-2">
-                {{--                Search --}}
+                    {{--                Search --}}
                     <div class="row mx-2 my-2">
                         <div class="col-sm-12 col-md-4 col-lg-6">
                             <div class="dataTables_length" id="DataTables_Table_0_length"><label><select
@@ -88,8 +88,8 @@
                             <th class="select-filter">No.</th>
                             <th>Code</th>
                             <th>Name</th>
-                            {{-- <th>Status</th>
-                            <th>Actions</th> --}}
+                            {{--                            <th>Status</th>--}}
+                            <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody class="table-border-bottom-0 ">
@@ -112,32 +112,36 @@
                                 <td id="status"><span class="badge bg-label-danger me-1">InActive</span></td>
                             @endif
                             </td> --}}
-                                {{-- <td>
-                                <div class="dropdown">
-                                    <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                        data-bs-toggle="dropdown">
-                                        <i class="bx bx-dots-vertical-rounded"></i>
-                                    </button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="javascript:void(0);"><i
-                                                class="bx bx-edit-alt me-1"></i>
-                                            Edit</a>
-                                        @if ($program->status == 1)
-                                            <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
-                                                data-username="{{ $program->code }}"
-                                                data-status="{{ $program->status }}"><i class="bx bx-refresh"></i>
-                                                <span>Inactive</span></a>
-                                        @else
-                                            <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"
-                                                data-username="{{ $program->code }}"
-                                                data-status="{{ $program->status }}"><i
-                                                    class="bx bx-refresh"></i>
-                                                <span>Active</span></a>
-                                        @endif
+                                <td>
+                                    <span class="dropdown-item EditBtn" data-bs-toggle="modal" data-bs-target="#EditModal"
+                                       data-id="{{ $program->id }}" onclick="EditBtnClick('{{ $program->id }}')"><i
+                                            class="bx bx-edit-alt me-1"></i>
+                                    </span>
+                                    {{--                                    <div class="dropdown">--}}
+                                    {{--                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"--}}
+                                    {{--                                                data-bs-toggle="dropdown">--}}
+                                    {{--                                            <i class="bx bx-dots-vertical-rounded"></i>--}}
+                                    {{--                                        </button>--}}
+                                    {{--                                        <div class="dropdown-menu">--}}
+                                    {{--                                            <a class="dropdown-item" href="javascript:void(0);"><i--}}
+                                    {{--                                                    class="bx bx-edit-alt me-1"></i>--}}
+                                    {{--                                                Edit</a>--}}
+                                    {{--                                            @if ($program->status == 1)--}}
+                                    {{--                                                <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"--}}
+                                    {{--                                                   data-username="{{ $program->code }}"--}}
+                                    {{--                                                   data-status="{{ $program->status }}"><i class="bx bx-refresh"></i>--}}
+                                    {{--                                                    <span>Inactive</span></a>--}}
+                                    {{--                                            @else--}}
+                                    {{--                                                <a class="dropdown-item" href="javascript:void(0);" id="changeStatus"--}}
+                                    {{--                                                   data-username="{{ $program->code }}"--}}
+                                    {{--                                                   data-status="{{ $program->status }}"><i--}}
+                                    {{--                                                        class="bx bx-refresh"></i>--}}
+                                    {{--                                                    <span>Active</span></a>--}}
+                                    {{--                                            @endif--}}
 
-                                    </div>
-                                </div>
-                            </td> --}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </div>--}}
+                                </td>
                             </tr>
                         @endforeach
                         {{-- @else
@@ -152,14 +156,171 @@
 
         </div>
     </div>
+
+    {{-- Edit Modal --}}
+    <div class="modal modal-top fade" id="EditModal" tabindex="-1" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTopTitle">Edit Program</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form id="EditForm">
+                            @csrf
+                            <input name="id" id="idModal" hidden/>
+                            <div class="col mb-3">
+                                <label for="codeModal" class="form-label">Code</label>
+                                <input type="text" id="codeModal" class="form-control" name="code"
+                                       placeholder="Enter Name">
+                            </div>
+                            <div class="col mb-3">
+                                <label for="nameModal" class="form-label">Name</label>
+                                <input type="text" id="nameModal" class="form-control" name="name"
+                                       placeholder="Enter Name">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-label-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="editUpdate">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @push('scripts')
     <script>
         $(document).ready(function () {
             // Initialize the DataTable
-            CreateDataTable();
+            var Table = CreateDataTable();
         });
+
+        function EditBtnClick (EditId) {
+            // Simulate data retrieval (replace with actual API call)
+            const Data = getData(EditId);
+        };
+
+        function getData(EditId) {
+            // console.log("Get data Called")
+            $.ajax({
+                type: 'get',
+                url: "{{ route('program.getProgram') }}",
+                data: {id: EditId},
+                success: function (res) {
+                    // console.log(res);
+
+                    // Display group details in the modal
+                    displayData(res);
+                    return res;
+                },
+            })
+        }
+
+        function displayData(data) {
+            $('#codeModal').val(data.code);
+            $('#nameModal').val(data.name);
+            $('#idModal').val(data.id);
+
+            // submit form
+            $('#editUpdate').click(function () {
+                // console.log("editUpdate Clicked");
+                $(document).find('#EditForm').submit();
+            });
+        }
+
+
+        // edit form validation
+        $('#EditForm').validate({
+            rules: {
+                "id": {
+                    required: true,
+                    number: true
+                },
+                "code": {
+                    required: true,
+                },
+                "name": {
+                    required: true,
+                },
+            },
+            messages: {
+                id: {
+                    required: "Please enter Id",
+                },
+                code: {
+                    required: "Please enter Program Code",
+                },
+                name: {
+                    required: "Please enter Program name",
+                },
+            },
+            submitHandler: function (form, event) {
+                event.preventDefault();
+                var formData = $('#EditForm').serialize()
+                // console.log(formDatda);
+                // add id to it
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('program.update') }}",
+                    data: formData,
+                    // dataType: "dataType",
+                    success: function (res) {
+                        // console.log(res.success);
+                        toastr.success(res.success)
+                        $('#EditForm')[0].reset();
+                        $('#EditModal').modal('hide');
+
+                        // get and replace table bodyy
+                        $.ajax({
+                            type: "get",
+                            url: "{{ route('ManageProgram') }}",
+                            // data: ,
+                            // dataType: "dataType",
+                            success: function (r) {
+                                DestroyDataTable();
+                                var response = $(r);
+                                var tbody = response.find('tbody').html();
+                                // console.log(tbody);
+                                $(document).find('tbody').html(tbody)
+                                CreateDataTable();
+                            },
+
+                            error: function (xhr, response) {
+                                if (xhr.status == 422) {
+                                    var errors = xhr.responseJSON.errors;
+
+                                    $.each(errors, function (field, messages) {
+                                        $.each(messages, function (index,
+                                                                   message) {
+                                            toastr.error(messages)
+                                        });
+                                    });
+                                }
+                            }
+
+                        })
+
+                    },
+
+                    error: function (xhr, response) {
+                        if (xhr.status == 422) {
+                            var errors = xhr.responseJSON.errors;
+
+                            $.each(errors, function (field, messages) {
+                                $.each(messages, function (index, message) {
+                                    toastr.error(messages)
+                                });
+                            });
+                        }
+                    }
+
+                });
+            }
+        })
     </script>
     <script>
         $('#addProgramForm').validate({

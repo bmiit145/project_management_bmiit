@@ -124,9 +124,8 @@ function CreateDataTable(param) {
                     emptyTable: "No records available", // Customize the "No record Found" message
                 }
             ,
-            select: true,
-        })
-    ;
+            // select: true,
+        });
 
     dataTable
         .on('order.dt search.dt', function () {
@@ -229,14 +228,14 @@ function DestroyDataTable(param) {
 }
 
 
-function ColumnSearch(className , table , column){
-    $(document).find(className).on( 'keyup', function () {
+function ColumnSearch(className, table, column) {
+    $(document).find(className).on('keyup', function () {
         table
             .api()
-            .columns( column )
-            .search( this.value )
+            .columns(column)
+            .search(this.value)
             .draw();
-    } );
+    });
 }
 
 

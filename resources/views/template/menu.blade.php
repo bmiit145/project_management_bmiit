@@ -226,7 +226,9 @@
                         </a>
                     </li>
                 </ul>
-                <!-- Allocation -->
+            </li>
+
+            <!-- Allocation -->
             <li class="menu-item">
                 <a href="{{ route('ManageAllocations')}}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-dock-top"></i>
@@ -236,10 +238,25 @@
 
             <!-- Allocation -->
             <li class="menu-item">
-                <a href="{{ route('ManageProjects')}}" class="menu-link">
-                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                    <div data-i18n="Account Settings">Project Allocation</div>
+                <a href="javascript:void(0);" class="menu-link menu-toggle">
+                    <i class="menu-icon tf-icons bx bx-layout"></i>
+                    <div data-i18n="Groups">Project</div>
                 </a>
+
+                <ul class="menu-sub">
+                    <li class="menu-item">
+                        <a href="{{ route('ManageProjects')}}" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Project Allocation</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="javascript:void(0)" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                            <div data-i18n="Account Settings">Report</div>
+                        </a>
+                    </li>
+                </ul>
             </li>
 
             <!-- Presentation  -->

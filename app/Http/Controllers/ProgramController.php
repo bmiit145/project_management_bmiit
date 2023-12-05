@@ -10,6 +10,35 @@ use Illuminate\Support\Facades\Auth;
 class ProgramController extends Controller
 {
 
+    function getProgram(Request $request)
+    {
+        $program = Program::where('id', $request->id)->first();
+        return response()->json($program);
+    }
+
+    function updateProgram(Request $request)
+    {
+        $validated = $request->validate([
+            'id' => "required | exists:programs",
+            'code' => "required",
+            "name" => "required",
+        ]);
+
+        // update Program
+        $program = Program::find($request->id);
+        if ($program){
+            $program->code = $request-> code;
+            $program->name = $request->name;
+            if($program->save()){
+                return response()->json(["success" => "Program Updated"]);
+            }else{
+                return response()->json(["error" => "Something Went Wrong"]);
+            }
+        }else{
+            return response()->json(["error" => "Id Not found"]);
+        }
+    }
+
     function getPrograms(Request $request)
     {
         $programs = Program::all();
@@ -19,7 +48,7 @@ class ProgramController extends Controller
             $programs = Program::where('id', $programId)->get();
         }
 //        dd($programs);
-            
+
         return response()->json($programs);
     }
 
