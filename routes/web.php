@@ -116,6 +116,8 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/Projects', [ProjectController::class, 'ViewAllProjects'])->name('ManageProjects');
     Route::get('/getProject', [ProjectController::class, 'getProject'])->name('getProject');
     Route::post('/AddProject', [ProjectController::class, 'createProject'])->name('Project.add');
+    Route::get('/ProjectReport', [ProjectController::class, 'ProjectReportPage'])->name('ProjectReportPage');
+    Route::post('/ProjectReport', [ProjectController::class, 'ProjectReport'])->name('DownloadProjectSheetPdf');
 
     // Presentation
     Route::get('/SchedulePresentation', [presentationController::class, 'SchedulePresentation'])->name('ManageSchedule');
