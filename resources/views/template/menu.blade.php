@@ -1,6 +1,5 @@
 <!-- Menu -->
-<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme"
-       style="touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
     <div class="app-brand demo">
         <a href="{{ url('/') }}" class="app-brand-link">
                     <span class="app-brand-logo demo">
@@ -60,7 +59,7 @@
 
     {{--    if role is admin--}}
     @if( Auth::user()->role == 1)
-        <ul class="menu-inner py-1 sidebar-menu ps ps--active-y">
+        <ul class="menu-inner py-1 sidebar-menu">
             <!-- Dashboard -->
             <!-- active open class for future -->
             <li class="menu-item">
@@ -321,7 +320,7 @@
 
     @elseif(Auth::user()->role == 0)
 
-        <ul class="menu-inner py-1 sidebar-menu ps ps--active-y">
+        <ul class="menu-inner py-1 sidebar-menu">
             <!-- Dashboard -->
             <!-- active open class for future -->
             <li class="menu-item">

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 
-<html lang="en" class="light-style" dir="ltr" data-theme="theme-default">
+<html lang="en" class="light-style layout-navbar-fixed layout-compact layout-menu-fixed" dir="ltr" data-theme="theme-default">
 
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
     <title>@yield('title')</title>
 
@@ -25,19 +24,19 @@
     <link rel="stylesheet" href="{{ asset('../assets/vendor/fonts/boxicons.css') }}"/>
 
     <!-- Core CSS -->
-    <link rel="stylesheet" href="{{ asset('../assets/vendor/css/core.css') }}" class="template-customizer-core-css"/>
-    <link rel="stylesheet" href="{{ asset('assets/css/core.css') }}"/>
+{{--    <link rel="stylesheet" href="{{ asset('../assets/vendor/css/core.css') }}" class="template-customizer-core-css"/>--}}
+    <link rel="stylesheet" href="{{ asset('assets/css/core1.css') }}"/>
     <link rel="stylesheet" href="{{ asset('../assets/vendor/css/theme-default.css') }}"
           class="template-customizer-theme-css"/>
-
     <link rel="stylesheet" href="{{ asset('../assets/css/demo.css') }}"/>
-
-    <!-- Vendors CSS -->
     <link rel="stylesheet" href="{{ asset('../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}"/>
+
 
     <!-- Page CSS -->
     <!-- Page -->
     <link rel="stylesheet" href="{{ asset('../assets/vendor/css/pages/page-auth.css') }}"/>
+
+
     <!-- Helpers -->
     <script src="{{ asset('../assets/vendor/js/helpers.js') }}"></script>
 
