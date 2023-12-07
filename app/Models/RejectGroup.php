@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PanddingGroups extends Model
+class RejectGroup extends Model
 {
     use HasFactory;
 
@@ -37,5 +37,4 @@ class PanddingGroups extends Model
     {
         return $this->belongsTo(PanddingGroups::class, 'groupNumber', 'groupNumber');
     }
-
 }

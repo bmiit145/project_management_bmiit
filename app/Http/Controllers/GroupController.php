@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PanddingGroups;
+use App\Models\RejectGroup;
 use Illuminate\Http\Request;
 use App\Models\CourseYear;
 use App\Models\Student;
@@ -125,8 +126,19 @@ class GroupController extends Controller
         // delete pandding group by groupNumber
         $panddingGroup = PanddingGroups::where('groupNumber', $id);
         if ($panddingGroup) {
-            $panddingGroup->delete();
-            return redirect()->back()->with('success', 'Group deleted successfully');
+            $rejectedGroup = new RejectGroup();
+            $rejectedGroup->groupNumber = $panddingGroup->first()->groupNumber;
+            $rejectedGroup->studentenro = $panddingGroup->first()->studentenro;
+            $rejectedGroup->courseYearId = $panddingGroup->first()->courseYearId;
+            $rejectedGroup->title = $panddingGroup->first()->title;
+            $rejectedGroup->definition = $panddingGroup->first()->definition;
+            $rejectedGroup->created_by = $panddingGroup->first()->created_by;
+
+            if ($rejectedGroup->save()) {
+                $panddingGroup = PanddingGroups::where('groupNumber', $id);
+                $panddingGroup->delete();
+                return redirect()->back()->with('success', 'Group deleted successfully');
+            }
         }
         return redirect()->back()->with('error', 'Something went wrong');
     }
