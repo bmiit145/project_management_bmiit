@@ -21,6 +21,8 @@ use App\Mail\PresentationScheduleMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Queue;
 use App\Jobs\presentationScheduleJob;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class presentationController extends Controller
 {
@@ -174,6 +176,13 @@ class presentationController extends Controller
                     $filename = rand(1111, 9999) . '_' . $attachment->getClientOriginalName();
                     $attachment->storeAs('attachments', $filename);
 //                    $attachment->move(public_path('attachments'), $filename);
+
+                    // Calculate expiration timestamp (e.g., 30 days from now)
+//                    $expiration = Carbon::now()->addDays(30)->timestamp;
+
+// Store file metadata (expiration timestamp) in the storage
+//                    Storage::put("metadata/{$filename}.txt", $expiration);
+
                     $attachments[] = $filename;
                     $attachmentPaths[] = storage_path('app/attachments/' . $filename);
                 }
@@ -190,7 +199,7 @@ class presentationController extends Controller
                 })->toArray();
 
             if (!empty($emails)) {
-                presentationScheduleJob::dispatch($emails, $request->emailBody, $request->datetime, $request->assessmentType , $attachmentPaths);
+                presentationScheduleJob::dispatch($emails, $request->emailBody, $request->datetime, $request->assessmentType, $attachmentPaths);
             }
 
             return response()->json([
