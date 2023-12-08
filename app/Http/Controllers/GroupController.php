@@ -352,11 +352,20 @@ class GroupController extends Controller
 
     //   faculty
 
-    public function ViewFacultyGroup(Request $request)
+    public function ViewFacultyGroup($id = null)
     {
         $facultyId = Auth::user()->user->id;
         // get all groups where faculty is guide with all row By groupId is distinct
-        $groups = Allocation::where('facultyid', $facultyId)->with('group', 'group.project', 'group.studentGroups', 'group.studentGroups.courseYear')->get();
+        $groups = Allocation::where('facultyid', $facultyId)->with('group', 'group.project', 'group.studentGroups', 'group.studentGroups.courseYear');
+
+        if ($id != null) {
+            $groups = $groups->whereHas('group.studentGroups.courseYear', function ($query) use ($id) {
+                $query->where('id', $id);
+            });
+        }
+        $groups = $groups->get();
+
+//        dd($groups);
         return view('faculty.viewFacultyGroup', compact('groups'));
     }
 

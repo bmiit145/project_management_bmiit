@@ -38,7 +38,7 @@
                                 <h4 class="card-title mb-1 text-nowrap">{{ $group->group->project->title }}</h4>
                                 @if($group->group->project->definition != null)
                                     <p class="d-block mb-3 text-wrap"
-                                       style="font-size:small"  >{{ $group->group->project->definition}}</p>
+                                       style="font-size:small">{{ $group->group->project->definition}}</p>
                                 @else
                                     <div class="alert alert-danger" role="alert">
                                         <strong>Project Definition Not Given</strong>
@@ -226,5 +226,29 @@
                 }
             });
         }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $(document).on('change', '#NavcourseYear', function () {
+                let courseYearId = $(this).val();
+
+                var currentUrl = window.location.href;
+                var parts = currentUrl.split('/');
+                var lastPart = parts.filter(part => part !== '').pop();
+
+                if (lastPart == courseYearId) {
+                    return;
+                }
+                if (courseYearId != -1) {
+                    window.location.href = "{{ route('ManageFacultyGroup') }}/" + courseYearId;
+                } else {
+                    // if last part is not a number then reload the page
+                    if (!isNaN(lastPart)) {
+                        window.location.href = "{{ route('ManageFacultyGroup') }}";
+                    }
+                }
+            })
+        });
     </script>
 @endpush
