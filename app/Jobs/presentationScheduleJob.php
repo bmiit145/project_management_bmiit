@@ -27,13 +27,15 @@ class presentationScheduleJob implements ShouldQueue
     public $emailBody;
     public $datetime;
     public $assessmentType;
+    public  $attachmentPaths;
 
-    public function __construct($emails, $emailBody, $datetime, $assessmentType)
+    public function __construct($emails, $emailBody, $datetime, $assessmentType , $attachmentPaths)
     {
         $this->emails = $emails;
         $this->emailBody = $emailBody;
         $this->datetime = $datetime;
         $this->assessmentType = $assessmentType;
+        $this->attachmentPaths = $attachmentPaths;
     }
 
     /**
@@ -44,11 +46,9 @@ class presentationScheduleJob implements ShouldQueue
     public function handle()
     {
         // for invalid mail as not found mail  , log it
-
         foreach ($this->emails as $email) {
             try {
-                Mail::to($email)->queue(new PresentationScheduleMail($this->emailBody, $this->datetime, $this->assessmentType));
-
+                Mail::to($email)->queue(new PresentationScheduleMail($this->emailBody, $this->datetime, $this->assessmentType ,  $this->attachmentPaths));
             } catch (\Exception $e) {
                 Log::error("Error in sending mail to " . $email . " " . $e->getMessage());
             }

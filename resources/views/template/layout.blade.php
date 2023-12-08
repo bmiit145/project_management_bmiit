@@ -9,6 +9,9 @@
     <title>@yield('title')</title>
 
     <meta name="description" content="PMS - Project Management System"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="author" content="PMS - Project Management System"/>
+
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('../assets/img/favicon/favicon.ico')}}"/>

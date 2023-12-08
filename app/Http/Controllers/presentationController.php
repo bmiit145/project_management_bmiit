@@ -135,12 +135,13 @@ class presentationController extends Controller
 
     public function createSchedule(Request $request)
     {
-//        dd($request->all());
-
         $request->validate([
             'courseYearId' => 'required | numeric | exists:course_years,id',
             'datetime' => 'required | date | after:today',
             'assessmentType' => 'required',
+            // max 25M per file and max 5 files
+            'attachments.*' => 'mimes:pdf,doc,docx,zip,jpeg,jpg,png,rar,txt | max:25000',
+            'attachments' => 'array | max:5',
         ], [
             'courseYearId.required' => 'Please select a course year',
             'courseYearId.numeric' => 'Please select a valid course year',
@@ -149,6 +150,10 @@ class presentationController extends Controller
             'datetime.date' => 'Please select a valid date and time',
             'datetime.after' => 'Please select date and time After Now',
             'assessmentType.required' => 'Please select an assessment type',
+            'attachments.*.mimes' => 'Please select a valid file type as pdf,doc,docx,zip,jpeg,jpg,png,rar',
+            'attachments.*.max' => 'Please select a file less than 25MB',
+            'attachments.array' => 'Please select a valid file',
+            'attachments.max' => 'Please select a maximum of 5 files',
         ]);
 
         $schedule = new Schedule();
@@ -160,6 +165,22 @@ class presentationController extends Controller
             //TODO: send email to all students
 //            $emails = ['wfsi@sghfuiods.com', '21bmiit145@gmail.com', 'sp8414sp@gmail.com', 'sutariyabhavik99@gmail.com', 'priyanksutariya0@gmail.com'];
 
+            // attachments array to store all file names for  attaching with mail
+            $attachments = [];
+            $attachmentPaths = [];
+
+            if ($request->hasFile('attachments')) {
+                foreach ($request->file('attachments') as $attachment) {
+                    $filename = rand(1111, 9999) . '_' . $attachment->getClientOriginalName();
+                    $attachment->storeAs('attachments', $filename);
+//                    $attachment->move(public_path('attachments'), $filename);
+                    $attachments[] = $filename;
+                    $attachmentPaths[] = storage_path('app/attachments/' . $filename);
+                }
+            }
+            $attachments = array_filter($attachments);
+            $attachmentPaths = array_filter($attachmentPaths);
+
             // Fetching student emails
             $emails = Student::whereHas('studentGroups', function ($query) use ($request) {
                 $query->where('courseYearId', $request->courseYearId);
@@ -169,9 +190,8 @@ class presentationController extends Controller
                 })->toArray();
 
             if (!empty($emails)) {
-                presentationScheduleJob::dispatch($emails, $request->emailBody ,$request->datetime , $request->assessmentType);
+                presentationScheduleJob::dispatch($emails, $request->emailBody, $request->datetime, $request->assessmentType , $attachmentPaths);
             }
-
 
             return response()->json([
                 'success' => "Scheduled Successfully"

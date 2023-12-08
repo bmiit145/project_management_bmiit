@@ -15,17 +15,20 @@ class PresentationScheduleMail extends Mailable
     public $datetime;
     public $assessmentType;
 
+    public $attachmentPaths;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
 
-    public function __construct($mailBody, $datetime, $assessmentType)
+    public function __construct($mailBody, $datetime, $assessmentType, $attachmentPaths)
     {
         $this->mailBody = $mailBody;
         $this->datetime = $datetime;
         $this->assessmentType = $assessmentType;
+        $this->attachmentPaths = $attachmentPaths;
     }
 
     /**
@@ -35,20 +38,30 @@ class PresentationScheduleMail extends Mailable
      */
     public function build()
     {
+        $from = env('MAIL_FROM_ADDRESS', '21bmiit145@gmail.com');
+
         $date = date_create($this->datetime);
         $dateOnly = date_format($date, 'Y-m-d');
         $timeOnly = date_format($date, 'h:i A');
 
-        return $this->subject("$this->assessmentType Schedule on $dateOnly at $timeOnly")
-            ->name('PMS Committee')
+        $mail = $this->subject("$this->assessmentType Schedule on $dateOnly at $timeOnly")
+            ->from("$from", 'PMS Committee');
 //            ->replyTo('21bmiit145@gmail.com', 'PMS Committee')
-            ->view('mail.presentationScheduleMail')
+
+        foreach ($this->attachmentPaths as $attachmentPath) {
+            $mail->attach($attachmentPath);
+        }
+//        $mail->attach(public_path('attachments/5980_1.pdf'));
+        $mail->view('mail.presentationScheduleMail')
             ->with([
                 'mailBody' => $this->mailBody,
                 'dateOnly' => $dateOnly,
                 'timeOnly' => $timeOnly,
                 'assessmentType' => $this->assessmentType
             ]);
+
+        return $mail;
+
     }
 }
 

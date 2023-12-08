@@ -49,11 +49,11 @@
                     <select class="form-select selectSearch" id="NavSemester"
                             aria-label="Default select example">
                         <option value="-1" selected>Semester</option>
-{{--                                                @foreach ($courseYears as $courseYear)--}}
-{{--                                                    <option value="{{ $courseYear->id }}">{{ $courseYear->course->name }}--}}
-{{--                                                        - {{ $courseYear->year->name }}--}}
-{{--                                                    </option>s--}}
-{{--                                                @endforeach--}}
+                        {{--                                                @foreach ($courseYears as $courseYear)--}}
+                        {{--                                                    <option value="{{ $courseYear->id }}">{{ $courseYear->course->name }}--}}
+                        {{--                                                        - {{ $courseYear->year->name }}--}}
+                        {{--                                                    </option>s--}}
+                        {{--                                                @endforeach--}}
                     </select>
                 </div>
             </div>
@@ -76,7 +76,6 @@
             </div>
             <!-- /Search -->
 
-
             <!-- User -->
             <li class="nav-item navbar-dropdown dropdown-user dropdown">
                 <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
@@ -95,21 +94,37 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">John Doe</span>
-                                    <small class="text-muted">Admin</small>
+                                    @if(auth()->user()->role != 1)
+                                        <span
+                                                class="fw-semibold d-block">{{ auth()->user()->user->fname . ' '. auth()->user()->user->lname }}
+                                        </span>
+                                    @else
+                                        <span
+                                                class="fw-semibold d-block text-capitalize">{{ auth()->user()->username }}
+                                        </span>
+                                    @endif
+                                    <small class="text-muted">
+                                        @if(auth()->user()->role == 1)
+                                            Admin
+                                        @elseif(auth()->user()->role == 2)
+                                            Teacher
+                                        @elseif(auth()->user()->role == 0)
+                                            Student
+                                        @endif
+                                    </small>
                                 </div>
                             </div>
                         </a>
                     </li>
-                    <li>
-                        <div class="dropdown-divider"></div>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="#">
-                            <i class="bx bx-user me-2"></i>
-                            <span class="align-middle">My Profile</span>
-                        </a>
-                    </li>
+                    {{--                    <li>--}}
+                    {{--                        <div class="dropdown-divider"></div>--}}
+                    {{--                    </li>--}}
+                    {{--                    <li>--}}
+                    {{--                        <a class="dropdown-item" href="#">--}}
+                    {{--                            <i class="bx bx-user me-2"></i>--}}
+                    {{--                            <span class="align-middle">My Profile</span>--}}
+                    {{--                        </a>--}}
+                    {{--                    </li>--}}
                     <!-- <li>
                       <a class="dropdown-item" href="#">
                         <i class="bx bx-cog me-2"></i>

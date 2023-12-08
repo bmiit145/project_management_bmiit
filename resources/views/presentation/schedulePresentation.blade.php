@@ -24,10 +24,10 @@
                         <!-- <small class="text-muted float-end">Merged input group</small> -->
                     </div>
                     <div class="card-body">
-                        <form method="post" action="{{ route('Schedule.add') }}" id="scheduleForm">
+                        <form method="post" action="{{ route('Schedule.add') }}" id="scheduleForm"
+                              enctype="multipart/form-data">
                             @csrf
                             <span id="error_info">
-
                             </span>
                             <div class="mb-3">
                                 <label for="courseYear" class="form-label">Course Year</label>
@@ -68,6 +68,11 @@
                             <div class="mb-3">
                                 <textarea id="emailBody" name="emailBody"></textarea>
                                 <label id="emailBody-error" class="error" for="emailBody" style="display: none"></label>
+                            </div>
+                            {{--  attachment file input  --}}
+                            <div class="mb-3">
+                                <label for="attachment" class="form-label">Multiple attachments </label>
+                                <input type="file" class="form-control" id="attachment" name="attachments[]" multiple>
                             </div>
                             <button type="submit" class="btn btn-primary">Schedule Presentation</button>
                         </form>
@@ -164,8 +169,9 @@
 @endsection
 
 @push('scripts')
-    <script src="https://cdn.tiny.cloud/1/694jsilu2i2a150wdh5m7uhmno49slwk405uxocc8cqogt5i/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-{{--<script src="{{ asset('../assets/js/tinymce.min.js') }}"></script>--}}
+    <script src="https://cdn.tiny.cloud/1/694jsilu2i2a150wdh5m7uhmno49slwk405uxocc8cqogt5i/tinymce/5/tinymce.min.js"
+            referrerpolicy="origin"></script>
+    {{--<script src="{{ asset('../assets/js/tinymce.min.js') }}"></script>--}}
     <script>
         tinymce.init({
             selector: '#emailBody',
@@ -177,7 +183,7 @@
 
     <script src="{{ asset('../assets/js/flatpickr.js') }}"></script>
     <!-- jQuery library -->
-{{--    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>--}}
+    {{--    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>--}}
     <script src="{{ asset('../assets/js/jquery-ui.min.js') }}"></script>
     <script>
         flatpickr("#datetime", {
@@ -248,24 +254,25 @@
                 // form.submit();
                 event.preventDefault();
 
-
-                // name = $(document).find('#name').val();
-
-                // //send ajax for similar name check
-                // if (similarName) {
-
-                // }
-
                 // get and set email body
                 var content = tinymce.get('emailBody').getContent();
                 $('#emailBody').val(content);
 
-                var formData = $('#scheduleForm').serialize();
+                // var formData = $('#scheduleForm').serialize();
+                var formData = new FormData($('#scheduleForm')[0]);
+                var csrfToken = $('meta[name="csrf-token"]').attr('content');
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': csrfToken
+                    }
+                });
 
                 $.ajax({
-                    type: "post",
+                    type: "POST",
                     url: "{{ route('Schedule.add') }}",
                     data: formData,
+                    contentType: false,
+                    processData: false,
                     // dataType: "dataType",
                     success: function (res) {
                         if (res.error) {

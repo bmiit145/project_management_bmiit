@@ -74,7 +74,7 @@ Route::group(['middleware' => 'admin'], function () {
     Route::get('/ViewPrograms', [ProgramController::class, 'viewAllPrograms'])->name('ManageProgram');
     Route::post('/AddProgram', [ProgramController::class, 'create'])->name('program.add');
     Route::get('/getProgram', [ProgramController::class, 'getProgram'])->name('program.getProgram');
-    Route::post('/program.update' ,[ProgramController::class , 'updateProgram'])->name('program.update');
+    Route::post('/program.update', [ProgramController::class, 'updateProgram'])->name('program.update');
 
     // Acadamic Year
     Route::get('/ViewAcadamicYear', [AcadamicYearController::class, 'viewAllYears'])->name('ManageYears');
