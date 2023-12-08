@@ -319,7 +319,6 @@
         </ul>
 
     @elseif(Auth::user()->role == 0)
-
         <ul class="menu-inner py-1 sidebar-menu">
             <!-- Dashboard -->
             <!-- active open class for future -->
@@ -366,6 +365,58 @@
                 <a href="{{ route('ManageStudentGroup') }}" class="menu-link">
                     <i class="menu-icon tf-icons bx bx-dock-top"></i>
                     <div data-i18n="Account Settings">Group</div>
+                </a>
+            </li>
+        </ul>
+
+{{--        faculty --}}
+    @elseif(Auth::user()->role == 2)
+        <ul class="menu-inner py-1 sidebar-menu">
+            <!-- Dashboard -->
+            <!-- active open class for future -->
+            <li class="menu-item">
+                <a href=" {{ url('/faculty/dashboard') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                    <div data-i18n="Analytics">Dashboard</div>
+                </a>
+            </li>
+
+
+            {{--            <!-- Heading -->--}}
+            {{--            <li class="menu-header small text-uppercase">--}}
+            {{--                <span class="menu-header-text">USERS</span>--}}
+            {{--            </li>--}}
+
+            {{--            <!-- Faculty -->--}}
+            {{--            <li class="menu-item ">--}}
+            {{--                <a href="javascript:void(0);" class="menu-link menu-toggle">--}}
+            {{--                    <i class="menu-icon tf-icons bx bx-layout"></i>--}}
+            {{--                    <div data-i18n="Faculties">Faculties</div>--}}
+            {{--                </a>--}}
+
+            {{--                <ul class="menu-sub">--}}
+            {{--                    <li class="menu-item">--}}
+            {{--                        <a href="javascript:void(0);" id="add_faculty" class="menu-link">--}}
+            {{--                            <div data-i18n="Add Faculty">Add Faculty</div>--}}
+            {{--                        </a>--}}
+            {{--                    </li>--}}
+            {{--                    <li class="menu-item">--}}
+            {{--                        <a href="javascript:void(0);" id="view_faculty" class="menu-link">--}}
+            {{--                            <div data-i18n="Without navbar">List Faculties</div>--}}
+            {{--                        </a>--}}
+            {{--                    </li>--}}
+            {{--                </ul>--}}
+            {{--            </li>--}}
+
+            <li class="menu-header small text-uppercase">
+                <span class="menu-header-text">Groups</span>
+            </li>
+
+            {{-- groups --}}
+            <li class="menu-item">
+                <a href="{{ route('ManageFacultyGroup') }}" class="menu-link">
+                    <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                    <div>Group</div>
                 </a>
             </li>
 

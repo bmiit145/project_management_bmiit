@@ -40,4 +40,8 @@ class Student extends Model
         return $this->hasMany(PanddingGroups::class, 'studentenro', 'enro');
     }
 
+    public function userInfo()
+    {
+        return $this->hasOne(User::class, 'username', 'username');
+    }
 }

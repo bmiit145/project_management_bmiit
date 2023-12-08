@@ -35,4 +35,8 @@ class Faculty extends Model
         return $this->hasMany(PresentationPanel::class , 'facultyId' , 'id');
     }
 
+    public function userInfo()
+    {
+        return $this->hasOne(User::class, 'username', 'username');
+    }
 }

@@ -41,7 +41,11 @@ class User extends Authenticatable
 
     public function userInfo()
     {
-        return $this->belongsTo(Faculty::class, 'username');
+        if ($this->role == 0) {
+            return $this->belongsTo(Student::class, 'username' , 'username');
+        } elseif ($this->role == 2) {
+            return $this->belongsTo(Faculty::class, 'username' , 'username');
+        }
     }
 
     public function user()

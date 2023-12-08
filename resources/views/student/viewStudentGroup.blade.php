@@ -166,13 +166,25 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <h4 class="card-title mb-1 text-nowrap">{{ $group->group->project?$group->group->project->title:"No any Project Title Given" }}</h4>
-                            <p class="d-block mb-3 text-wrap"
-                               style="font-size: medium">{{ $group->group->project?$group->group->project->definition == null ?"No any Project Definition Given": $group->group->project->definition : "No any Project Title Given" }}</p>
+                            @if($group->group->project)
+                                <h4 class="card-title mb-1 text-nowrap">{{ $group->group->project->title }}</h4>
+                                @if($group->group->project->definition != null)
+                                    <p class="d-block mb-3 text-wrap"
+                                       style="font-size: small">{{ $group->group->project->definition}}</p>
+                                @else
+                                    <div class="alert alert-danger" role="alert">
+                                        <strong>Project Definition Not Given</strong>
+                                    </div>
+                                @endif
+                            @else
+                                <div class="alert alert-danger" role="alert">
+                                    <strong>Project Not Assigned</strong>
+                                </div>
+                            @endif
 
-                            <h5 class="card-title  mb-2">Guide : <span
-                                    class="text-primary">{{ $group->group->allocation ? $group->group->allocation->faculty->fname . " " . $group->group->allocation->faculty->lname :"No any Guide Assigned" }}</span>
-                            </h5>
+                            {{--                            <h5 class="card-title  mb-2">Guide : <span--}}
+                            {{--                                    class="text-primary">{{ $group->group->allocation ? $group->group->allocation->faculty->fname . " " . $group->group->allocation->faculty->lname :"No any Guide Assigned" }}</span>--}}
+                            {{--                            </h5>--}}
 
                             @foreach( $group->group->studentGroups as $student)
                                 <small class="d-block pb-1"

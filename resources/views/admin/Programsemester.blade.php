@@ -264,7 +264,7 @@
 
                             $.each(errors, function (field, messages) {
                                 $.each(messages, function (index, message) {
-                                    toastr.error(messages)
+                                    toastr.error(message)
                                 });
                             });
                         }

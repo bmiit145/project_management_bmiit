@@ -24,9 +24,17 @@ class StudentController extends Controller
 
     public function index()
     {
+        if(session()->get('courseYear')){
+            $courseYearId = session()->get('courseYear');
+        }else{
+            $courseYearId = -1;
+        }
 
-        // number of groups  in which user have
-        $studentGroups = StudentGroup::where('studentenro' , auth()->user()->username)->get();
+        if ($courseYearId == -1) {
+            $studentGroups = StudentGroup::where('studentenro', auth()->user()->username)->get();
+        }else{
+            $studentGroups = StudentGroup::where('studentenro', auth()->user()->username)->where('courseYearId', $courseYearId)->get();
+        }
 
         return view('student.dashboard', compact( 'studentGroups'));
     }

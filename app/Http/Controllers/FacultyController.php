@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Allocation;
 use App\Models\Faculty;
+use App\Models\StudentGroup;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,7 +16,7 @@ class FacultyController extends Controller
     public function viewAllFaculty(){
 
        $faculties =  Faculty::all();
-       
+
         return view('faculty.allFaculty', compact(['faculties'=>'faculties']));
 
     }
@@ -33,7 +35,24 @@ class FacultyController extends Controller
         ]);
     }
     public function index(){
-        return view('faculty.dashboard');
+        if (session()->get('courseYear')) {
+            $courseYearId = session()->get('courseYear');
+        } else {
+            $courseYearId = -1;
+        }
+
+        if ($courseYearId == -1) {
+            $studentGroups = Allocation::where('facultyid', auth()->user()->userInfo()->first()->id)->get();
+        }else{
+            $studentGroups = Allocation::where('facultyid', auth()->user()->userInfo()->first()->id)
+                ->with('studentGroups')
+                ->whereHas('studentGroups', function ($query) use ($courseYearId) {
+                    $query->where('courseyearid', $courseYearId);
+                })
+                ->get();
+        }
+
+        return view('faculty.dashboard' , compact('studentGroups'));
     }
 
     public function ViewAddFacultyForm()

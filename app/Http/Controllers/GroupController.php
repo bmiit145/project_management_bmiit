@@ -350,7 +350,61 @@ class GroupController extends Controller
         return response()->json(['success' => 'Group created successfully and waiting for approval']);
     }
 
+    //   faculty
 
+    public function ViewFacultyGroup(Request $request)
+    {
+        $facultyId = Auth::user()->user->id;
+        // get all groups where faculty is guide with all row By groupId is distinct
+        $groups = Allocation::where('facultyid', $facultyId)->with('group', 'group.project', 'group.studentGroups', 'group.studentGroups.courseYear')->get();
+        return view('faculty.viewFacultyGroup', compact('groups'));
+    }
+
+    public function getGroup(Request $request)
+    {
+        $this->validate($request, [
+            'group_id' => 'required | numeric | exists:groups,id',
+        ]);
+
+        $group = Group::where('id', $request->group_id)->with('project', 'studentGroups', 'studentGroups.courseYear', 'studentGroups.courseYear.course', 'studentGroups.courseYear.year', 'studentGroups.student')->first();
+
+        // add length of group members in studentGroups
+        $group->members = $group->studentGroups->count();
+        return response()->json(['group' => $group]);
+    }
+
+    public function updateGroup(Request $request)
+    {
+        $this->validate($request, [
+            'group_id' => 'required | numeric | exists:groups,id',
+            'title' => 'required | string | max:255',
+            'definition' => 'nullable | string',
+        ], [
+            'group_id.exists' => 'Group not found',
+            'title.required' => 'Project Title is required',
+            'title.string' => 'Project Title must be string',
+            'title.max' => 'Project Title must be less than 255 characters',
+            'definition.string' => 'Project Definition must be string',
+        ]);
+
+        $group = Group::find($request->group_id);
+        if (!$group->project) {
+            $group->project()->create([
+                'title' => $request->title,
+                'definition' => $request->definition,
+            ]);
+            return response()->json(['success' => 'Group updated successfully']);
+        }
+        $group->project->title = $request->title;
+//        if ($request->definition != null && $request->definition != '' && $request->definition != 'undefined') {
+        $group->project->definition = $request->definition;
+//        }
+        if ($group->project->save()) {
+            return response()->json(['success' => 'Group updated successfully']);
+        } else {
+            return response()->json(['error' => 'Something went wrong']);
+        }
+    }
 }
 
 

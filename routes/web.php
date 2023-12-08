@@ -161,6 +161,11 @@ Route::group(['middleware' => 'admin'], function () {
 // faculty route
 Route::group(['middleware' => 'faculty'], function () {
     Route::get('faculty/dashboard', [FacultyController::class, 'index'])->name('show.faculty.dashboard');
+
+    // group
+    Route::get('/ViewFacultyGroup', [GroupController::class, 'ViewFacultyGroup'])->name('ManageFacultyGroup');
+    Route::get('/getGroup', [GroupController::class, 'getGroup'])->name('faculty.group.show');
+    Route::post('/updateGroup', [GroupController::class, 'updateGroup'])->name('faculty.group.update');
 });
 
 // student route
