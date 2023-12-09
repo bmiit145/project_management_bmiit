@@ -239,7 +239,9 @@ class UserController extends Controller
         if (!$user) {
             return back()->with(['error' => "User Not Found!"]);
         }
-
+        if ($request->old_password ==  $request->password){
+            return back()->with(['error' => "Password Should Not match with Old !"]);
+        }
         if (Hash::check($request->old_password , $user->password)){
             $user->password = Hash::make($request->password) ;
             $user->save();

@@ -172,6 +172,12 @@
                         <div class="mb-3">
                             <button class="btn btn-primary d-grid w-100" type="submit">Change Password</button>
                         </div>
+                        <div class="text-center">
+                            <a href="{{ route('dashboard') }}">
+                                <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+                                Back to Dashboard
+                            </a>
+                        </div>
                     </form>
 
                     <!-- <p class="text-center">

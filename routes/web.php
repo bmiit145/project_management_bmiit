@@ -56,7 +56,7 @@ Route::post('/setCourseYearSession', [CourseController::class, 'setCourseYearSes
 Route::group(['middleware' => 'admin'], function () {
 
     Route::get('admin/dashboard', [AdminController::class, 'index'])->name('show.admin.dashboard');
-    Route::get('/dashboard', [AdminController::class, 'index']);
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
     // faculty
     Route::get('/ViewAddFaculty', [FacultyController::class, 'ViewAddFacultyForm'])->name('faculty.addForm');
