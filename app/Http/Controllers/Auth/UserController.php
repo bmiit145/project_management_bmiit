@@ -216,4 +216,37 @@ class UserController extends Controller
 
         return redirect('/login')->with("success", "Password Change Successfullty");
     }
+
+    public function changePasswordPage()
+    {
+        if (!auth()->user()) {
+            return back()->with(["error" => "User Not Login"]);
+        }
+
+        $username = auth()->user()->username;
+        return view('auth.changePassword', compact(['username']));
+    }
+
+    public function NewChangePassword(Request $request)
+    {
+        $validated = $request->validate([
+            'username' => 'required',
+            'old_password' => 'required',
+            'password' => 'required',
+        ]);
+
+        $user = User::where('username', $request->username)->first();
+        if (!$user) {
+            return back()->with(['error' => "User Not Found!"]);
+        }
+
+        if (Hash::check($request->old_password , $user->password)){
+            $user->password = Hash::make($request->password) ;
+            $user->save();
+            Auth::logout();
+            return redirect('login')->with(['success' => 'Password Changed']);
+        }else{
+            return back()->with(['error' => 'Invaild Password']);
+        }
+    }
 }

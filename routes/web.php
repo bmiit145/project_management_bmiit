@@ -39,9 +39,10 @@ Route::get('/forgotpassword', [UserController::class, 'showForgotForm'])->name('
 Route::post('/forgotpassword', [UserController::class, 'forgotPassword'])->name('auth.forgotPassword');
 Route::get('/resetpassword', [UserController::class, 'resetPassword']);
 Route::post('/changepassword', [UserController::class, 'ChangePassword'])->name('change.password');
+Route::get('/changePassword' , [UserController::class , 'changePasswordPage'])->name('changePasswordPage');
+Route::post('/changePasswordNew' , [UserController::class , 'NewChangePassword'])->name('change.password.new');
 
 // extra
-
 Route::get('/getCourseYears', [CourseController::class, 'getCourseYears'])->name('getCourseYears');
 Route::get('/getSemesters', [SemesterController::class, 'getSemesters'])->name('getSemesters');
 Route::get('/getPrograms', [ProgramController::class, 'getPrograms'])->name('getPrograms');
@@ -155,7 +156,6 @@ Route::group(['middleware' => 'admin'], function () {
     // Send a mail
 
 //    Route::get('/sendMail' , [presentationController::class, 'sendMail'])->name('sendMail');
-
 });
 
 // faculty route
