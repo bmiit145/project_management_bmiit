@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+// index function for vercel
+Route::get('/', function () {
+    return response()->json(['message' => 'Welcome to the API']);
+});
+
