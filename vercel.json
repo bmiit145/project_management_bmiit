@@ -27,7 +27,7 @@
         "APP_NAME":"PMS",
         "APP_ENV":"local",
         "APP_KEY":"base64: ZouroeidyOyrLZkGGWkZMr9sIT36lq47/agb53K0BgM=",
-        "APP_DEBUG":true,
+        "APP_DEBUG":"true",
         "APP_URL":"http: //localhost:8000",
 
         "LOG_CHANNEL":"stack",
