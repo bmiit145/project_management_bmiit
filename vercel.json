@@ -4,6 +4,10 @@
       {
         "src": "build.sh",
         "use": "@vercel/static-build"
+      },
+      {
+        "src": "api/index.php",
+        "use": "@vercel/php"
       }
     ],
     "routes": [
