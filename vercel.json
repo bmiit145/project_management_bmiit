@@ -4,10 +4,6 @@
       {
         "src": "build.sh",
         "use": "@vercel/static-build"
-      },
-      {
-        "src": "api/index.php",
-        "use": "@vercel/php"
       }
     ],
     "routes": [
@@ -35,6 +31,6 @@
       "SSR_TEMP_PATH": "/tmp/ssr",
       "NODE_PATH": "node"
     },
-    "buildCommand": "bash build.sh"
+    "buildCommand": "sh build.sh"
   }
   
