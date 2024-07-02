@@ -1,10 +1,4 @@
 #!/bin/bash
 
-# Update package list
-apt-get update
-
-# Install required libraries
-apt-get install -y libssl1.0.0
-
-# Run composer install
-composer install
+# Install dependencies using Docker
+docker run --rm -v $(pwd):/app -w /app php:7.4-cli bash -c "apt-get update && apt-get install -y libssl1.0.0 && composer install"
