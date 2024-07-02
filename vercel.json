@@ -31,6 +31,6 @@
       "SSR_TEMP_PATH": "/tmp/ssr",
       "NODE_PATH": "node"
     },
-    "buildCommand": "sh build.sh"
+    "buildCommand": "bash build.sh"
   }
   
