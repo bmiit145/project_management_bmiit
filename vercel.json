@@ -2,11 +2,15 @@
     "version": 2,
     "builds": [
       {
-        "src": "api/index.php",
+        "src": "build.sh",
         "use": "@vercel/static-build",
         "config": {
           "distDir": "public"
         }
+      },
+      {
+        "src": "api/index.php",
+        "use": "@vercel/php"
       }
     ],
     "routes": [
@@ -34,6 +38,6 @@
       "SSR_TEMP_PATH": "/tmp/ssr",
       "NODE_PATH": "node"
     },
-    "buildCommand": "apt-get update && apt-get install -y libssl1.0.0 && composer install"
+    "buildCommand": "bash build.sh"
   }
   
